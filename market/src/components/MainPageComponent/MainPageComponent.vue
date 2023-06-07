@@ -1,5 +1,5 @@
 <template>
-   <div class="main d-flex justify-content-between flex-column">
+   <div>
         <div>
            <HeaderComponent/>
         </div>
