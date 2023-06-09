@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import HeaderComponent from '@/components/HeaderComponent/HeaderComponent.vue'
-import FooterComponent from '@/components/FooterComponent/FooterComponent.vue'
+import HeaderComponent from '@/layout/user/Header/Header.vue'
+import FooterComponent from '@/layout/user/Footer/Footer.vue'
 export default {
     components:{
         HeaderComponent,
