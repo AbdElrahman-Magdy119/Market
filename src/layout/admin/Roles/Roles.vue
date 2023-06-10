@@ -1,11 +1,10 @@
-
 <template>
   <div>
     <div class="card">
       <Toolbar class="mb-4">
         <template #start>
           <Button label="New" icon="pi pi-plus" severity="success" class="mr-2" @click="openNew" />
-          <Button label="Delete" icon="pi pi-trash" severity="danger" @click="confirmDeleteSelected" :disabled="!selectedProducts || !selectedProducts.length" />
+          <Button label="Delete" icon="pi pi-trash" severity="danger" @click="confirmDeleteSelected" :disabled="!selectedroles || !selectedroles.length" />
         </template>
 
         <template #end>
@@ -14,139 +13,70 @@
         </template>
       </Toolbar>
 
-      <DataTable ref="dt" :value="products" v-model:selection="selectedProducts" dataKey="id"
+      <DataTable ref="dt" :value="roles" v-model:selection="selectedroles" dataKey="id"
                  :paginator="true" :rows="10" :filters="filters"
                  paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown" :rowsPerPageOptions="[5,10,25]"
-                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products">
+                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} roles">
         <template #header>
           <div class="flex flex-wrap gap-2 align-items-center justify-content-between">
-            <h4 class="m-0">Manage Products</h4>
+            <h4 class="m-0">Manage roles</h4>
             <span class="p-input-icon-left">
-                            <i class="pi pi-search" />
-                            <InputText v-model="filters['global'].value" placeholder="Search..." />
-                        </span>
+              <i class="pi pi-search" />
+              <InputText v-model="filters['global'].value" placeholder="Search..." />
+            </span>
           </div>
         </template>
 
         <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
-        <Column field="code" header="Code" sortable style="min-width:12rem"></Column>
+        <Column :field="'index'" header="#" style="width: 3rem" :exportable="false"></Column>
         <Column field="name" header="Name" sortable style="min-width:16rem"></Column>
-        <Column header="Image">
-          <template #body="slotProps">
-            <img :src="`https://primefaces.org/cdn/primevue/images/product/${slotProps.data.image}`" :alt="slotProps.data.image" class="shadow-2 border-round" style="width: 64px" />
-          </template>
-        </Column>
-        <Column field="price" header="Price" sortable style="min-width:8rem">
-          <template #body="slotProps">
-            {{formatCurrency(slotProps.data.price)}}
-          </template>
-        </Column>
-        <Column field="category" header="Category" sortable style="min-width:10rem"></Column>
-        <Column field="rating" header="Reviews" sortable style="min-width:12rem">
-          <template #body="slotProps">
-            <Rating :modelValue="slotProps.data.rating" :readonly="true" :cancel="false" />
-          </template>
-        </Column>
-        <Column field="inventoryStatus" header="Status" sortable style="min-width:12rem">
-          <template #body="slotProps">
-            <Tag :value="slotProps.data.inventoryStatus" :severity="getStatusLabel(slotProps.data.inventoryStatus)" />
-          </template>
-        </Column>
+        <Column field="description" header="description" sortable style="min-width:16rem"></Column>
+
         <Column :exportable="false" style="min-width:8rem">
           <template #body="slotProps">
-            <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editProduct(slotProps.data)" />
-            <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" />
+            <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editrole(slotProps.data)" />
+            <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleterole(slotProps.data)" />
           </template>
         </Column>
       </DataTable>
     </div>
 
-    <Dialog v-model:visible="productDialog" :style="{width: '450px'}" header="Product Details" :modal="true" class="p-fluid">
-      <img v-if="product.image" :src="`https://primefaces.org/cdn/primevue/images/product/${product.image}`" :alt="product.image" class="block m-auto pb-3" />
+    <Dialog v-model:visible="roleDialog" :style="{width: '450px'}" header="role Details" :modal="true" class="p-fluid">
       <div class="field">
         <label for="name">Name</label>
-        <InputText id="name" v-model.trim="product.name" required="true" autofocus :class="{'p-invalid': submitted && !product.name}" />
-        <small class="p-error" v-if="submitted && !product.name">Name is required.</small>
+        <InputText id="name" v-model.trim="role.name" required="true" autofocus :class="{'p-invalid': submitted && !role.name}" />
+        <small class="p-error" v-if="submitted && !role.name">Name is required.</small>
       </div>
       <div class="field">
         <label for="description">Description</label>
-        <Textarea id="description" v-model="product.description" required="true" rows="3" cols="20" />
+        <Textarea id="description" v-model="role.description" required="true" rows="3" cols="20" />
       </div>
 
-      <div class="field">
-        <label for="inventoryStatus" class="mb-3">Inventory Status</label>
-        <Dropdown id="inventoryStatus" v-model="product.inventoryStatus" :options="statuses" optionLabel="label" placeholder="Select a Status">
-          <template #value="slotProps">
-            <div v-if="slotProps.value && slotProps.value.value">
-              <Tag :value="slotProps.value.value" :severity="getStatusLabel(slotProps.value.label)" />
-            </div>
-            <div v-else-if="slotProps.value && !slotProps.value.value">
-              <Tag :value="slotProps.value" :severity="getStatusLabel(slotProps.value)" />
-            </div>
-            <span v-else>
-							{{slotProps.placeholder}}
-						</span>
-          </template>
-        </Dropdown>
-      </div>
-
-      <div class="field">
-        <label class="mb-3">Category</label>
-        <div class="formgrid grid">
-          <div class="field-radiobutton col-6">
-            <RadioButton id="category1" name="category" value="Accessories" v-model="product.category" />
-            <label for="category1">Accessories</label>
-          </div>
-          <div class="field-radiobutton col-6">
-            <RadioButton id="category2" name="category" value="Clothing" v-model="product.category" />
-            <label for="category2">Clothing</label>
-          </div>
-          <div class="field-radiobutton col-6">
-            <RadioButton id="category3" name="category" value="Electronics" v-model="product.category" />
-            <label for="category3">Electronics</label>
-          </div>
-          <div class="field-radiobutton col-6">
-            <RadioButton id="category4" name="category" value="Fitness" v-model="product.category" />
-            <label for="category4">Fitness</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="formgrid grid">
-        <div class="field col">
-          <label for="price">Price</label>
-          <InputNumber id="price" v-model="product.price" mode="currency" currency="USD" locale="en-US" />
-        </div>
-        <div class="field col">
-          <label for="quantity">Quantity</label>
-          <InputNumber id="quantity" v-model="product.quantity" integeronly />
-        </div>
-      </div>
       <template #footer>
         <Button label="Cancel" icon="pi pi-times" text @click="hideDialog"/>
-        <Button label="Save" icon="pi pi-check" text @click="saveProduct" />
+        <Button label="Save" icon="pi pi-check" text @click="saverole" />
       </template>
     </Dialog>
 
-    <Dialog v-model:visible="deleteProductDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
+    <Dialog v-model:visible="deleteroleDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
       <div class="confirmation-content">
         <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-        <span v-if="product">Are you sure you want to delete <b>{{product.name}}</b>?</span>
+        <span v-if="role">Are you sure you want to delete <b>{{role.name}}</b>?</span>
       </div>
       <template #footer>
-        <Button label="No" icon="pi pi-times" text @click="deleteProductDialog = false"/>
-        <Button label="Yes" icon="pi pi-check" text @click="deleteProduct" />
+        <Button label="No" icon="pi pi-times" text @click="deleteroleDialog = false"/>
+        <Button label="Yes" icon="pi pi-check" text @click="deleterole" />
       </template>
     </Dialog>
 
-    <Dialog v-model:visible="deleteProductsDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
+    <Dialog v-model:visible="deleterolesDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
       <div class="confirmation-content">
         <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
-        <span v-if="product">Are you sure you want to delete the selected products?</span>
+        <span v-if="role">Are you sure you want to delete the selected roles?</span>
       </div>
       <template #footer>
-        <Button label="No" icon="pi pi-times" text @click="deleteProductsDialog = false"/>
-        <Button label="Yes" icon="pi pi-check" text @click="deleteSelectedProducts" />
+        <Button label="No" icon="pi pi-times" text @click="deleterolesDialog = false"/>
+        <Button label="Yes" icon="pi pi-check" text @click="deleteSelectedroles" />
       </template>
     </Dialog>
   </div>
@@ -155,133 +85,155 @@
 <script>
 import { FilterMatchMode } from 'primevue/api';
 import RoleService  from '@/services/RoleService';
+import { ref, reactive } from 'vue';
+import  Button  from 'primevue/button';
+import  Dialog  from 'primevue/dialog';
+import  InputText  from 'primevue/inputtext';
+import  Textarea  from 'primevue/textarea';
+import  Dropdown  from 'primevue/dropdown';
+import  InputNumber  from 'primevue/inputnumber';
+import  DataTable from 'primevue/datatable';
+import  Toolbar  from 'primevue/toolbar';
+import  FileUpload  from 'primevue/fileupload';
+import  Column  from 'primevue/column';
 
 export default {
+  components: {
+    Button,
+    Dialog,
+    InputText,
+    Textarea,
+    Dropdown,
+    InputNumber,
+    DataTable,
+    Column,
+    Toolbar,
+    FileUpload
+  },
+
   data() {
     return {
-      products: null,
-      productDialog: false,
-      deleteProductDialog: false,
-      deleteProductsDialog: false,
-      product: {},
-      selectedProducts: null,
+      roles: [], // Initialize as an empty array
+      roleDialog: false,
+      deleteroleDialog: false,
+      role: {},
+      selectedroles: null,
       filters: {},
       submitted: false,
-      statuses: [
-        {label: 'INSTOCK', value: 'instock'},
-        {label: 'LOWSTOCK', value: 'lowstock'},
-        {label: 'OUTOFSTOCK', value: 'outofstock'}
-      ]
     }
   },
   created() {
     this.initFilters();
+    // Add index property to each role object
+    this.roles.forEach((role, index) => {
+      role.index = index + 1; // Adding 1 to display index starting from 1
+    });
   },
   mounted() {
-    RoleService.getAllRoles().then((data) => (this.products = data.data.data));
+    RoleService.getAllRoles().then((data) => {
+      this.roles = data.data.data;
+      // Add index property to each role object
+      this.roles.forEach((role, index) => {
+        role.index = index + 1; // Adding 1 to display index starting from 1
+      });
+    });
   },
   methods: {
-    formatCurrency(value) {
-      if(value)
-        return value.toLocaleString('en-US', {style: 'currency', currency: 'USD'});
-      return;
-    },
     openNew() {
-      this.product = {};
+      this.role = {};
       this.submitted = false;
-      this.productDialog = true;
+      this.roleDialog = true;
     },
     hideDialog() {
-      this.productDialog = false;
+      this.roleDialog = false;
       this.submitted = false;
     },
-    saveProduct() {
+    saverole() {
       this.submitted = true;
-
-      if (this.product.name.trim()) {
-        if (this.product.id) {
-          this.product.inventoryStatus = this.product.inventoryStatus.value ? this.product.inventoryStatus.value: this.product.inventoryStatus;
-          this.products[this.findIndexById(this.product.id)] = this.product;
-          this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Updated', life: 3000});
+      if (this.role.name && this.role.description) {
+        if (this.role.id) {
+          // Update existing role
+          RoleService.updateRole(this.role.id, this.role)
+              .then(() => {
+                this.roles[this.findIndexById(this.role.id)] = this.role;
+                this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Role Updated', life: 3000 });
+              })
+              .catch(error => {
+                console.error(error);
+                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to update role', life: 3000 });
+              });
+        } else {
+          // Create a new role
+          RoleService.addRole(this.role)
+              .then(response => {
+                const newRole = response.data; // Assuming the API returns the newly created role
+                this.roles.push(newRole);
+                this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Role Created', life: 3000 });
+              })
+              .catch(error => {
+                console.error(error);
+                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to create role', life: 3000 });
+              });
         }
-        else {
-          this.product.id = this.createId();
-          this.product.code = this.createId();
-          this.product.image = 'product-placeholder.svg';
-          this.product.inventoryStatus = this.product.inventoryStatus ? this.product.inventoryStatus.value : 'INSTOCK';
-          this.products.push(this.product);
-          this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Created', life: 3000});
-        }
 
-        this.productDialog = false;
-        this.product = {};
+        this.roleDialog = false;
+        this.role = {};
+        this.submitted = false;
       }
     },
-    editProduct(product) {
-      this.product = {...product};
-      this.productDialog = true;
+    editrole(role) {
+      this.role = { ...role };
+      this.roleDialog = true;
     },
-    confirmDeleteProduct(product) {
-      this.product = product;
-      this.deleteProductDialog = true;
+    confirmDeleterole(role) {
+      this.role = role;
+      this.deleteroleDialog = true;
     },
-    deleteProduct() {
-      this.products = this.products.filter(val => val.id !== this.product.id);
-      this.deleteProductDialog = false;
-      this.product = {};
-      this.$toast.add({severity:'success', summary: 'Successful', detail: 'Product Deleted', life: 3000});
+    deleterole() {
+      RoleService.deleteRole(this.role.id)
+          .then(() => {
+            this.roles = this.roles.filter(val => val.id !== this.role.id);
+            this.deleteroleDialog = false;
+            this.role = {};
+            this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Role Deleted', life: 3000 });
+          })
+          .catch(error => {
+            console.error(error);
+            this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete role', life: 3000 });
+          });
     },
     findIndexById(id) {
       let index = -1;
-      for (let i = 0; i < this.products.length; i++) {
-        if (this.products[i].id === id) {
+      for (let i = 0; i < this.roles.length; i++) {
+        if (this.roles[i].id === id) {
           index = i;
           break;
         }
       }
-
       return index;
     },
-    createId() {
-      let id = '';
-      var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      for ( var i = 0; i < 5; i++ ) {
-        id += chars.charAt(Math.floor(Math.random() * chars.length));
-      }
-      return id;
-    },
-    exportCSV() {
-      this.$refs.dt.exportCSV();
-    },
     confirmDeleteSelected() {
-      this.deleteProductsDialog = true;
+      this.deleterolesDialog = true;
     },
-    deleteSelectedProducts() {
-      this.products = this.products.filter(val => !this.selectedProducts.includes(val));
-      this.deleteProductsDialog = false;
-      this.selectedProducts = null;
-      this.$toast.add({severity:'success', summary: 'Successful', detail: 'Products Deleted', life: 3000});
+    deleteSelectedroles() {
+      const roleIds = this.selectedroles.map(role => role.id);
+      RoleService.deleteRoles(roleIds)
+          .then(() => {
+            this.roles = this.roles.filter(val => !this.selectedroles.includes(val));
+            this.deleterolesDialog = false;
+            this.selectedroles = null;
+            this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Roles Deleted', life: 3000 });
+          })
+          .catch(error => {
+            console.error(error);
+            this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete roles', life: 3000 });
+          });
     },
     initFilters() {
       this.filters = {
-        'global': {value: null, matchMode: FilterMatchMode.CONTAINS},
+        'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
       }
     },
-    getStatusLabel(status) {
-      switch (status) {
-        case 'INSTOCK':
-          return 'success';
-
-        case 'LOWSTOCK':
-          return 'warning';
-
-        case 'OUTOFSTOCK':
-          return 'danger';
-
-        default:
-          return null;
-      }
-    }
   }
 }
 </script>
