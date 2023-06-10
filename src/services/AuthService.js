@@ -8,7 +8,7 @@ const apiClient = axios.create({
     },
 });
 
-const apiService = {
+const authService = {
     login(credentials) {
         return apiClient.post('/login', credentials);
     },
@@ -18,4 +18,4 @@ const apiService = {
 };
 
 
-export default apiService;
+export default authService;

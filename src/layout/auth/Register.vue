@@ -38,7 +38,7 @@ import Message from 'primevue/message'; // Import the Message component correctl
 import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
-import apiService from '@/services/apiService';
+import authService from '@/services/AuthService';
 
 export default {
   components: {
@@ -83,7 +83,7 @@ export default {
         lastName: this.lastName,
         password: this.password,
       };
-      apiService.register(userData)
+      authService.register(userData)
           .then(response => {
             // Handle successful registration
             this.registrationSuccess = true;

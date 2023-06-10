@@ -65,7 +65,7 @@ import Toast from 'primevue/toast';
 import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
-import apiService from '@/services/apiService';
+import authService from '@/services/AuthService';
 
 export default {
   components: {
@@ -85,7 +85,7 @@ export default {
         password: this.password,
       };
 
-      apiService
+      authService
           .login(credentials)
           .then(response => {
             // Handle successful login
