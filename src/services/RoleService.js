@@ -9,7 +9,7 @@ const apiClient = axios.create({
     },
 });
 
-const authService = {
+const RoleService = {
     getAllRoles() {
         return apiClient.get('/roles');
     },
@@ -25,4 +25,4 @@ const authService = {
 };
 
 
-export default authService;
+export default RoleService;
