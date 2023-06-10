@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Toast></Toast>
     <div class="card">
       <Toolbar class="mb-4">
         <template #start>
@@ -7,10 +8,7 @@
           <Button label="Delete" icon="pi pi-trash" severity="danger" @click="confirmDeleteSelected" :disabled="!selectedroles || !selectedroles.length" />
         </template>
 
-        <template #end>
-          <FileUpload mode="basic" accept="image/*" :maxFileSize="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block" />
-          <Button label="Export" icon="pi pi-upload" severity="help" @click="exportCSV($event)"  />
-        </template>
+
       </Toolbar>
 
       <DataTable ref="dt" :value="roles" v-model:selection="selectedroles" dataKey="id"
