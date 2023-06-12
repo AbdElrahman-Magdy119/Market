@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp } from 'vue/dist/vue.esm-bundler'
 import MainComponent from './MainComponent.vue'
 
 import PrimeVue from 'primevue/config'
