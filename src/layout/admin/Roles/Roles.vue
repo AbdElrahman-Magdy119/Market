@@ -94,19 +94,21 @@ import  DataTable from 'primevue/datatable';
 import  Toolbar  from 'primevue/toolbar';
 import  FileUpload  from 'primevue/fileupload';
 import  Column  from 'primevue/column';
+import  Toast  from 'primevue/toast';
 
 export default {
-  components: {
-    Button,
-    Dialog,
-    InputText,
-    Textarea,
-    Dropdown,
-    InputNumber,
-    DataTable,
-    Column,
-    Toolbar,
-    FileUpload
+    components: {
+        Button,
+        Dialog,
+        InputText,
+        Textarea,
+        Dropdown,
+        InputNumber,
+        DataTable,
+        Column,
+        Toolbar,
+        FileUpload,
+        Toast
   },
 
   data() {
