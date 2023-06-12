@@ -59,8 +59,8 @@
 </template>
 
 <script>
-import HeaderComponent from '@/layout/user/Header/Header.vue'
-import FooterComponent from '@/layout/user/Footer/Footer.vue'
+import HeaderComponent from '@/layout/admin/Header/Header.vue'
+import FooterComponent from '@/layout/admin/Footer/Footer.vue'
 
 export default {
     components:{
