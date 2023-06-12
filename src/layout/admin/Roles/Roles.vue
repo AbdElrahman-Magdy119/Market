@@ -213,20 +213,6 @@ export default {
     confirmDeleteSelected() {
       this.deleterolesDialog = true;
     },
-    deleteSelectedroles() {
-      const roleIds = this.selectedroles.map(role => role.id);
-      RoleService.deleteRoles(roleIds)
-          .then(() => {
-            this.roles = this.roles.filter(val => !this.selectedroles.includes(val));
-            this.deleterolesDialog = false;
-            this.selectedroles = null;
-            this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Roles Deleted', life: 3000 });
-          })
-          .catch(error => {
-            console.error(error);
-            this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete roles', life: 3000 });
-          });
-    },
     initFilters() {
       this.filters = {
         'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
