@@ -14,6 +14,9 @@ import Orders from "@/layout/admin/Orders/Orders.vue";
 import OrderDetails from "@/layout/admin/OrderDetails/OrderDetails.vue";
 import Reviews from "@/layout/admin/Reveiws/Reviews.vue";
 
+import Products from "@/layout/admin/products/Products.vue";
+
+
 const routes = [
     {
       path: '',
@@ -49,6 +52,10 @@ const routes = [
             {
                 path:'reviews',
                 component:Reviews
+            },
+            {
+                path:'products',
+                component:Products
             }
         ],
     },
