@@ -1,5 +1,5 @@
 <template>
-
+  <!DOCTYPE html>
 <html lang="zxx">
 
 <head>
@@ -25,83 +25,26 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-	
 
-    <!-- Humberger Begin -->
-    <div class="humberger__menu__overlay"></div>
-    <div class="humberger__menu__wrapper">
-        <div class="humberger__menu__logo">
-            <a href="#"><img src="../../../../public/images/logo.png" alt=""></a>
-        </div>
-        <div class="humberger__menu__cart">
-            <ul>
-                <li  ><a href="#"><i class="fa fa-user "></i></a></li>
-                <li ><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                <li ><a href="#"><i class="fa fa-shopping-bag "></i> <span>3</span></a></li>
-            </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
-        </div>
-        <nav class="humberger__menu__nav mobile-menu">
-            <ul>
-                <li class="active"><a href="./index.html">Home</a></li>
-                <li><router-link :to="'/shop'" >Shop</router-link></li>
-                <li><a href="#">packages</a></li>
-                <li><a href="./blog.html">Blog</a></li>
-                <li><a href="./contact.html">Contact</a></li>
-            </ul>
-        </nav>
-        <div id="mobile-menu-wrap"></div>
-       
-
-    </div>
-    <!-- Humberger End -->
-
-    <!-- Header Section Begin -->
-    <header class="header">
- 
+    <section class="breadcrumb-section set-bg" data-setbg="images/breadcrumb.jpg">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
-                    <div class="header__logo">
-                        <a href="./index.html"><img src="../../../../public/images/logo.png" alt=""></a>
+                <div class="col-lg-12 text-center">
+                    <div class="breadcrumb__text">
+                        <h2>Organi Shop</h2>
+                        <div class="breadcrumb__option">
+                            <a href="#">Home</a>
+                            <span>Shop</span>
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <nav class="header__menu">
-                        <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
-                            <li><router-link :to="'/shop'" >Shop</router-link></li>
-                            <li><a href="#">Packages</a></li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-lg-3">
-                    <div class="header__cart">
-                        <ul>
-                            <li><a href="#"><i class="fa fa-user mx-1"></i></a></li>
-                            <li><a href="#"><i class="fa fa-heart mx-1"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag mx-1"></i> <span>3</span></a></li>
-                        </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
             </div>
         </div>
-    </header>
-    <!-- Header Section End -->
+    </section>
 
-      
-    
 </body>
 
 </html>
-
 </template>
 
 <script>
@@ -109,46 +52,46 @@ import '@/jquery.js';
 export default {
 	mounted() {
 
-    const script2 = document.createElement("script");
-    script2.src = "js/jquery-3.3.1.min.js";
-	script2.async = true;
-    document.body.appendChild(script2);
+const script2 = document.createElement("script");
+script2.src = "js/jquery-3.3.1.min.js";
+script2.async = true;
+document.body.appendChild(script2);
 
-    const script3 = document.createElement("script");
-	script3.src = "js/bootstrap.min.js";
-	script3.async = true;
-    document.body.appendChild(script3);
+const script3 = document.createElement("script");
+script3.src = "js/bootstrap.min.js";
+script3.async = true;
+document.body.appendChild(script3);
 
-    const script4 = document.createElement("script");
-    script4.src = "js/jquery.nice-select.min.js";
-	script4.async = true;
-    document.body.appendChild(script4);
+const script4 = document.createElement("script");
+script4.src = "js/jquery.nice-select.min.js";
+script4.async = true;
+document.body.appendChild(script4);
 
-    const script5 = document.createElement("script");
-    script5.src = "js/jquery-ui.min.js";
-	script5.async = true;
-    document.body.appendChild(script5);
+const script5 = document.createElement("script");
+script5.src = "js/jquery-ui.min.js";
+script5.async = true;
+document.body.appendChild(script5);
 
-    const script6 = document.createElement("script");
-    script6.src = "js/jquery.slicknav.js";
-	script6.async = true;
-    document.body.appendChild(script6);
+const script6 = document.createElement("script");
+script6.src = "js/jquery.slicknav.js";
+script6.async = true;
+document.body.appendChild(script6);
 
-    const script7 = document.createElement("script");
-    script7.src = "js/mixitup.min.js";
-	script7.async = true;
-    document.body.appendChild(script7);
+const script7 = document.createElement("script");
+script7.src = "js/mixitup.min.js";
+script7.async = true;
+document.body.appendChild(script7);
 
-    const script8 = document.createElement("script");
-    script8.src = "js/owl.carousel.min.js";
-	script8.async = true;
-    document.body.appendChild(script8);
+const script8 = document.createElement("script");
+script8.src = "js/owl.carousel.min.js";
+script8.async = true;
+document.body.appendChild(script8);
 
-    const script9 = document.createElement("script");
-    script9.src = "js/main.js";
-	script9.async = true;
-    document.body.appendChild(script9);
-  },
+const script9 = document.createElement("script");
+script9.src = "js/main.js";
+script9.async = true;
+document.body.appendChild(script9);
+},
 }
 </script>
 
@@ -193,20 +136,23 @@ body {
 	font-smoothing: antialiased;
 }
 
+
+a{
+    text-decoration: none;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-	margin: 0; 
+	margin: 0;
 	color: #111111;
 	font-weight: 400;
 	font-family: "Cairo", sans-serif;
 }
-a{
-	text-decoration: none;
-}
+
 h1 {
 	font-size: 70px;
 }
@@ -917,6 +863,7 @@ ol {
 .categories__item {
 	height: 270px;
 	position: relative;
+    width: 232px;
 }
 
 .categories__item h5 {
