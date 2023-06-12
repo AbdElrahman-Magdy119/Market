@@ -2,10 +2,13 @@ import { createRouter,createWebHistory } from "vue-router";
 
 import NotFoundComponent from '@/layout/user/NotFound/NotFoundComponent.vue';
 import HomeComponent from '@/layout/user/Home/Home.vue';
+import AdminHomeComponent from '@/layout/admin/Home/Home.vue';
+
 import MainPageComponent from '@/layout/user/MainPage/MainPage.vue';
 import Login from "@/layout/auth/Login.vue";
 import Register from "@/layout/auth/Register.vue";
 import MainLayout from "@/layout/admin/MainLayout/MainLayout.vue";
+
 import Roles from "@/layout/admin/Roles/Roles.vue";
 
 
@@ -23,11 +26,11 @@ const routes = [
     },
     {
         path: '/admin',
-        component: MainLayout,
+        component:MainLayout ,
         children: [
             {
                 path:'',
-                component:HomeComponent
+                component:AdminHomeComponent
             },
             {
                 path:'roles',
