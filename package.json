@@ -15,11 +15,11 @@
     "primeicons": "^6.0.1",
     "primevue": "^3.29.2",
     "vue": "^3.2.13",
-    "vue-chartjs": "^5.2.0",
     "vue-router": "^4.2.2"
   },
   "devDependencies": {
-    "@vue/cli-service": "~5.0.0"
+    "@vue/cli-service": "~5.0.0",
+    "vue-chartjs": "^4.1.1"
   },
   "browserslist": [
     "> 1%",

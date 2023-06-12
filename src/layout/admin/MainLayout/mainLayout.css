@@ -586,6 +586,7 @@ pre code {
 }
 
 @media (min-width: 576px) {
+
     .container {
         max-width: 540px;
     }
@@ -11791,18 +11792,23 @@ h5,
 
 .wrapper {
     width: 100%;
+    flex-wrap: nowrap;
 }
 
 #sidebar {
     min-width: 280px;
     max-width: 280px;
+    height: 100%;
     background: #3445b4;
+    padding-top: 20px;
     color: #fff;
     -webkit-transition: all 0.3s;
     -o-transition: all 0.3s;
     transition: all 0.3s;
-    position: relative;
-    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
 }
 
 #sidebar .h6 {
@@ -11868,8 +11874,12 @@ h5,
 @media (max-width: 991.98px) {
     #sidebar {
         margin-left: -270px;
-    }
 
+    }
+    #content
+    {
+        margin-left: 8px !important; 
+    }
     #sidebar.active {
         margin-left: 0;
     }
@@ -11959,7 +11969,8 @@ a[data-toggle="collapse"] {
     -webkit-transition: all 0.3s;
     -o-transition: all 0.3s;
     transition: all 0.3s;
-    margin-left:50px
+    margin-left: 280px; 
+    padding: 0px 10px;
 
 }
 

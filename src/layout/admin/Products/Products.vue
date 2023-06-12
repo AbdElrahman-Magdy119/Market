@@ -1,3 +1,10 @@
+<template>
+  <h1>
+    {{ products }}
+  </h1>
+</template>
+
+
 <script>
 import axios from 'axios';
 let apiClient = axios.create({
@@ -13,7 +20,7 @@ export default {
 
   data() {
     return {
-      roles: [], // Initialize as an empty array
+      products: [], // Initialize as an empty array
       roleDialog: false,
       deleteroleDialog: false,
       role: {},
@@ -25,7 +32,7 @@ export default {
 
   mounted() {
     apiClient.get('/products').then((data) => {
-        console.log(data)
+      this.products = data
     });
   },
 }
