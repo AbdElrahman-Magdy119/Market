@@ -1,5 +1,5 @@
 <template>
-
+  <!DOCTYPE html>
 <html lang="zxx">
 
 <head>
@@ -25,130 +25,108 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-	
-
-    <!-- Humberger Begin -->
-    <div class="humberger__menu__overlay"></div>
-    <div class="humberger__menu__wrapper">
-        <div class="humberger__menu__logo">
-            <a href="#"><img src="../../../../public/images/logo.png" alt=""></a>
-        </div>
-        <div class="humberger__menu__cart">
-            <ul>
-                <li  ><a href="#"><i class="fa fa-user "></i></a></li>
-                <li ><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                <li ><a href="#"><i class="fa fa-shopping-bag "></i> <span>3</span></a></li>
-            </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
-        </div>
-        <nav class="humberger__menu__nav mobile-menu">
-            <ul>
-                <li class="active"><a href="./index.html">Home</a></li>
-                <li><router-link :to="'/shop'" >Shop</router-link></li>
-                <li><a href="#">packages</a></li>
-                <li><a href="./blog.html">Blog</a></li>
-                <li><a href="./contact.html">Contact</a></li>
-            </ul>
-        </nav>
-        <div id="mobile-menu-wrap"></div>
-       
-
-    </div>
-    <!-- Humberger End -->
-
-    <!-- Header Section Begin -->
-    <header class="header">
- 
+    <section class="hero hero-normal">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
-                    <div class="header__logo">
-                        <a href="./index.html"><img src="../../../../public/images/logo.png" alt=""></a>
+                    <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>All departments</span>
+                        </div>
+                        <ul>
+                            <li><a href="#">Fresh Meat</a></li>
+                            <li><a href="#">Vegetables</a></li>
+                            <li><a href="#">Fruit & Nut Gifts</a></li>
+                            <li><a href="#">Fresh Berries</a></li>
+                            <li><a href="#">Ocean Foods</a></li>
+                            <li><a href="#">Butter & Eggs</a></li>
+                            <li><a href="#">Fastfood</a></li>
+                            <li><a href="#">Fresh Onion</a></li>
+                            <li><a href="#">Papayaya & Crisps</a></li>
+                            <li><a href="#">Oatmeal</a></li>
+                            <li><a href="#">Fresh Bananas</a></li>
+                        </ul>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <nav class="header__menu">
-                        <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
-                            <li><router-link :to="'/shop'" >Shop</router-link></li>
-                            <li><a href="#">Packages</a></li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-lg-3">
-                    <div class="header__cart">
-                        <ul>
-                            <li><a href="#"><i class="fa fa-user mx-1"></i></a></li>
-                            <li><a href="#"><i class="fa fa-heart mx-1"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag mx-1"></i> <span>3</span></a></li>
-                        </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+                            <form action="#">
+                                <div class="hero__search__categories">
+                                    All Categories
+                                    <span class="arrow_carrot-down"></span>
+                                </div>
+                                <input type="text" placeholder="What do yo u need?">
+                                <button type="submit" class="site-btn">SEARCH</button>
+                            </form>
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="hero__search__phone__text">
+                                <h5>+65 11.188.888</h5>
+                                <span>support 24/7 time</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
             </div>
         </div>
-    </header>
-    <!-- Header Section End -->
+    </section>
 
-      
-    
 </body>
 
 </html>
-
 </template>
 
 <script>
 import '@/jquery.js'; 
 export default {
-	mounted() {
+    mounted() {
 
-    const script2 = document.createElement("script");
-    script2.src = "js/jquery-3.3.1.min.js";
-	script2.async = true;
-    document.body.appendChild(script2);
+const script2 = document.createElement("script");
+script2.src = "js/jquery-3.3.1.min.js";
+script2.async = true;
+document.body.appendChild(script2);
 
-    const script3 = document.createElement("script");
-	script3.src = "js/bootstrap.min.js";
-	script3.async = true;
-    document.body.appendChild(script3);
+const script3 = document.createElement("script");
+script3.src = "js/bootstrap.min.js";
+script3.async = true;
+document.body.appendChild(script3);
 
-    const script4 = document.createElement("script");
-    script4.src = "js/jquery.nice-select.min.js";
-	script4.async = true;
-    document.body.appendChild(script4);
+const script4 = document.createElement("script");
+script4.src = "js/jquery.nice-select.min.js";
+script4.async = true;
+document.body.appendChild(script4);
 
-    const script5 = document.createElement("script");
-    script5.src = "js/jquery-ui.min.js";
-	script5.async = true;
-    document.body.appendChild(script5);
+const script5 = document.createElement("script");
+script5.src = "js/jquery-ui.min.js";
+script5.async = true;
+document.body.appendChild(script5);
 
-    const script6 = document.createElement("script");
-    script6.src = "js/jquery.slicknav.js";
-	script6.async = true;
-    document.body.appendChild(script6);
+const script6 = document.createElement("script");
+script6.src = "js/jquery.slicknav.js";
+script6.async = true;
+document.body.appendChild(script6);
 
-    const script7 = document.createElement("script");
-    script7.src = "js/mixitup.min.js";
-	script7.async = true;
-    document.body.appendChild(script7);
+const script7 = document.createElement("script");
+script7.src = "js/mixitup.min.js";
+script7.async = true;
+document.body.appendChild(script7);
 
-    const script8 = document.createElement("script");
-    script8.src = "js/owl.carousel.min.js";
-	script8.async = true;
-    document.body.appendChild(script8);
+const script8 = document.createElement("script");
+script8.src = "js/owl.carousel.min.js";
+script8.async = true;
+document.body.appendChild(script8);
 
-    const script9 = document.createElement("script");
-    script9.src = "js/main.js";
-	script9.async = true;
-    document.body.appendChild(script9);
-  },
+const script9 = document.createElement("script");
+script9.src = "js/main.js";
+script9.async = true;
+document.body.appendChild(script9);
+},
+
 }
 </script>
 

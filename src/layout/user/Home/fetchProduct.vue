@@ -1,5 +1,5 @@
 <template>
-
+  <!DOCTYPE html>
 <html lang="zxx">
 
 <head>
@@ -25,83 +25,154 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-	
 
-    <!-- Humberger Begin -->
-    <div class="humberger__menu__overlay"></div>
-    <div class="humberger__menu__wrapper">
-        <div class="humberger__menu__logo">
-            <a href="#"><img src="../../../../public/images/logo.png" alt=""></a>
-        </div>
-        <div class="humberger__menu__cart">
-            <ul>
-                <li  ><a href="#"><i class="fa fa-user "></i></a></li>
-                <li ><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                <li ><a href="#"><i class="fa fa-shopping-bag "></i> <span>3</span></a></li>
-            </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
-        </div>
-        <nav class="humberger__menu__nav mobile-menu">
-            <ul>
-                <li class="active"><a href="./index.html">Home</a></li>
-                <li><router-link :to="'/shop'" >Shop</router-link></li>
-                <li><a href="#">packages</a></li>
-                <li><a href="./blog.html">Blog</a></li>
-                <li><a href="./contact.html">Contact</a></li>
-            </ul>
-        </nav>
-        <div id="mobile-menu-wrap"></div>
-       
-
-    </div>
-    <!-- Humberger End -->
-
-    <!-- Header Section Begin -->
-    <header class="header">
- 
+    <section class="featured spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
-                    <div class="header__logo">
-                        <a href="./index.html"><img src="../../../../public/images/logo.png" alt=""></a>
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2>Featured Product</h2>
                     </div>
-                </div>
-                <div class="col-lg-6">
-                    <nav class="header__menu">
+                    <div class="featured__controls">
                         <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
-                            <li><router-link :to="'/shop'" >Shop</router-link></li>
-                            <li><a href="#">Packages</a></li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
+                            <li class="active" data-filter="*">All</li>
+                            <li data-filter=".oranges">Oranges</li>
+                            <li data-filter=".fresh-meat">Fresh Meat</li>
+                            <li data-filter=".vegetables">Vegetables</li>
+                            <li data-filter=".fastfood">Fastfood</li>
                         </ul>
-                    </nav>
-                </div>
-                <div class="col-lg-3">
-                    <div class="header__cart">
-                        <ul>
-                            <li><a href="#"><i class="fa fa-user mx-1"></i></a></li>
-                            <li><a href="#"><i class="fa fa-heart mx-1"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag mx-1"></i> <span>3</span></a></li>
-                        </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
                     </div>
                 </div>
             </div>
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
+            <div class="row featured__filter">
+                
+                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fresh-meat">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" data-setbg="images/featured/feature-1.jpg">
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="#">Crab Pool Security</a></h6>
+                            <h5>$30.00</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fastfood">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" data-setbg="images/featured/feature-2.jpg">
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="#">Crab Pool Security</a></h6>
+                            <h5>$30.00</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 mix vegetables fresh-meat">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" data-setbg="images/featured/feature-3.jpg">
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="#">Crab Pool Security</a></h6>
+                            <h5>$30.00</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood oranges">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" data-setbg="images/featured/feature-4.jpg">
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart "></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet ms-2"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart ms-2"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="#">Crab Pool Security</a></h6>
+                            <h5>$30.00</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" data-setbg="images/featured/feature-5.jpg">
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="#">Crab Pool Security</a></h6>
+                            <h5>$30.00</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 mix oranges fastfood">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" data-setbg="images/featured/feature-6.jpg">
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="#">Crab Pool Security</a></h6>
+                            <h5>$30.00</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 mix fresh-meat vegetables">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" data-setbg="images/featured/feature-7.jpg">
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="#">Crab Pool Security</a></h6>
+                            <h5>$30.00</h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
+                    <div class="featured__item">
+                        <div class="featured__item__pic set-bg" data-setbg="images/featured/feature-8.jpg">
+                            <ul class="featured__item__pic__hover">
+                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+                            </ul>
+                        </div>
+                        <div class="featured__item__text">
+                            <h6><a href="#">Crab Pool Security</a></h6>
+                            <h5>$30.00</h5>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </header>
-    <!-- Header Section End -->
+    </section>
 
-      
-    
 </body>
 
 </html>
-
 </template>
 
 <script>
@@ -109,46 +180,46 @@ import '@/jquery.js';
 export default {
 	mounted() {
 
-    const script2 = document.createElement("script");
-    script2.src = "js/jquery-3.3.1.min.js";
-	script2.async = true;
-    document.body.appendChild(script2);
+const script2 = document.createElement("script");
+script2.src = "js/jquery-3.3.1.min.js";
+script2.async = true;
+document.body.appendChild(script2);
 
-    const script3 = document.createElement("script");
-	script3.src = "js/bootstrap.min.js";
-	script3.async = true;
-    document.body.appendChild(script3);
+const script3 = document.createElement("script");
+script3.src = "js/bootstrap.min.js";
+script3.async = true;
+document.body.appendChild(script3);
 
-    const script4 = document.createElement("script");
-    script4.src = "js/jquery.nice-select.min.js";
-	script4.async = true;
-    document.body.appendChild(script4);
+const script4 = document.createElement("script");
+script4.src = "js/jquery.nice-select.min.js";
+script4.async = true;
+document.body.appendChild(script4);
 
-    const script5 = document.createElement("script");
-    script5.src = "js/jquery-ui.min.js";
-	script5.async = true;
-    document.body.appendChild(script5);
+const script5 = document.createElement("script");
+script5.src = "js/jquery-ui.min.js";
+script5.async = true;
+document.body.appendChild(script5);
 
-    const script6 = document.createElement("script");
-    script6.src = "js/jquery.slicknav.js";
-	script6.async = true;
-    document.body.appendChild(script6);
+const script6 = document.createElement("script");
+script6.src = "js/jquery.slicknav.js";
+script6.async = true;
+document.body.appendChild(script6);
 
-    const script7 = document.createElement("script");
-    script7.src = "js/mixitup.min.js";
-	script7.async = true;
-    document.body.appendChild(script7);
+const script7 = document.createElement("script");
+script7.src = "js/mixitup.min.js";
+script7.async = true;
+document.body.appendChild(script7);
 
-    const script8 = document.createElement("script");
-    script8.src = "js/owl.carousel.min.js";
-	script8.async = true;
-    document.body.appendChild(script8);
+const script8 = document.createElement("script");
+script8.src = "js/owl.carousel.min.js";
+script8.async = true;
+document.body.appendChild(script8);
 
-    const script9 = document.createElement("script");
-    script9.src = "js/main.js";
-	script9.async = true;
-    document.body.appendChild(script9);
-  },
+const script9 = document.createElement("script");
+script9.src = "js/main.js";
+script9.async = true;
+document.body.appendChild(script9);
+},
 }
 </script>
 
@@ -193,20 +264,23 @@ body {
 	font-smoothing: antialiased;
 }
 
+
+a{
+    text-decoration: none;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-	margin: 0; 
+	margin: 0;
 	color: #111111;
 	font-weight: 400;
 	font-family: "Cairo", sans-serif;
 }
-a{
-	text-decoration: none;
-}
+
 h1 {
 	font-size: 70px;
 }
@@ -917,6 +991,7 @@ ol {
 .categories__item {
 	height: 270px;
 	position: relative;
+    width: 232px;
 }
 
 .categories__item h5 {
