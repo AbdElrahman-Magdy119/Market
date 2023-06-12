@@ -43,7 +43,7 @@ const routes = [
                 component:OrderDetails
             },
             {
-                path:'orders',
+                path:'orders',  
                 component:Orders
             },
             {

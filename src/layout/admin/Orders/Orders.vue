@@ -26,8 +26,12 @@
 
                 <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
                 <Column :field="'index'" header="#" style="width: 3rem" :exportable="false"></Column>
-                <Column field="name" header="Name" sortable style="min-width:16rem"></Column>
-                <Column field="description" header="description" sortable style="min-width:16rem"></Column>
+                <Column field="firstName" header="first_name" sortable style="min-width:16rem"></Column>
+                <Column field="lastName" header="last_name" sortable style="min-width:16rem"></Column>
+                <Column field="status" header="status" sortable style="min-width:16rem"></Column>
+                <Column field="total_price" header="total_price" sortable style="min-width:16rem"></Column>
+                <Column field="tracking_no" header="tracking_no" sortable style="min-width:16rem"></Column>
+
 
                 <Column :exportable="false" style="min-width:8rem">
                     <template #body="slotProps">
@@ -41,8 +45,8 @@
         <Dialog v-model:visible="orderDialog" :style="{width: '450px'}" header="order Details" :modal="true" class="p-fluid">
             <div class="field">
                 <label for="name">Name</label>
-                <InputText id="name" v-model.trim="order.name" required="true" autofocus :class="{'p-invalid': submitted && !order.name}" />
-                <small class="p-error" v-if="submitted && !order.name">Name is required.</small>
+                <InputText id="name" v-model.trim="order.firstName" required="true" autofocus :class="{'p-invalid': submitted && !order.name}" />
+                <small class="p-error" v-if="submitted && !order.firstName">First Name is required.</small>
             </div>
             <div class="field">
                 <label for="description">Description</label>
@@ -66,14 +70,14 @@
             </template>
         </Dialog>
 
-        <Dialog v-model:visible="deleteordersDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
+        <Dialog v-model:visible="deleteOrdersDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
             <div class="confirmation-content">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
                 <span v-if="order">Are you sure you want to delete the selected orders?</span>
             </div>
             <template #footer>
-                <Button label="No" icon="pi pi-times" text @click="deleteordersDialog = false"/>
-                <Button label="Yes" icon="pi pi-check" text @click="deleteSelectedorders" />
+                <Button label="No" icon="pi pi-times" text @click="deleteOrdersDialog = false"/>
+                <Button label="Yes" icon="pi pi-check" text @click="deleteSelectedOrders" />
             </template>
         </Dialog>
     </div>
@@ -130,7 +134,9 @@ export default {
     },
     mounted() {
         orderService.getAllOrders().then((data) => {
+            console.log(data.data.data)
             this.orders = data.data.data;
+
             // Add index property to each order object
             this.orders.forEach((order, index) => {
                 order.index = index + 1; // Adding 1 to display index starting from 1

@@ -16,7 +16,7 @@
                             <a href="#"><span class="fa fa-home mr-3"></span> Home</a>
                         </li>
                         <li>
-                            <a href="#"><span class="fa fa-user mr-3"></span> About</a>
+                            <router-link to="/admin/roles"><span class="fa fa-user mr-3"></span> Roles</router-link>
                         </li>
                         <li>
                             <a href="#"><span class="fa fa-briefcase mr-3"></span> Works</a>
@@ -28,10 +28,10 @@
                             <a href="#"><span class="fa fa-suitcase mr-3"></span> Gallery</a>
                         </li>
                         <li>
-                            <a href="#"><span class="fa fa-cogs mr-3"></span> Services</a>
+                            <router-link to="/admin/orders"><span class="fa fa-cogs mr-3"></span> Orders</router-link>
                         </li>
                         <li>
-                            <a href="#"><span class="fa fa-paper-plane mr-3"></span> Contacts</a>
+                            <router-link to="/admin/reviews"><span class="fa fa-paper-plane mr-3"></span> Reviews</router-link>
                         </li>
                     </ul>
                 </div>
@@ -88,10 +88,10 @@ export default {
             $('#sidebarCollapse').on('click', function () {
               $('#sidebar').toggleClass('active');
           });
-        
+
         })(jQuery);
-        
-      }     
+
+      }
 }
 </script>
 
