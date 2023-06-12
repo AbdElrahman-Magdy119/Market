@@ -10,7 +10,9 @@ import Register from "@/layout/auth/Register.vue";
 import MainLayout from "@/layout/admin/MainLayout/MainLayout.vue";
 import shopcomponent from "@/layout/user/shop/shopComponent.vue";
 import Roles from "@/layout/admin/Roles/Roles.vue";
-
+import Orders from "@/layout/admin/Orders/Orders.vue";
+import OrderDetails from "@/layout/admin/OrderDetails/OrderDetails.vue";
+import Reviews from "@/layout/admin/Reveiws/Reviews.vue";
 
 const routes = [
     {
@@ -40,7 +42,18 @@ const routes = [
                 path:'roles',
                 component:Roles
             },
-            //  Here Add any route to show in mainpage that contains Header and footer Component
+            {
+                path:'order-details/:id',
+                component:OrderDetails
+            },
+            {
+                path:'orders',
+                component:Orders
+            },
+            {
+                path:'reviews',
+                component:Reviews
+            }
         ],
     },
     {
