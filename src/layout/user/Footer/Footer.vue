@@ -96,6 +96,7 @@
 </template>
 
 <script>
+import '@/jquery.js'; 
 export default {
   mounted() {
 
