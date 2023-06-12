@@ -1,7 +1,7 @@
 <template>
 <body>
      <div class="container">
-        <img class="centered-image" src="../../../assets/images/notfound.svg">
+        <img class="centered-image" src="../../../../public/images/notfound.svg">
      </div>
 </body>
 

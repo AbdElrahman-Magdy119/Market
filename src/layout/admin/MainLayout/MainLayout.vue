@@ -16,7 +16,7 @@
                             <a href="#"><span class="fa fa-home mr-3"></span> Home</a>
                         </li>
                         <li>
-                            <a href="#"><span class="fa fa-user mr-3"></span> About</a>
+                            <router-link to="/admin/roles"><span class="fa fa-user mr-3"></span> Roles</router-link>
                         </li>
                         <li>
                             <a href="#"><span class="fa fa-briefcase mr-3"></span> Works</a>
@@ -52,16 +52,12 @@
             </div>
         </div>
 
-   <div>
-
-
-    </div>
 </template>
 
 <script>
-import '@/jquery.js'; // Import the jQuery configuration file
-import HeaderComponent from '@/layout/user/Header/Header.vue'
-import FooterComponent from '@/layout/user/Footer/Footer.vue'
+import '@/jquery.js';
+import HeaderComponent from '@/layout/admin/Header/Header.vue'
+import FooterComponent from '@/layout/admin/Footer/Footer.vue'
 
 export default {
     components:{

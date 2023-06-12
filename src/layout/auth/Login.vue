@@ -88,10 +88,15 @@ export default {
       authService
           .login(credentials)
           .then(response => {
+            console.log(response.data);
             // Handle successful login
             this.loginSuccess = true;
             const token = response.data.token;
+            const name = response.data.name;
+            const role = response.data.role.name;
             localStorage.setItem('token', token);
+            localStorage.setItem('name', name);
+            localStorage.setItem('role', role);
           })
           .catch(error => {
             // Handle error
