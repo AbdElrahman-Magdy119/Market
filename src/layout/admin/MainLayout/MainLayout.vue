@@ -1,6 +1,6 @@
 <template>
-		<div class="wrapper d-flex align-items-stretch row">
-			<nav id="sidebar" class=" col-3">
+		<div class="wrapper d-flex">
+			<nav id="sidebar" class="">
 				<div class="custom-menu">
 					<button type="button" id="sidebarCollapse" class="btn btn-primary">
 	                    <i class="fa fa-bars"></i>
@@ -37,7 +37,7 @@
                 </div>
     	    </nav>
             <!-- Page Content  -->
-            <div id="content" class="p-4 p-md-5 pt-5 col-8">
+            <div id="content" class="p-4 p-md-5 pt-5 ">
                 <div>
                     <HeaderComponent/>
                 </div>

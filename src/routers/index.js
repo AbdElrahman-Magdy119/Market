@@ -14,6 +14,7 @@ import Roles from "@/layout/admin/Roles/Roles.vue";
 import Orders from "@/layout/admin/Orders/Orders.vue";
 import OrderDetails from "@/layout/admin/OrderDetails/OrderDetails.vue";
 import Reviews from "@/layout/admin/Reveiws/Reviews.vue";
+import Products from "@/layout/admin/Products/Products.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -36,7 +37,7 @@ const router = createRouter({
     {
       path: "/admin",
       component: MainLayout,
-      beforeEnter: (to, from, next) => requireAdminAuth(to, from, next),
+      // beforeEnter: (to, from, next) => requireAdminAuth(to, from, next),
       children: [
         {
           path: "",
@@ -57,6 +58,10 @@ const router = createRouter({
         {
           path: "reviews",
           component: Reviews,
+        },
+        {
+          path: "products",
+          component: Products,
         },
       ],
     },
