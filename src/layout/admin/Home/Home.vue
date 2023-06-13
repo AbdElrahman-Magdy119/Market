@@ -1,8 +1,11 @@
 <template>
   <div>
     <h1>Admin Home</h1>
-    <div>
-      <AnalysisChartBar :chart-data="chartData" :options="chartOptions"></AnalysisChartBar>
+    <div v-if="analysis">
+      <AnalysisChartBar :chart-data="chartData" :chart-options="chartOptions"></AnalysisChartBar>
+    </div>
+    <div v-else>
+      Loading...
     </div>
   </div>
 </template>

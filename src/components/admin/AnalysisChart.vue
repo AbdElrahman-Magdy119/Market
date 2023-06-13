@@ -1,20 +1,35 @@
 <template>
-  <Bar
-      id="my-chart-id"
-      :options="chartOptions"
-      :data="chartData"
-  />
+  <div>
+    <canvas ref="chartCanvas"></canvas>
+  </div>
 </template>
 
 <script>
-import { Bar } from 'vue-chartjs'
-import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js'
+import { defineComponent } from 'vue';
+import { Chart, BarController, BarElement, CategoryScale, LinearScale, Title } from 'chart.js';
 
-ChartJS.register(Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale)
+export default defineComponent({
+  mounted() {
+    Chart.register(BarController, BarElement, CategoryScale, LinearScale, Title);
 
-export default {
-  name: 'AnalysisChartBar',
-  components: { Bar },
-  props: ['chartData', 'chartOptions']
-}
+    const ctx = this.$refs.chartCanvas.getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: this.chartData,
+      options: this.chartOptions,
+    });
+  },
+  props: {
+    chartData: {
+      type: Object,
+      required: true,
+    },
+    chartOptions: {
+      type: Object,
+      default: () => ({}),
+    },
+  },
+});
 </script>
+
+<style scoped></style>
