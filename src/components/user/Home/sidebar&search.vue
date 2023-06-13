@@ -1,5 +1,5 @@
 <template>
-
+  <!DOCTYPE html>
 <html lang="">
 
 <head>
@@ -25,94 +25,79 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-	
 
-    <!-- Humberger Begin -->
-    <div class="humberger__menu__overlay"></div>
-    <div class="humberger__menu__wrapper">
-        <div class="humberger__menu__logo">
-            <router-link  :to="'/'"  ><img src="../../../../public/images/logo.png" alt=""></router-link>
-        </div>
-        <div class="humberger__menu__cart">
-            <ul>
-                <li v-if="login==false" ><router-link :to="'/login'" ><i class="fa fa-user "></i></router-link></li>
-				<li v-else><router-link :to="'/profile'" ><i class="fa fa-user "></i></router-link></li>
-                <li ><router-link :to="'/wishlist'" ><i class="fa fa-heart"></i> <span>1</span></router-link></li>
-                <li ><router-link :to="'/cart'"><i class="fa fa-shopping-bag "></i> <span>3</span></router-link></li>
-            </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
-        </div>
-        <nav class="humberger__menu__nav mobile-menu">
-            <ul>
-                <li class="active"><router-link :to="'/'" >Home</router-link></li>
-                <li><router-link :to="'/shop'" >Shop</router-link></li>
-                <li><router-link :to="'/package'">packages</router-link></li>
-                <li><router-link :to="'/contact'" >Contact</router-link></li>
-            </ul>
-        </nav>
-        <div id="mobile-menu-wrap"></div>
-       
-
-    </div>
-    <!-- Humberger End -->
-
-    <!-- Header Section Begin -->
-    <header class="header">
- 
+ <section class="hero">
         <div class="container">
             <div class="row">
                 <div class="col-lg-3">
-                    <div class="header__logo">
-                        <router-link :to="'/'" ><img src="../../../../public/images/logo.png" alt=""></router-link>
+                    <div class="hero__categories">
+                        <div class="hero__categories__all">
+                            <i class="fa fa-bars"></i>
+                            <span>All Categories</span>
+                        </div>
+                        <ul>
+                            <li v-for="category in categories" :key="category.id" ><a  >{{ category.name }}</a></li>
+                        </ul>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <nav class="header__menu">
-                        <ul>
-                            <li class="active"><router-link :to="'/'" >Home</router-link></li>
-                            <li><router-link :to="'/shop'" >Shop</router-link></li>
-                            <li><router-link :to="'/package'" >Packages</router-link></li>
-                            <li><router-link :to="'/contact'" >Contact</router-link></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-lg-3">
-                    <div class="header__cart">
-                        <ul>
-							<li v-if="login==false" ><router-link :to="'/login'" ><i class="fa fa-user "></i></router-link></li>
-			             	<li v-else><router-link :to="'/profile'" ><i class="fa fa-user "></i></router-link></li>
-                            <li ><router-link :to="'/wishlist'" ><i class="fa fa-heart"></i> <span>1</span></router-link></li>
-                            <li ><router-link :to="'/cart'"><i class="fa fa-shopping-bag "></i> <span>3</span></router-link></li>
-                        </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                <div class="col-lg-9">
+                    <div class="hero__search">
+                        <div class="hero__search__form">
+
+                            <form action="#">
+                                <div class="hero__search__categories">
+                                    All Categories
+                                    
+                                </div>
+                                <input type="text" placeholder="What do yo u need?">
+                                <button type="submit" class="site-btn">SEARCH</button>
+                            </form>
+
+                        </div>
+                        <div class="hero__search__phone">
+                            <div class="hero__search__phone__icon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <div class="hero__search__phone__text">
+                                <h5>+65 11.188.888</h5>
+                                <span>support 24/7 time</span>
+                            </div>
+                        </div>
+                    </div>  
+                  
+                    <div class="hero__item set-bg" data-setbg="images/banner.jpg">
+                        <div class="hero__text">
+                            <span>FRUIT FRESH</span>
+                            <h2>Vegetable <br />100% Organic</h2>
+                            <p>Free Pickup and Delivery Available</p>
+                            <router-link :to="'/shop'" class="primary-btn">SHOP NOW</router-link>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
             </div>
         </div>
-    </header>
-    <!-- Header Section End -->
+</section>
 
-      
-    
 </body>
 
 </html>
-
 </template>
 
 <script>
 import '@/jquery.js'; 
+import HomeService from '@/services/HomeService';
 export default {
-	data: () => ({
-        login:true
-            }),
+	data() {
+        return {
+            categories: [], // Initialize as an empty array
+        }
+    },
 	mounted() {
+		HomeService.getAllCategories().then((data) => {
+        this.categories = data.data.Categories;
+		});
+},
 
-  },
 }
 </script>
 
@@ -157,20 +142,23 @@ body {
 	font-smoothing: antialiased;
 }
 
+
+a{
+    text-decoration: none;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-	margin: 0; 
+	margin: 0;
 	color: #111111;
 	font-weight: 400;
 	font-family: "Cairo", sans-serif;
 }
-a{
-	text-decoration: none;
-}
+
 h1 {
 	font-size: 70px;
 }

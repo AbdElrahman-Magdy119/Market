@@ -1,6 +1,6 @@
 <template>
-
-<html lang="">
+  <!DOCTYPE html>
+<html lang="zxx">
 
 <head>
     <meta charset="UTF-8">
@@ -25,94 +25,141 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-	
 
-    <!-- Humberger Begin -->
-    <div class="humberger__menu__overlay"></div>
-    <div class="humberger__menu__wrapper">
-        <div class="humberger__menu__logo">
-            <router-link  :to="'/'"  ><img src="../../../../public/images/logo.png" alt=""></router-link>
-        </div>
-        <div class="humberger__menu__cart">
-            <ul>
-                <li v-if="login==false" ><router-link :to="'/login'" ><i class="fa fa-user "></i></router-link></li>
-				<li v-else><router-link :to="'/profile'" ><i class="fa fa-user "></i></router-link></li>
-                <li ><router-link :to="'/wishlist'" ><i class="fa fa-heart"></i> <span>1</span></router-link></li>
-                <li ><router-link :to="'/cart'"><i class="fa fa-shopping-bag "></i> <span>3</span></router-link></li>
-            </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
-        </div>
-        <nav class="humberger__menu__nav mobile-menu">
-            <ul>
-                <li class="active"><router-link :to="'/'" >Home</router-link></li>
-                <li><router-link :to="'/shop'" >Shop</router-link></li>
-                <li><router-link :to="'/package'">packages</router-link></li>
-                <li><router-link :to="'/contact'" >Contact</router-link></li>
-            </ul>
-        </nav>
-        <div id="mobile-menu-wrap"></div>
-       
-
-    </div>
-    <!-- Humberger End -->
-
-    <!-- Header Section Begin -->
-    <header class="header">
- 
+    <section class="shoping-cart spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
-                    <div class="header__logo">
-                        <router-link :to="'/'" ><img src="../../../../public/images/logo.png" alt=""></router-link>
+                <div class="col-lg-12">
+                    <div class="shoping__cart__table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="shoping__product">Products</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <img src="images/cart/cart-1.jpg" alt="">
+                                        <h5>Vegetable's Package</h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        $55.00
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <span>-</span>
+                                                <input type="text" value="1">
+                                                <span>+</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        $110.00
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <span class="icon_close"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <img src="images/cart/cart-2.jpg" alt="">
+                                        <h5>Fresh Garden Vegetable</h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        $39.00
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <input type="text" value="1">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        $39.99
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <span class="icon_close"></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="shoping__cart__item">
+                                        <img src="images/cart/cart-3.jpg" alt="">
+                                        <h5>Organic Bananas</h5>
+                                    </td>
+                                    <td class="shoping__cart__price">
+                                        $69.00
+                                    </td>
+                                    <td class="shoping__cart__quantity">
+                                        <div class="quantity">
+                                            <div class="pro-qty">
+                                                <input type="text" value="1">
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        $69.99
+                                    </td>
+                                    <td class="shoping__cart__item__close">
+                                        <span class="icon_close"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shoping__cart__btns">
+                        <a href="#" class="primary-btn cart-btn">CONTINUE SHOPPING</a>
+                        <a href="#" class="primary-btn cart-btn cart-btn-right"><span class="icon_loading"></span>
+                            Upadate Cart</a>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <nav class="header__menu">
-                        <ul>
-                            <li class="active"><router-link :to="'/'" >Home</router-link></li>
-                            <li><router-link :to="'/shop'" >Shop</router-link></li>
-                            <li><router-link :to="'/package'" >Packages</router-link></li>
-                            <li><router-link :to="'/contact'" >Contact</router-link></li>
-                        </ul>
-                    </nav>
+                    <div class="shoping__continue">
+                        <div class="shoping__discount">
+                            <h5>Discount Codes</h5>
+                            <form action="#">
+                                <input type="text" placeholder="Enter your coupon code">
+                                <button type="submit" class="site-btn">APPLY COUPON</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-3">
-                    <div class="header__cart">
+                <div class="col-lg-6">
+                    <div class="shoping__checkout">
+                        <h5>Cart Total</h5>
                         <ul>
-							<li v-if="login==false" ><router-link :to="'/login'" ><i class="fa fa-user "></i></router-link></li>
-			             	<li v-else><router-link :to="'/profile'" ><i class="fa fa-user "></i></router-link></li>
-                            <li ><router-link :to="'/wishlist'" ><i class="fa fa-heart"></i> <span>1</span></router-link></li>
-                            <li ><router-link :to="'/cart'"><i class="fa fa-shopping-bag "></i> <span>3</span></router-link></li>
+                            <li>Subtotal <span>$454.98</span></li>
+                            <li>Total <span>$454.98</span></li>
                         </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
+                        <router-link :to="'/checkout'" class="primary-btn">PROCEED TO CHECKOUT</router-link>
                     </div>
                 </div>
             </div>
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
-            </div>
         </div>
-    </header>
-    <!-- Header Section End -->
+    </section>
 
-      
-    
 </body>
 
 </html>
-
 </template>
 
 <script>
 import '@/jquery.js'; 
 export default {
-	data: () => ({
-        login:true
-            }),
-	mounted() {
+    mounted() {
+		
+},
 
-  },
 }
 </script>
 
@@ -1405,6 +1452,7 @@ ol {
 	height: 270px;
 	position: relative;
 	overflow: hidden;
+    width: 225px;
 }
 
 .product__discount__item__pic .product__discount__percent {

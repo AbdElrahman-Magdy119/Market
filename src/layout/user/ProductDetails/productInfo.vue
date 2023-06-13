@@ -1,6 +1,7 @@
-<template>
 
-<html lang="">
+<template>
+  <!DOCTYPE html>
+<html lang="zxx">
 
 <head>
     <meta charset="UTF-8">
@@ -25,94 +26,166 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-	
 
-    <!-- Humberger Begin -->
-    <div class="humberger__menu__overlay"></div>
-    <div class="humberger__menu__wrapper">
-        <div class="humberger__menu__logo">
-            <router-link  :to="'/'"  ><img src="../../../../public/images/logo.png" alt=""></router-link>
-        </div>
-        <div class="humberger__menu__cart">
-            <ul>
-                <li v-if="login==false" ><router-link :to="'/login'" ><i class="fa fa-user "></i></router-link></li>
-				<li v-else><router-link :to="'/profile'" ><i class="fa fa-user "></i></router-link></li>
-                <li ><router-link :to="'/wishlist'" ><i class="fa fa-heart"></i> <span>1</span></router-link></li>
-                <li ><router-link :to="'/cart'"><i class="fa fa-shopping-bag "></i> <span>3</span></router-link></li>
-            </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
-        </div>
-        <nav class="humberger__menu__nav mobile-menu">
-            <ul>
-                <li class="active"><router-link :to="'/'" >Home</router-link></li>
-                <li><router-link :to="'/shop'" >Shop</router-link></li>
-                <li><router-link :to="'/package'">packages</router-link></li>
-                <li><router-link :to="'/contact'" >Contact</router-link></li>
-            </ul>
-        </nav>
-        <div id="mobile-menu-wrap"></div>
-       
 
-    </div>
-    <!-- Humberger End -->
-
-    <!-- Header Section Begin -->
-    <header class="header">
- 
+    <section class="product-details spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
-                    <div class="header__logo">
-                        <router-link :to="'/'" ><img src="../../../../public/images/logo.png" alt=""></router-link>
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__pic">
+                        <div class="product__details__pic__item">
+                            <img class="product__details__pic__item--large"
+                                src="images/product/details/product-details-1.jpg" alt="">
+                        </div>
+                        <div class="product__details__pic__slider owl-carousel">
+                            <img data-imgbigurl="images/product/details/product-details-2.jpg"
+                                src="images/product/details/thumb-1.jpg" alt="">
+                            <img data-imgbigurl="images/product/details/product-details-3.jpg"
+                                src="images/product/details/thumb-2.jpg" alt="">
+                            <img data-imgbigurl="images/product/details/product-details-5.jpg"
+                                src="images/product/details/thumb-3.jpg" alt="">
+                            <img data-imgbigurl="images/product/details/product-details-4.jpg"
+                                src="images/product/details/thumb-4.jpg" alt="">
+                        </div>
                     </div>
                 </div>
-                <div class="col-lg-6">
-                    <nav class="header__menu">
+                <div class="col-lg-6 col-md-6">
+                    <div class="product__details__text">
+                        <h3>Vetgetable's Package</h3>
+                        <div class="product__details__rating">
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star"></i>
+                            <i class="fa fa-star-half-o"></i>
+                            <span>(18 reviews)</span>
+                        </div>
+                        <div class="product__details__price">$50.00</div>
+                        <p>Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Vestibulum ac diam sit amet quam
+                            vehicula elementum sed sit amet dui. Sed porttitor lectus nibh. Vestibulum ac diam sit amet
+                            quam vehicula elementum sed sit amet dui. Proin eget tortor risus.</p>
+                        <div class="product__details__quantity">
+                            <div class="quantity">
+                                <div class="pro-qty">
+									<span>+</span>
+                                    <input type="text" value="1">
+									<span>-</span>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="primary-btn">ADD TO CARD</a>
+                        <a href="#" class="heart-icon"><span class="icon_heart_alt"></span></a>
                         <ul>
-                            <li class="active"><router-link :to="'/'" >Home</router-link></li>
-                            <li><router-link :to="'/shop'" >Shop</router-link></li>
-                            <li><router-link :to="'/package'" >Packages</router-link></li>
-                            <li><router-link :to="'/contact'" >Contact</router-link></li>
+                            <li><b>Availability</b> <span>In Stock</span></li>
+                            <li><b>Shipping</b> <span>01 day shipping. <samp>Free pickup today</samp></span></li>
+                            <li><b>Weight</b> <span>0.5 kg</span></li>
+                            <li><b>Share on</b>
+                                <div class="share">
+                                    <a href="#"><i class="fa fa-facebook"></i></a>
+                                    <a href="#"><i class="fa fa-twitter"></i></a>
+                                    <a href="#"><i class="fa fa-instagram"></i></a>
+                                    <a href="#"><i class="fa fa-pinterest"></i></a>
+                                </div>
+                            </li>
                         </ul>
-                    </nav>
-                </div>
-                <div class="col-lg-3">
-                    <div class="header__cart">
-                        <ul>
-							<li v-if="login==false" ><router-link :to="'/login'" ><i class="fa fa-user "></i></router-link></li>
-			             	<li v-else><router-link :to="'/profile'" ><i class="fa fa-user "></i></router-link></li>
-                            <li ><router-link :to="'/wishlist'" ><i class="fa fa-heart"></i> <span>1</span></router-link></li>
-                            <li ><router-link :to="'/cart'"><i class="fa fa-shopping-bag "></i> <span>3</span></router-link></li>
-                        </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
                     </div>
                 </div>
-            </div>
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
+                <div class="col-lg-12">
+                    <div class="product__details__tab">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab"
+                                    aria-selected="true">Description</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
+                                    aria-selected="false">Information</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
+                                    aria-selected="false">Reviews <span>(1)</span></a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                    <h6>Products Infomation</h6>
+                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
+                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus. Vivamus
+                                        suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam sit amet quam
+                                        vehicula elementum sed sit amet dui. Donec rutrum congue leo eget malesuada.
+                                        Vivamus suscipit tortor eget felis porttitor volutpat. Curabitur arcu erat,
+                                        accumsan id imperdiet et, porttitor at sem. Praesent sapien massa, convallis a
+                                        pellentesque nec, egestas non nisi. Vestibulum ac diam sit amet quam vehicula
+                                        elementum sed sit amet dui. Vestibulum ante ipsum primis in faucibus orci luctus
+                                        et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam
+                                        vel, ullamcorper sit amet ligula. Proin eget tortor risus.</p>
+                                        <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
+                                        ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
+                                        elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
+                                        porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
+                                        nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.
+                                        Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Sed
+                                        porttitor lectus nibh. Vestibulum ac diam sit amet quam vehicula elementum
+                                        sed sit amet dui. Proin eget tortor risus.</p>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabs-2" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                    <h6>Products Infomation</h6>
+                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
+                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
+                                        Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
+                                        sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
+                                        eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
+                                        Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
+                                        sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
+                                        diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
+                                        ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+                                        Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
+                                        Proin eget tortor risus.</p>
+                                    <p>Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Lorem
+                                        ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit aliquet
+                                        elit, eget tincidunt nibh pulvinar a. Cras ultricies ligula sed magna dictum
+                                        porta. Cras ultricies ligula sed magna dictum porta. Sed porttitor lectus
+                                        nibh. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a.</p>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tabs-3" role="tabpanel">
+                                <div class="product__details__tab__desc">
+                                    <h6>Products Infomation</h6>
+                                    <p>Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.
+                                        Pellentesque in ipsum id orci porta dapibus. Proin eget tortor risus.
+                                        Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ac diam
+                                        sit amet quam vehicula elementum sed sit amet dui. Donec rutrum congue leo
+                                        eget malesuada. Vivamus suscipit tortor eget felis porttitor volutpat.
+                                        Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Praesent
+                                        sapien massa, convallis a pellentesque nec, egestas non nisi. Vestibulum ac
+                                        diam sit amet quam vehicula elementum sed sit amet dui. Vestibulum ante
+                                        ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae;
+                                        Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.
+                                        Proin eget tortor risus.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </header>
-    <!-- Header Section End -->
+    </section>
 
-      
-    
 </body>
 
 </html>
-
 </template>
 
 <script>
 import '@/jquery.js'; 
 export default {
-	data: () => ({
-        login:true
-            }),
-	mounted() {
+    mounted() {
 
-  },
+},
+
 }
 </script>
 
@@ -1405,6 +1478,7 @@ ol {
 	height: 270px;
 	position: relative;
 	overflow: hidden;
+    width: 225px;
 }
 
 .product__discount__item__pic .product__discount__percent {
