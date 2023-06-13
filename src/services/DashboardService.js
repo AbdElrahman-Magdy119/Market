@@ -9,18 +9,11 @@ const apiClient = axios.create({
     },
 });
 
-
-const OrderService = {
-    getAllOrders() {
-        return apiClient.get(`/order`);
+const DashboardService = {
+    analysis() {
+        return apiClient.get('/dashboard');
     },
-    updateOrder(orderId, order) {
-        return apiClient.put(`/order/${orderId}`, order);
-    },
-    deleteOrder(orderId) {
-        return apiClient.delete(`/order/${orderId}`);
-    }
 };
 
 
-export default OrderService;
+export default DashboardService;

@@ -26,8 +26,12 @@
 
                 <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
                 <Column :field="'index'" header="#" style="width: 3rem" :exportable="false"></Column>
-                <Column field="name" header="Name" sortable style="min-width:16rem"></Column>
-                <Column field="description" header="description" sortable style="min-width:16rem"></Column>
+                <Column field="firstName" header="first_name" sortable style="min-width:16rem"></Column>
+                <Column field="lastName" header="last_name" sortable style="min-width:16rem"></Column>
+                <Column field="status" header="status" sortable style="min-width:16rem"></Column>
+                <Column field="total_price" header="total_price" sortable style="min-width:16rem"></Column>
+                <Column field="tracking_no" header="tracking_no" sortable style="min-width:16rem"></Column>
+
 
                 <Column :exportable="false" style="min-width:8rem">
                     <template #body="slotProps">
@@ -40,14 +44,11 @@
 
         <Dialog v-model:visible="orderDialog" :style="{width: '450px'}" header="order Details" :modal="true" class="p-fluid">
             <div class="field">
-                <label for="name">Name</label>
-                <InputText id="name" v-model.trim="order.name" required="true" autofocus :class="{'p-invalid': submitted && !order.name}" />
-                <small class="p-error" v-if="submitted && !order.name">Name is required.</small>
+                <label for="status">Status</label>
+                <Dropdown id="status" v-model.trim="order.status" optionValue="value" :options="statusOptions" optionLabel="label" :class="{'p-invalid': submitted && !order.status}" />
+                <small class="p-error" v-if="submitted && !order.status">Status is required.</small>
             </div>
-            <div class="field">
-                <label for="description">Description</label>
-                <Textarea id="description" v-model="order.description" required="true" rows="3" cols="20" />
-            </div>
+
 
             <template #footer>
                 <Button label="Cancel" icon="pi pi-times" text @click="hideDialog"/>
@@ -66,14 +67,14 @@
             </template>
         </Dialog>
 
-        <Dialog v-model:visible="deleteordersDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
+        <Dialog v-model:visible="deleteOrdersDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
             <div class="confirmation-content">
                 <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
                 <span v-if="order">Are you sure you want to delete the selected orders?</span>
             </div>
             <template #footer>
-                <Button label="No" icon="pi pi-times" text @click="deleteordersDialog = false"/>
-                <Button label="Yes" icon="pi pi-check" text @click="deleteSelectedorders" />
+                <Button label="No" icon="pi pi-times" text @click="deleteOrdersDialog = false"/>
+                <Button label="Yes" icon="pi pi-check" text @click="deleteSelectedOrders" />
             </template>
         </Dialog>
     </div>
@@ -119,6 +120,16 @@ export default {
             selectedOrders: null,
             filters: {},
             submitted: false,
+            deleteOrdersDialog:false,
+            // order: {
+            //     status: 'default-option-value'
+            // },
+            statusOptions: [
+                { label: 'Processing', value: 'Processing' },
+                { label: 'On delivery', value: 'On delivery' },
+                { label: 'Delivered', value: 'Delivered' }
+                // Add more options as needed
+            ]
         }
     },
     created() {
@@ -130,7 +141,9 @@ export default {
     },
     mounted() {
         orderService.getAllOrders().then((data) => {
+            console.log(data.data.data)
             this.orders = data.data.data;
+
             // Add index property to each order object
             this.orders.forEach((order, index) => {
                 order.index = index + 1; // Adding 1 to display index starting from 1
@@ -149,7 +162,7 @@ export default {
         },
         saveOrder() {
             this.submitted = true;
-            if (this.order.name && this.order.description) {
+            if (this.order.status) {
                 if (this.order.id) {
                     // Update existing order
                     orderService.updateOrder(this.order.id, this.order)
@@ -186,13 +199,13 @@ export default {
         },
         confirmDeleteOrder(order) {
             this.order = order;
-            this.deleteorderDialog = true;
+            this.deleteOrderDialog = true;
         },
         deleteOrder() {
             orderService.deleteOrder(this.order.id)
                 .then(() => {
                     this.orders = this.orders.filter(val => val.id !== this.order.id);
-                    this.deleteorderDialog = false;
+                    this.deleteOrderDialog = false;
                     this.order = {};
                     this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'order Deleted', life: 3000 });
                 })
@@ -212,7 +225,7 @@ export default {
             return index;
         },
         confirmDeleteSelected() {
-            this.deleteordersDialog = true;
+            this.deleteOrdersDialog = true;
         },
         deleteSelectedOrders() {
             const orderIds = this.selectedorders.map(order => order.id);

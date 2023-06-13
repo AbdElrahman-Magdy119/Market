@@ -1,6 +1,6 @@
 <template>
-		<div class="wrapper d-flex align-items-stretch row">
-			<nav id="sidebar" class=" col-3">
+		<div class="wrapper d-flex">
+			<nav id="sidebar" class="">
 				<div class="custom-menu">
 					<button type="button" id="sidebarCollapse" class="btn btn-primary">
 	                    <i class="fa fa-bars"></i>
@@ -9,14 +9,14 @@
                 </div>
                 <div class="p-4">
                     <h1>
-                        <a href="" class="logo">Market <span>Online Market</span></a>
+                        <router-link to="/admin" class="logo">Market <span>Online Market</span></router-link>
                     </h1>
                     <ul class="list-unstyled components mb-5">
                         <li class="active">
                             <a href="#"><span class="fa fa-home mr-3"></span> Home</a>
                         </li>
                         <li>
-                            <a href="#"><span class="fa fa-user mr-3"></span> About</a>
+                            <router-link to="/admin/roles"><span class="fa fa-user mr-3"></span> Roles</router-link>
                         </li>
                         <li>
                             <a href="#"><span class="fa fa-briefcase mr-3"></span> Works</a>
@@ -28,16 +28,16 @@
                             <a href="#"><span class="fa fa-suitcase mr-3"></span> Gallery</a>
                         </li>
                         <li>
-                            <a href="#"><span class="fa fa-cogs mr-3"></span> Services</a>
+                            <router-link to="/admin/orders"><span class="fa fa-cogs mr-3"></span> Orders</router-link>
                         </li>
                         <li>
-                            <a href="#"><span class="fa fa-paper-plane mr-3"></span> Contacts</a>
+                            <router-link to="/admin/reviews"><span class="fa fa-paper-plane mr-3"></span> Reviews</router-link>
                         </li>
                     </ul>
                 </div>
     	    </nav>
             <!-- Page Content  -->
-            <div id="content" class="p-4 p-md-5 pt-5 col-8">
+            <div id="content" class="p-4 p-md-5 pt-5 ">
                 <div>
                     <HeaderComponent/>
                 </div>
@@ -55,9 +55,9 @@
 </template>
 
 <script>
-import '@/jquery.js'; // Import the jQuery configuration file
-import HeaderComponent from '@/layout/user/Header/Header.vue'
-import FooterComponent from '@/layout/user/Footer/Footer.vue'
+import '@/jquery.js';
+import HeaderComponent from '@/layout/admin/Header/Header.vue'
+import FooterComponent from '@/layout/admin/Footer/Footer.vue'
 
 export default {
     components:{
@@ -84,10 +84,10 @@ export default {
             $('#sidebarCollapse').on('click', function () {
               $('#sidebar').toggleClass('active');
           });
-        
+
         })(jQuery);
-        
-      }     
+
+      }
 }
 </script>
 
