@@ -1,4 +1,14 @@
 <template>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div v-if="message.length !== 0" class="alert alert-danger text-center">
+                    {{message}}
+                </div>
+            </div>
+        </div>
+    </div>
+
   <div class="register">
     <h2>Register</h2>
     <form @submit.prevent="register" class="p-fluid">
@@ -39,6 +49,7 @@ import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import authService from '@/services/AuthService';
+import * as router from 'vue-router';
 
 export default {
   components: {
@@ -46,12 +57,13 @@ export default {
   },
   data() {
     return {
-      email: '',
-      name: '',
-      lastName: '',
-      password: '',
-      confirmPassword: '',
-      registrationSuccess: false,
+        email: '',
+        name: '',
+        lastName: '',
+        password: '',
+        confirmPassword: '',
+        registrationSuccess: false,
+        message:''
     };
   },
   computed: {
@@ -89,6 +101,9 @@ export default {
             this.registrationSuccess = true;
             const token = response.data.token;
             localStorage.setItem('token', token);
+
+            //Navigate to admin component
+            this.$router.push('/admin');
           })
           .catch(error => {
             // Handle error

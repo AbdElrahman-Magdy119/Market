@@ -44,14 +44,11 @@
 
         <Dialog v-model:visible="orderDialog" :style="{width: '450px'}" header="order Details" :modal="true" class="p-fluid">
             <div class="field">
-                <label for="name">Name</label>
-                <InputText id="name" v-model.trim="order.firstName" required="true" autofocus :class="{'p-invalid': submitted && !order.name}" />
-                <small class="p-error" v-if="submitted && !order.firstName">First Name is required.</small>
+                <label for="status">Status</label>
+                <Dropdown id="status" v-model.trim="order.status" optionValue="value" :options="statusOptions" optionLabel="label" :class="{'p-invalid': submitted && !order.status}" />
+                <small class="p-error" v-if="submitted && !order.status">Status is required.</small>
             </div>
-            <div class="field">
-                <label for="description">Description</label>
-                <Textarea id="description" v-model="order.description" required="true" rows="3" cols="20" />
-            </div>
+
 
             <template #footer>
                 <Button label="Cancel" icon="pi pi-times" text @click="hideDialog"/>
@@ -123,6 +120,16 @@ export default {
             selectedOrders: null,
             filters: {},
             submitted: false,
+            deleteOrdersDialog:false,
+            // order: {
+            //     status: 'default-option-value'
+            // },
+            statusOptions: [
+                { label: 'Processing', value: 'Processing' },
+                { label: 'On delivery', value: 'On delivery' },
+                { label: 'Delivered', value: 'Delivered' }
+                // Add more options as needed
+            ]
         }
     },
     created() {
@@ -155,7 +162,7 @@ export default {
         },
         saveOrder() {
             this.submitted = true;
-            if (this.order.name && this.order.description) {
+            if (this.order.status) {
                 if (this.order.id) {
                     // Update existing order
                     orderService.updateOrder(this.order.id, this.order)
@@ -192,13 +199,13 @@ export default {
         },
         confirmDeleteOrder(order) {
             this.order = order;
-            this.deleteorderDialog = true;
+            this.deleteOrderDialog = true;
         },
         deleteOrder() {
             orderService.deleteOrder(this.order.id)
                 .then(() => {
                     this.orders = this.orders.filter(val => val.id !== this.order.id);
-                    this.deleteorderDialog = false;
+                    this.deleteOrderDialog = false;
                     this.order = {};
                     this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'order Deleted', life: 3000 });
                 })
@@ -218,7 +225,7 @@ export default {
             return index;
         },
         confirmDeleteSelected() {
-            this.deleteordersDialog = true;
+            this.deleteOrdersDialog = true;
         },
         deleteSelectedOrders() {
             const orderIds = this.selectedorders.map(order => order.id);

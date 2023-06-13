@@ -1,5 +1,16 @@
 <template>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div v-if="message.length !== 0" class="alert alert-danger text-center">
+                    {{message}}
+                </div>
+            </div>
+        </div>
+    </div>
+
   <div class="container mt-5 d-flex justify-content-center align-items-center">
+
   <form @submit.prevent="login">
     <!-- Email input -->
     <div class="form-outline mb-4">
@@ -66,6 +77,7 @@ import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import authService from '@/services/AuthService';
+import * as router from 'vue-router';
 
 export default {
   components: {
@@ -73,9 +85,10 @@ export default {
   },
   data() {
     return {
-      email: '',
-      password: '',
-      loginSuccess: false,
+        email: '',
+        password: '',
+        loginSuccess: false,
+        message:''
     };
   },
   methods: {
@@ -91,15 +104,20 @@ export default {
             console.log(response.data);
             // Handle successful login
             this.loginSuccess = true;
+            this.message = '';
             const token = response.data.token;
             const name = response.data.name;
             const role = response.data.role.name;
             localStorage.setItem('token', token);
             localStorage.setItem('name', name);
             localStorage.setItem('role', role);
+
+              // Navigate to admin component
+              this.$router.push('/admin');
           })
           .catch(error => {
-            // Handle error
+              console.log(error);
+            this.message = "Wrong E-mail or Password"
           });
     },
   },

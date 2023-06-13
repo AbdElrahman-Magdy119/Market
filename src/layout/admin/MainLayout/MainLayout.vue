@@ -9,7 +9,7 @@
                 </div>
                 <div class="p-4">
                     <h1>
-                        <a href="" class="logo">Market <span>Online Market</span></a>
+                        <router-link to="/admin" class="logo">Market <span>Online Market</span></router-link>
                     </h1>
                     <ul class="list-unstyled components mb-5">
                         <li class="active">
