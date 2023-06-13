@@ -9,7 +9,10 @@
                 </div>
                 <div class="p-4">
                     <h1>
-                        <router-link to="/admin" class="logo">Market <span>Online Market</span></router-link>
+                        <router-link to="/admin" class="logo">
+                            Market
+                            <span>Online Market</span>
+                        </router-link>
                     </h1>
                     <ul class="list-unstyled components mb-5">
                         <li class="active">
@@ -19,7 +22,7 @@
                             <router-link to="/admin/roles"><span class="fa fa-user mr-3"></span> Roles</router-link>
                         </li>
                         <li>
-                            <a href="#"><span class="fa fa-briefcase mr-3"></span> Works</a>
+                            <router-link to="/admin/category"><span class="fa fa-briefcase mr-3"></span> Category</router-link>
                         </li>
                         <li>
                             <a href="#"><span class="fa fa-sticky-note mr-3"></span> Blog</a>
