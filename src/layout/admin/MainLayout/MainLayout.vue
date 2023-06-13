@@ -55,9 +55,9 @@
 </template>
 
 <script>
-import '@/jquery.js'; // Import the jQuery configuration file
-import HeaderComponent from '@/layout/user/Header/Header.vue'
-import FooterComponent from '@/layout/user/Footer/Footer.vue'
+import '@/jquery.js';
+import HeaderComponent from '@/layout/admin/Header/Header.vue'
+import FooterComponent from '@/layout/admin/Footer/Footer.vue'
 
 export default {
     components:{
