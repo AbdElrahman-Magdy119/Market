@@ -33,7 +33,7 @@
                     <div class="hero__categories">
                         <div class="hero__categories__all">
                             <i class="fa fa-bars"></i>
-                            <span>All departments</span>
+                            <span>All Categories</span>
                         </div>
                         <ul>
                             <li><a href="#">Fresh Meat</a></li>
@@ -94,9 +94,18 @@
 
 <script>
 import '@/jquery.js'; 
+import HomeService from '@/services/HomeService';
 export default {
+	data() {
+        return {
+            categories: [], // Initialize as an empty array
+        }
+    },
 	mounted() {
-
+		HomeService.getAllCategories.then((data) => {
+        console.log("dvdvdvdvmvkfmbkgb"+data);
+        // this.reviews = data.data.data;
+		});
 const script2 = document.createElement("script");
 script2.src = "js/jquery-3.3.1.min.js";
 script2.async = true;

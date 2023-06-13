@@ -1,6 +1,6 @@
 <template>
 
-<html lang="zxx">
+<html lang="">
 
 <head>
     <meta charset="UTF-8">
@@ -32,23 +32,23 @@
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
         <div class="humberger__menu__logo">
-            <a href="#"><img src="../../../../public/images/logo.png" alt=""></a>
+            <router-link  :to="'/'"  ><img src="../../../../public/images/logo.png" alt=""></router-link>
         </div>
         <div class="humberger__menu__cart">
             <ul>
-                <li  ><a href="#"><i class="fa fa-user "></i></a></li>
-                <li ><a href="#"><i class="fa fa-heart"></i> <span>1</span></a></li>
-                <li ><a href="#"><i class="fa fa-shopping-bag "></i> <span>3</span></a></li>
+                <li v-if="login==false" ><router-link :to="'/login'" ><i class="fa fa-user "></i></router-link></li>
+				<li v-else><router-link :to="'/profile'" ><i class="fa fa-user "></i></router-link></li>
+                <li ><router-link :to="'/wishlist'" ><i class="fa fa-heart"></i> <span>1</span></router-link></li>
+                <li ><router-link :to="'/cart'"><i class="fa fa-shopping-bag "></i> <span>3</span></router-link></li>
             </ul>
             <div class="header__cart__price">item: <span>$150.00</span></div>
         </div>
         <nav class="humberger__menu__nav mobile-menu">
             <ul>
-                <li class="active"><a href="./index.html">Home</a></li>
+                <li class="active"><router-link :to="'/'" >Home</router-link></li>
                 <li><router-link :to="'/shop'" >Shop</router-link></li>
-                <li><a href="#">packages</a></li>
-                <li><a href="./blog.html">Blog</a></li>
-                <li><a href="./contact.html">Contact</a></li>
+                <li><router-link :to="'/package'">packages</router-link></li>
+                <li><router-link :to="'/contact'" >Contact</router-link></li>
             </ul>
         </nav>
         <div id="mobile-menu-wrap"></div>
@@ -64,26 +64,26 @@
             <div class="row">
                 <div class="col-lg-3">
                     <div class="header__logo">
-                        <a href="./index.html"><img src="../../../../public/images/logo.png" alt=""></a>
+                        <router-link :to="'/'" ><img src="../../../../public/images/logo.png" alt=""></router-link>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <nav class="header__menu">
                         <ul>
-                            <li class="active"><a href="./index.html">Home</a></li>
+                            <li class="active"><router-link :to="'/'" >Home</router-link></li>
                             <li><router-link :to="'/shop'" >Shop</router-link></li>
-                            <li><a href="#">Packages</a></li>
-                            <li><a href="./blog.html">Blog</a></li>
-                            <li><a href="./contact.html">Contact</a></li>
+                            <li><router-link :to="'/package'" >Packages</router-link></li>
+                            <li><router-link :to="'/contact'" >Contact</router-link></li>
                         </ul>
                     </nav>
                 </div>
                 <div class="col-lg-3">
                     <div class="header__cart">
                         <ul>
-                            <li><a href="#"><i class="fa fa-user mx-1"></i></a></li>
-                            <li><a href="#"><i class="fa fa-heart mx-1"></i> <span>1</span></a></li>
-                            <li><a href="#"><i class="fa fa-shopping-bag mx-1"></i> <span>3</span></a></li>
+							<li v-if="login==false" ><router-link :to="'/login'" ><i class="fa fa-user "></i></router-link></li>
+			             	<li v-else><router-link :to="'/profile'" ><i class="fa fa-user "></i></router-link></li>
+                            <li ><router-link :to="'/wishlist'" ><i class="fa fa-heart"></i> <span>1</span></router-link></li>
+                            <li ><router-link :to="'/cart'"><i class="fa fa-shopping-bag "></i> <span>3</span></router-link></li>
                         </ul>
                         <div class="header__cart__price">item: <span>$150.00</span></div>
                     </div>
@@ -107,6 +107,9 @@
 <script>
 import '@/jquery.js'; 
 export default {
+	data: () => ({
+        login:true
+            }),
 	mounted() {
 
     const script2 = document.createElement("script");

@@ -26,22 +26,32 @@
 
 <body>
 
-    <section class="breadcrumb-section set-bg" data-setbg="images/breadcrumb.jpg">
+
+    <div class="contact-form spad">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="breadcrumb__text">
-                        <h2>Organi Shop</h2>
-                        <div class="breadcrumb__option">
-                            <a href="#">Home</a>
-							<slot name="page" />
-                           
-                        </div>
+                <div class="col-lg-12">
+                    <div class="contact__form__title">
+                        <h2>Leave Message</h2>
                     </div>
                 </div>
             </div>
+            <form action="#">
+                <div class="row">
+                    <div class="col-lg-6 col-md-6">
+                        <input type="text" placeholder="Your name">
+                    </div>
+                    <div class="col-lg-6 col-md-6">
+                        <input type="text" placeholder="Your Email">
+                    </div>
+                    <div class="col-lg-12 text-center">
+                        <textarea placeholder="Your message"></textarea>
+                        <button type="submit" class="site-btn">SEND MESSAGE</button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </section>
+    </div>
 
 </body>
 
@@ -51,7 +61,7 @@
 <script>
 import '@/jquery.js'; 
 export default {
-	mounted() {
+    mounted() {
 
 const script2 = document.createElement("script");
 script2.src = "js/jquery-3.3.1.min.js";
@@ -93,6 +103,7 @@ script9.src = "js/main.js";
 script9.async = true;
 document.body.appendChild(script9);
 },
+
 }
 </script>
 
@@ -137,23 +148,20 @@ body {
 	font-smoothing: antialiased;
 }
 
-
-a{
-    text-decoration: none;
-}
-
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-	margin: 0;
+	margin: 0; 
 	color: #111111;
 	font-weight: 400;
 	font-family: "Cairo", sans-serif;
 }
-
+a{
+	text-decoration: none;
+}
 h1 {
 	font-size: 70px;
 }
@@ -864,7 +872,6 @@ ol {
 .categories__item {
 	height: 270px;
 	position: relative;
-    width: 232px;
 }
 
 .categories__item h5 {
@@ -1389,6 +1396,7 @@ ol {
 	height: 270px;
 	position: relative;
 	overflow: hidden;
+    width: 225px;
 }
 
 .product__discount__item__pic .product__discount__percent {

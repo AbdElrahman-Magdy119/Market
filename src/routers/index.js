@@ -13,6 +13,17 @@ import Roles from "@/layout/admin/Roles/Roles.vue";
 import Orders from "@/layout/admin/Orders/Orders.vue";
 import OrderDetails from "@/layout/admin/OrderDetails/OrderDetails.vue";
 import Reviews from "@/layout/admin/Reveiws/Reviews.vue";
+import contactComponent from "@/layout/user/contact/contactComponent.vue";
+import productDetailsComponent from "@/layout/user/ProductDetails/productDetailsComponent.vue";
+import cart from "@/layout/user/Cart/CartComponent.vue";
+import CheckOutComponent from "@/layout/user/CheckOutComponent/CheckOutComponent.vue";
+import UserProfileComponent from "@/layout/user/UserProfile/UserProfileComponent.vue";
+import WishListComponent from "@/layout/user/WishList/WishListComponent.vue";
+import PackageComponent from "@/layout/user/Package/PackageComponent.vue";
+
+
+
+
 
 const routes = [
     {
@@ -27,6 +38,34 @@ const routes = [
             path:'/shop',
             component:shopcomponent 
         },
+        {
+            path:'/contact',
+            component:contactComponent
+        },
+        {
+            path:'/productDetails',
+            component:productDetailsComponent
+        },
+        {
+            path:'/cart',
+            component:cart
+        },
+        {
+            path:'/checkout',
+            component:CheckOutComponent
+        },
+        {
+            path:'/profile',
+            component:UserProfileComponent
+        },
+        {
+            path:'/wishlist',
+            component:WishListComponent
+        },
+        {
+            path:'/package',
+            component:PackageComponent
+        }
         //  Here Add any route to show in mainpage that contains Header and footer Component
       ],
     },

@@ -26,22 +26,22 @@
 
 <body>
 
-    <section class="breadcrumb-section set-bg" data-setbg="images/breadcrumb.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-                    <div class="breadcrumb__text">
-                        <h2>Organi Shop</h2>
-                        <div class="breadcrumb__option">
-                            <a href="#">Home</a>
-							<slot name="page" />
-                           
-                        </div>
-                    </div>
-                </div>
+
+
+    <div class="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d56794.288920985746!2d31.216405487168462!3d27.167518696390257!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x144509151bfbdd97%3A0x8de96860494f84a!2z2YLYs9mFINij2YjZhCDYo9iz2YrZiNi32Iwg2KPYs9mK2YjYt9iMINmF2LXYsQ!5e0!3m2!1sar!2sus!4v1686600826422!5m2!1sar!2sus"
+         width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div class="map-inside">
+            <i class="icon_pin"></i>
+            <div class="inside-widget">
+                <h4>New York</h4>
+                <ul>
+                    <li>Phone: +12-345-6789</li>
+                    <li>Add: 16 Creek Ave. Farmingdale, NY</li>
+                </ul>
             </div>
         </div>
-    </section>
+    </div>
 
 </body>
 
@@ -51,7 +51,12 @@
 <script>
 import '@/jquery.js'; 
 export default {
-	mounted() {
+	data() {
+    return {
+      myMap: new Map(),
+    };
+  },
+    mounted() {
 
 const script2 = document.createElement("script");
 script2.src = "js/jquery-3.3.1.min.js";
@@ -93,6 +98,7 @@ script9.src = "js/main.js";
 script9.async = true;
 document.body.appendChild(script9);
 },
+
 }
 </script>
 
@@ -137,23 +143,20 @@ body {
 	font-smoothing: antialiased;
 }
 
-
-a{
-    text-decoration: none;
-}
-
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-	margin: 0;
+	margin: 0; 
 	color: #111111;
 	font-weight: 400;
 	font-family: "Cairo", sans-serif;
 }
-
+a{
+	text-decoration: none;
+}
 h1 {
 	font-size: 70px;
 }
@@ -864,7 +867,6 @@ ol {
 .categories__item {
 	height: 270px;
 	position: relative;
-    width: 232px;
 }
 
 .categories__item h5 {
@@ -1389,6 +1391,7 @@ ol {
 	height: 270px;
 	position: relative;
 	overflow: hidden;
+    width: 225px;
 }
 
 .product__discount__item__pic .product__discount__percent {
