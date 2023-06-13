@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { requireAdminAuth } from "@/guards/guard";
+import { requireAuth } from "@/guards/guard";
 
 import NotFoundComponent from "@/layout/user/NotFound/NotFoundComponent.vue";
 import HomeComponent from "@/layout/user/Home/Home.vue";
@@ -37,7 +38,7 @@ const router = createRouter({
     {
       path: "/admin",
       component: MainLayout,
-      // beforeEnter: (to, from, next) => requireAdminAuth(to, from, next),
+      beforeEnter: requireAdminAuth,
       children: [
         {
           path: "",
