@@ -19,7 +19,13 @@
                             <router-link to="/admin/roles"><span class="fa fa-user mr-3"></span> Roles</router-link>
                         </li>
                         <li>
-                            <a href="#"><span class="fa fa-briefcase mr-3"></span> Works</a>
+                            <router-link to="/admin/products"><span class="fa fa-user mr-3"></span> Products</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/admin/categories"><span class="fa fa-user mr-3"></span> Categories</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/admin/subcategories"><span class="fa fa-user mr-3"></span> Sub Categories</router-link>
                         </li>
                         <li>
                             <a href="#"><span class="fa fa-sticky-note mr-3"></span> Blog</a>

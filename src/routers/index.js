@@ -15,6 +15,8 @@ import Orders from "@/layout/admin/Orders/Orders.vue";
 import OrderDetails from "@/layout/admin/OrderDetails/OrderDetails.vue";
 import Reviews from "@/layout/admin/Reveiws/Reviews.vue";
 import Products from "@/layout/admin/Products/Products.vue";
+import Categories from "@/layout/admin/Categories/Categories.vue";
+import SubCategories from "@/layout/admin/Categories/SubCategories.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -63,6 +65,15 @@ const router = createRouter({
           path: "products",
           component: Products,
         },
+        {
+          path: "categories",
+          component: Categories,
+        },
+        {
+          path: "subcategories",
+          component: SubCategories,
+        },
+                
       ],
     },
     {
