@@ -160,7 +160,7 @@
 </template>
 
 <script>
-import '@/jquery.js'; 
+import '@/jquery.custom.js';
 export default {
     mounted() {
 		

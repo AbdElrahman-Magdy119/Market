@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import '@/jquery.js'; 
+import '@/jquery.custom.js';
 import HomeService from '@/services/HomeService';
 export default {
 	data() {
