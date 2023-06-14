@@ -111,9 +111,8 @@ export default {
             localStorage.setItem('token', token);
             localStorage.setItem('name', name);
             localStorage.setItem('role', role);
-
               // Navigate to admin component
-              this.$router.push('/admin');
+              this.$router.push('/');
           })
           .catch(error => {
               console.log(error);

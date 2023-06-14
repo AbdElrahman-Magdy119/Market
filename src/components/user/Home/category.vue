@@ -1,6 +1,6 @@
 <template>
-
-<html lang="">
+  <!DOCTYPE html>
+<html lang="zxx">
 
 <head>
     <meta charset="UTF-8">
@@ -25,94 +25,43 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-	
 
-    <!-- Humberger Begin -->
-    <div class="humberger__menu__overlay"></div>
-    <div class="humberger__menu__wrapper">
-        <div class="humberger__menu__logo">
-            <router-link  :to="'/'"  ><img src="../../../../public/images/logo.png" alt=""></router-link>
-        </div>
-        <div class="humberger__menu__cart">
-            <ul>
-                <li v-if="login==false" ><router-link :to="'/login'" ><i class="fa fa-user "></i></router-link></li>
-				<li v-else><router-link :to="'/profile'" ><i class="fa fa-user "></i></router-link></li>
-                <li ><router-link :to="'/wishlist'" ><i class="fa fa-heart"></i> <span>1</span></router-link></li>
-                <li ><router-link :to="'/cart'"><i class="fa fa-shopping-bag "></i> <span>3</span></router-link></li>
-            </ul>
-            <div class="header__cart__price">item: <span>$150.00</span></div>
-        </div>
-        <nav class="humberger__menu__nav mobile-menu">
-            <ul>
-                <li class="active"><router-link :to="'/'" >Home</router-link></li>
-                <li><router-link :to="'/shop'" >Shop</router-link></li>
-                <li><router-link :to="'/package'">packages</router-link></li>
-                <li><router-link :to="'/contact'" >Contact</router-link></li>
-            </ul>
-        </nav>
-        <div id="mobile-menu-wrap"></div>
-       
-
-    </div>
-    <!-- Humberger End -->
-
-    <!-- Header Section Begin -->
-    <header class="header">
- 
+	<section class="categories">
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
-                    <div class="header__logo">
-                        <router-link :to="'/'" ><img src="../../../../public/images/logo.png" alt=""></router-link>
+                <div class="categories__slider owl-carousel">
+                    <div class="col-lg-3" v-for="category in categories" :key="category.id">
+                        <div class="categories__item set-bg" data-setbg="images/cat-1.jpg">
+                            <h5><a href="#">{{  category.name }}</a></h5>
+                        </div>
                     </div>
+                    
+                  
+                   
+                 
                 </div>
-                <div class="col-lg-6">
-                    <nav class="header__menu">
-                        <ul>
-                            <li class="active"><router-link :to="'/'" >Home</router-link></li>
-                            <li><router-link :to="'/shop'" >Shop</router-link></li>
-                            <li><router-link :to="'/package'" >Packages</router-link></li>
-                            <li><router-link :to="'/contact'" >Contact</router-link></li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="col-lg-3">
-                    <div class="header__cart">
-                        <ul>
-							<li v-if="login==false" ><router-link :to="'/login'" ><i class="fa fa-user "></i></router-link></li>
-			             	<li v-else><router-link :to="'/profile'" ><i class="fa fa-user "></i></router-link></li>
-                            <li ><router-link :to="'/wishlist'" ><i class="fa fa-heart"></i> <span>1</span></router-link></li>
-                            <li ><router-link :to="'/cart'"><i class="fa fa-shopping-bag "></i> <span>3</span></router-link></li>
-                        </ul>
-                        <div class="header__cart__price">item: <span>$150.00</span></div>
-                    </div>
-                </div>
-            </div>
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
             </div>
         </div>
-    </header>
-    <!-- Header Section End -->
-
-      
-    
+    </section>
 </body>
 
 </html>
-
 </template>
 
 <script>
 import '@/jquery.js'; 
+import HomeService from '@/services/HomeService';
 export default {
-	data: () => ({
-        login:true
-            }),
+	data() {
+        return {
+            categories: [], // Initialize as an empty array
+        }
+    },
 	mounted() {
-
-  },
+		HomeService.getAllCategories().then((data) => {
+        this.categories = data.data.Categories;
+		});
+},
 }
 </script>
 
@@ -157,20 +106,23 @@ body {
 	font-smoothing: antialiased;
 }
 
+
+a{
+    text-decoration: none;
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-	margin: 0; 
+	margin: 0;
 	color: #111111;
 	font-weight: 400;
 	font-family: "Cairo", sans-serif;
 }
-a{
-	text-decoration: none;
-}
+
 h1 {
 	font-size: 70px;
 }
@@ -881,6 +833,7 @@ ol {
 .categories__item {
 	height: 270px;
 	position: relative;
+    width: 232px;
 }
 
 .categories__item h5 {

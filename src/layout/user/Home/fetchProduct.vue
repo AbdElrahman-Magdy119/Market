@@ -25,7 +25,6 @@
 </head>
 
 <body>
-
     <section class="featured spad">
         <div class="container">
             <div class="row">
@@ -35,11 +34,7 @@
                     </div>
                     <div class="featured__controls">
                         <ul>
-                            <li class="active" data-filter="*">All</li>
-                            <li data-filter=".oranges">Oranges</li>
-                            <li data-filter=".fresh-meat">Fresh Meat</li>
-                            <li data-filter=".vegetables">Vegetables</li>
-                            <li data-filter=".fastfood">Fastfood</li>
+						   <li v-for="category in categories" :key="category.id" ><a >{{ category.name }}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -177,48 +172,17 @@
 
 <script>
 import '@/jquery.js'; 
+import HomeService from '@/services/HomeService';
 export default {
+	data() {
+        return {
+            categories: [], // Initialize as an empty array
+        }
+    },
 	mounted() {
-
-const script2 = document.createElement("script");
-script2.src = "js/jquery-3.3.1.min.js";
-script2.async = true;
-document.body.appendChild(script2);
-
-const script3 = document.createElement("script");
-script3.src = "js/bootstrap.min.js";
-script3.async = true;
-document.body.appendChild(script3);
-
-const script4 = document.createElement("script");
-script4.src = "js/jquery.nice-select.min.js";
-script4.async = true;
-document.body.appendChild(script4);
-
-const script5 = document.createElement("script");
-script5.src = "js/jquery-ui.min.js";
-script5.async = true;
-document.body.appendChild(script5);
-
-const script6 = document.createElement("script");
-script6.src = "js/jquery.slicknav.js";
-script6.async = true;
-document.body.appendChild(script6);
-
-const script7 = document.createElement("script");
-script7.src = "js/mixitup.min.js";
-script7.async = true;
-document.body.appendChild(script7);
-
-const script8 = document.createElement("script");
-script8.src = "js/owl.carousel.min.js";
-script8.async = true;
-document.body.appendChild(script8);
-
-const script9 = document.createElement("script");
-script9.src = "js/main.js";
-script9.async = true;
-document.body.appendChild(script9);
+		HomeService.getAllCategories().then((data) => {
+        this.categories = data.data.Categories;
+		});
 },
 }
 </script>
