@@ -9,11 +9,14 @@
                 </div>
                 <div class="p-4">
                     <h1>
-                        <a href="" class="logo">Market <span>Online Market</span></a>
+                        <router-link to="/admin" class="logo">
+                            Market
+                            <span>Online Market</span>
+                        </router-link>
                     </h1>
                     <ul class="list-unstyled components mb-5">
                         <li class="active">
-                            <a href="#"><span class="fa fa-home mr-3"></span> Home</a>
+                            <router-link to="/admin"><span class="fa fa-home mr-3"></span> Home</router-link>
                         </li>
                         <li>
                             <router-link to="/admin/roles"><span class="fa fa-user mr-3"></span> Roles</router-link>
@@ -26,6 +29,7 @@
                         </li>
                         <li>
                             <router-link to="/admin/subcategories"><span class="fa fa-user mr-3"></span> Sub Categories</router-link>
+                            <router-link to="/admin/category"><span class="fa fa-briefcase mr-3"></span> Category</router-link>
                         </li>
                         <li>
                             <a href="#"><span class="fa fa-sticky-note mr-3"></span> Blog</a>
@@ -34,10 +38,10 @@
                             <a href="#"><span class="fa fa-suitcase mr-3"></span> Gallery</a>
                         </li>
                         <li>
-                            <a href="#"><span class="fa fa-cogs mr-3"></span> Services</a>
+                            <router-link to="/admin/orders"><span class="fa fa-cogs mr-3"></span> Orders</router-link>
                         </li>
                         <li>
-                            <a href="#"><span class="fa fa-paper-plane mr-3"></span> Contacts</a>
+                            <router-link to="/admin/reviews"><span class="fa fa-paper-plane mr-3"></span> Reviews</router-link>
                         </li>
                     </ul>
                 </div>
@@ -90,10 +94,10 @@ export default {
             $('#sidebarCollapse').on('click', function () {
               $('#sidebar').toggleClass('active');
           });
-        
+
         })(jQuery);
-        
-      }     
+
+      }
 }
 </script>
 

@@ -13,3 +13,16 @@ export function requireAdminAuth(to, from, next) {
         next({ path: "/404" }); // Redirect to 404 Not Found page
     }
 }
+
+export function requireAuth(to, from, next) {
+    const isAuthenticated = function () {
+        return !!localStorage.getItem('token');
+    }
+
+    if (isAuthenticated()) {
+        // User is authenticated
+        next();
+    } else {
+        next({ path: "/login" }); // Redirect to login page
+    }
+}

@@ -6,7 +6,12 @@
                 <template #start>
                     <Button label="New" icon="pi pi-plus" severity="success" class="mr-2" @click="openNew" />
                     <Button label="Delete" icon="pi pi-trash" severity="danger" @click="confirmDeleteSelected" :disabled="!selectedReviews || !selectedReviews.length" />
+                    <div class="field mx-3">
+                        <Dropdown @change="getAllReviews($event.value)" id="product" v-model.trim="prd.name" optionValue="value" :options="productOptions" optionLabel="label" />
+                    </div>
                 </template>
+
+
 
             </Toolbar>
 
@@ -101,14 +106,17 @@ export default {
 
     data() {
         return {
+            products:[],
             reviews: [], // Initialize as an empty array
             reviewDialog: false,
             deleteReviewDialog: false,
             review: {},
+            prd:{},
             selectedReviews: null,
             filters: {},
             submitted: false,
-            deleteSelectedReviews: []
+            deleteSelectedReviews: [],
+            productOptions:[]
         }
     },
     created() {
@@ -119,17 +127,29 @@ export default {
         });
     },
     mounted() {
-        reviewService.getAllReviews().then((data) => {
-            console.log(data.data.data);
-            this.reviews = data.data.data;
+        reviewService.getAllProducts().then((data) => {
+            this.products = data.data.Products;
 
-            // Add index property to each review object
-            this.reviews.forEach((review, index) => {
-                review.index = index + 1; // Adding 1 to display index starting from 1
-            });
+            this.products.forEach(product =>{
+                this.prd = {};
+                this.prd.value = product.id;
+                this.prd.label = product.name;
+                this.productOptions.push(this.prd);
+            })
         });
     },
     methods: {
+        getAllReviews(prdId) {
+            reviewService.getAllReviews(prdId).then((data) => {
+                console.log(data.data.data);
+                this.reviews = data.data.data;
+
+                // Add index property to each review object
+                this.reviews.forEach((review, index) => {
+                    review.index = index + 1; // Adding 1 to display index starting from 1
+                });
+            })
+        },
         openNew() {
             this.review = {};
             this.submitted = false;
