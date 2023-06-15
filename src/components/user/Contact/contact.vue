@@ -1,59 +1,67 @@
 <template>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Responsive Grocery Store Website</title>
+   <!DOCTYPE html>
+  <html lang="">
+  
+  <head>
+      <meta charset="UTF-8">
+      <meta name="description" content="Ogani Template">
+      <meta name="keywords" content="Ogani, unica, creative, html">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Ogani | Template</title>
+  
+      <!-- Google Font -->
+      <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+  
+      <!-- Css Styles -->
+      <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+      <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+      <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+      <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+      <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+      <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+      <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+      <link rel="stylesheet" href="/css/style.css" type="text/css">
+  </head>
+  
+  <body>
+  
 
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+   <section class="contact " id="contact" >
 
-    <!-- font awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+      <h1 class="heading"> contact <span> now </span> </h1>
 
-    <link rel="stylesheet" href="/css/style.css">
+<div class="row">
 
-</head>
-<body>
+    <div class="image">
+        <img src="images/contact.png" alt="">
+    </div>
 
-		<section class="footer">
+    <form action="">
 
-		<div class="box-container">
+        <div class="inputBox">
+            <input type="text" placeholder="first name">
+            <input type="text" placeholder="last name">
+        </div>
 
-			<div class="box">
-				<h3>find us here</h3>
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In accusamus praesentium.</p>
-				<div class="share">
-					<a href="#" class="fab fa-facebook-f"></a>
-					<a href="#" class="fab fa-twitter"></a>
-					<a href="#" class="fab fa-instagram"></a>
-					<a href="#" class="fab fa-linkedin"></a>
-				</div>
-			</div>
+        <div class="inputBox">
+            <input type="email" placeholder="email address">
+            <input type="number" placeholder="phone">
+        </div>
 
-			<div class="box">
-				<h3>contact us</h3>
-				<p>+52 2 1478 7412</p>
-				<a href="#" class="link">ninjashub@gmail.com</a>
-			</div>
+        <textarea placeholder="message" id="" cols="30" rows="10"></textarea>
+        <input type="submit" value="order now" class="btn">
+    </form>
 
-			<div class="box">
-				<h3>localization</h3>
-				<p>230 points of pines dr <br>
-				colorado springs <br>
-				United States.
-				</p>
-			</div>
+</div>
 
-	    	</div>
+   </section>
 
-	    	<div class="credit">created by <span> ninjashub </span> all rights reserved!</div>
 
-	  	</section>
-
-</body>
-</html>
-
+ 
+  </body>
+  
+  </html>
 </template>
 
 <script>
@@ -129,6 +137,10 @@ html::-webkit-scrollbar-track{
 html::-webkit-scrollbar-thumb{
   background: var(--primary-color);
   border-radius: 5rem;
+}
+
+.contact{
+  margin-top: 10rem;
 }
 
 section{

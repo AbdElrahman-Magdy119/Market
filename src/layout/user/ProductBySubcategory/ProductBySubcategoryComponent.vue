@@ -9,37 +9,37 @@
 
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 
+    <!-- font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <link rel="stylesheet" href="/css/style.css">
 
 </head>
 <body>
-  <div style="margin-top: 10rem;">
-    product details
+  <div style="margin-top:10rem">
+     
   </div>
 </body>
     </html>
-    
 </template>
 
 <script>
-import ProductService  from '@/services/ProductService';
+import HomeService from "@/services/HomeService";
 export default {
-    data() {
-        return {
-            product: {}, // Initialize as an empty array
-        }
-    },
+    data: () => ({
+    Products: [],
+    }),
     mounted() {
-		ProductService.getProductById(this.$route.params.idProduct).then((data) => {
-        this.product = data.data.data;
-        console.log(this.product);
-		});
-    }
+    HomeService.getProductBySubcategory(this.$route.params.idSubCategory).then(
+      (data) => {
+        this.Products = data.data.Products;
+      }
+    );
+    },
+
 }
 </script>
 
-<style scoped>
+<style>
 
 </style>

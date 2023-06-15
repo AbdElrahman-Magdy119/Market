@@ -1,6 +1,6 @@
 <template>
-<html lang="en">
-<head>
+    <html lang="en">
+     <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,41 +16,14 @@
 </head>
 <body>
 
-		<section class="footer">
+ <section class="home" id="home">
 
-		<div class="box-container">
+    <div class="content">
+        <h3>buy best <span> organic product </span> online </h3>
+        <router-link :to="'/shop'" class="btn"> Shop Now </router-link>
+    </div>
 
-			<div class="box">
-				<h3>find us here</h3>
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In accusamus praesentium.</p>
-				<div class="share">
-					<a href="#" class="fab fa-facebook-f"></a>
-					<a href="#" class="fab fa-twitter"></a>
-					<a href="#" class="fab fa-instagram"></a>
-					<a href="#" class="fab fa-linkedin"></a>
-				</div>
-			</div>
-
-			<div class="box">
-				<h3>contact us</h3>
-				<p>+52 2 1478 7412</p>
-				<a href="#" class="link">ninjashub@gmail.com</a>
-			</div>
-
-			<div class="box">
-				<h3>localization</h3>
-				<p>230 points of pines dr <br>
-				colorado springs <br>
-				United States.
-				</p>
-			</div>
-
-	    	</div>
-
-	    	<div class="credit">created by <span> ninjashub </span> all rights reserved!</div>
-
-	  	</section>
-
+</section>
 </body>
 </html>
 
