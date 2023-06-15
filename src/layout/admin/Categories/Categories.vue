@@ -136,19 +136,21 @@ export default {
   },
 
   methods: {
-
     saveCategory() {
       this.submitted = true;
       if (this.category.name) {
         if (this.category.id) {
-          const formData2 = new FormData();
-          formData2.append('image', this.selectedFile);
-          formData2.append('name', this.category.name);
+          const formData = new FormData();
+          formData.append('image', this.selectedFile);
+          formData.append('name', this.category.name);
+          formData.append('_method', 'put');
+          
           // Update existing category
-          CategoriesService.updateCategory(this.category.id, formData2)
+          CategoriesService.updateCategory(this.category.id, formData)
               .then(() => {
                 this.categories[this.findIndexById(this.category.id)] = this.category;
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Updated', life: 3000 });
+                this.category = {};
               })
               .catch(error => {
                 console.error(error);
@@ -165,6 +167,8 @@ export default {
                 const newCategory = response.data.data; // Assuming the API returns the newly created category
                 this.categories.push(newCategory);
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Created', life: 3000 });
+                this.category = {};
+             
               })
               .catch(error => {
                 console.error(error);
@@ -173,7 +177,6 @@ export default {
         }
 
         this.categoryDialog = false;
-        this.category = {};
         this.submitted = false;
       }
     },    

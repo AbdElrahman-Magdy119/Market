@@ -18,7 +18,7 @@ const categoriesService = {
         return apiClient.post('/subcategories', category)
     },
     updateSubCategory(id, category) {
-        return apiClient.put(`/subcategories/${id}`, category);
+        return apiClient.post(`/subcategories/${id}`, category);
     },
     deleteSubCategory(id) {
         return apiClient.delete(`/subcategories/${id}`);

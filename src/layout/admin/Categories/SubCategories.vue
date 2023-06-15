@@ -25,12 +25,13 @@
         <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
         <Column :field="'index'" header="#" style="width: 3rem" :exportable="false"></Column>
         <Column field="name" header="Name" sortable style="min-width:16rem"></Column>
+        <Column field="category_id" header="Category Id" sortable style="min-width:16rem"></Column>
         <Column field="image" header="Image" sortable style="min-width:16rem">
           <template #body="{data}">
               <img  :src="'http://localhost:8000/'+data.image" :alt="data.image" class="product-image"/>
           </template>        
         </Column>
-
+        
         <Column :exportable="false" style="min-width:8rem">
           <template #body="slotProps">
             <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editSubCategory(slotProps.data)" />
@@ -49,12 +50,12 @@
         <small class="p-error" v-if="submitted && !subCategory.name">Name is required.</small>
       </div>
 
-      <div class="field">
-        <label for="name">Image</label>
-        <input type="file" name="image"  @change="handleFileSelect"  accept="image/*" :maxFileSize="1000000"  />
+      <div class="field ">
+        <label for="image" class="col-form-label">Image</label>
+        <input type="file" name="image" id="image" class="form-control" @change="handleFileSelect"  accept="image/*" :maxFileSize="1000000"  />
         <small class="p-error" v-if="submitted && !subCategory.name">Name is required.</small>
       </div>
-      <Dropdown v-model="selectedCategory" :options="categories" optionLabel="name"  option-value="id" placeholder="Select a City" class="w-full md:w-14rem" />
+      <Dropdown v-model="subCategory.category_id" :options="categories" optionLabel="name"  option-value="id" placeholder="Select a City" class="w-full md:w-14rem" />
 
 
       <template #footer>
@@ -115,7 +116,6 @@ export default {
         deleteSubCategoryDialog: false,
         subCategory: {},
         selectedSubCategories: null,
-        selectedCategory: null,
         selectedFile:null,
         filters: {},
         submitted: false,
@@ -154,13 +154,15 @@ export default {
           const formData = new FormData();
           formData.append('image', this.selectedFile);
           formData.append('name', this.subCategory.name);
-          formData.append('category_id', this.selectedCategory);
+          formData.append('category_id', this.subCategory.category_id);
+          formData.append('_method', 'put');
 
           // Update existing subCategory
           SubCategoriesService.updateSubCategory(this.subCategory.id, formData)
               .then(() => {
                 this.subCategories[this.findIndexById(this.subCategory.id)] = this.subCategory;
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Updated', life: 3000 });
+                this.subCategory = {};              
               })
               .catch(error => {
                 console.error(error);
@@ -171,13 +173,14 @@ export default {
           const formData = new FormData();
           formData.append('image', this.selectedFile);
           formData.append('name', this.subCategory.name);
-          formData.append('category_id', this.selectedCategory);
+          formData.append('category_id', this.subCategory.category_id);
 
           SubCategoriesService.addSubCategory(formData)
               .then(response => {
                 const newCategory = response.data.data; // Assuming the API returns the newly created subCategory
                 this.subCategories.push(newCategory);
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Created', life: 3000 });
+                this.subCategory = {};
               })
               .catch(error => {
                 console.error(error);
@@ -186,7 +189,6 @@ export default {
         }
 
         this.subCategoryDialog = false;
-        this.subCategory = {};
         this.submitted = false;
       }
     },    
