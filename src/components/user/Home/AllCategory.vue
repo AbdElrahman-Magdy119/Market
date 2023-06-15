@@ -1,5 +1,5 @@
 <template>
-<html lang="en">
+    <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +8,6 @@
 
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 
-    <!-- font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <link rel="stylesheet" href="/css/style.css">
@@ -16,53 +15,34 @@
 </head>
 <body>
 
-		<section class="footer">
+      <section class="banner-container">
 
-		<div class="box-container">
+        <div class="banner" v-for="category in categories" :key="category.id">
+           <!-- <img  :src="`http://localhost:8000/`+ category.image" alt="category.name"> -->
+           <div class="content">
+              <h3>{{ category.name }}</h3>
+              <router-link :to="'/subcategory/'+category.id" class="btn">Show More</router-link>
+           </div>
+        </div>
 
-			<div class="box">
-				<h3>find us here</h3>
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In accusamus praesentium.</p>
-				<div class="share">
-					<a href="#" class="fab fa-facebook-f"></a>
-					<a href="#" class="fab fa-twitter"></a>
-					<a href="#" class="fab fa-instagram"></a>
-					<a href="#" class="fab fa-linkedin"></a>
-				</div>
-			</div>
-
-			<div class="box">
-				<h3>contact us</h3>
-				<p>+52 2 1478 7412</p>
-				<a href="#" class="link">ninjashub@gmail.com</a>
-			</div>
-
-			<div class="box">
-				<h3>localization</h3>
-				<p>230 points of pines dr <br>
-				colorado springs <br>
-				United States.
-				</p>
-			</div>
-
-	    	</div>
-
-	    	<div class="credit">created by <span> ninjashub </span> all rights reserved!</div>
-
-	  	</section>
-
-</body>
+      </section>
+    </body>
 </html>
-
 </template>
 
 <script>
-
+import HomeService  from '@/services/HomeService';
 export default {
-	data: () => ({
-        
-    }),
+	data() {
+        return {
+            categories: [], // Initialize as an empty array
+        }
+    },
     mounted() {
+		HomeService.getAllCategories().then((data) => {
+        this.categories = data.data.Categories;
+		});
+
         let cart = document.querySelector('.shopping-cart');
 
         document.querySelector('#cart-btn').onclick = () =>{
