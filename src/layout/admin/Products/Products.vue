@@ -25,11 +25,23 @@
         <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
         <Column :field="'index'" header="#" style="width: 3rem" :exportable="false"></Column>
         <Column field="name" header="Name" sortable style="min-width:16rem"></Column>
-        <Column field="description" header="description" sortable style="min-width:16rem"></Column>
+        <Column field="image" header="Image" sortable style="min-width:16rem">
+          <template #body="{data}">
+              <img  :src="'http://localhost:8000/'+data.image" :alt="data.image" class="product-image"/>
+          </template>        
+        </Column>
+        <Column field="description" header="Description" sortable style="min-width:16rem"></Column>
+        <Column field="price" header="Price" sortable style="min-width:16rem"></Column>
+        <Column field="quantity" header="Quantity" sortable style="min-width:16rem"></Column>
+        <Column field="discount" header="Discount" sortable style="min-width:16rem"></Column>
+        <Column field="subcategory_id" header="Subcategory_id" sortable style="min-width:16rem"></Column>
+        <Column field="trend" header="Trend" sortable style="min-width:16rem"></Column>
+
+
 
         <Column :exportable="false" style="min-width:8rem">
           <template #body="slotProps">
-            <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editproduct(slotProps.data)" />
+            <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editProduct(slotProps.data)" />
             <Button icon="pi pi-trash" outlined rounded severity="danger" @click="confirmDeleteProduct(slotProps.data)" />
           </template>
         </Column>
@@ -163,7 +175,7 @@ export default {
   mounted() {
     ProductsService.getAllProducts().then((data) => {
       this.products = data.data.data;
-
+      console.log(this.products)
       // Add index property to each Product object
       this.products.forEach((Product, index) => {
         Product.index = index + 1; // Adding 1 to display index starting from 1
@@ -184,13 +196,21 @@ export default {
           const formData = new FormData();
           formData.append('image', this.selectedFile);
           formData.append('name', this.product.name);
-          formData.append('category_id', this.selectedCategory);
+          formData.append('description', this.product.description);
+          formData.append('price', Number(this.product.price));
+          formData.append('quantity', this.product.quantity);
+          formData.append('discount', this.product.discount);
+          formData.append('subcategory_id', Number(this.selectedCate));
+          formData.append('trend', 1);
+          formData.append('_method', 'put');
 
           // Update existing product
           ProductsService.updateProduct(this.product.id, formData)
               .then(() => {
                 this.subCategories[this.findIndexById(this.product.id)] = this.product;
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Updated', life: 3000 });
+                this.product = {};
+              
               })
               .catch(error => {
                 console.error(error);
@@ -207,13 +227,14 @@ export default {
           formData.append('discount', this.product.discount);
           formData.append('subcategory_id', this.selectedCate);
           formData.append('trend', 1);
-          alert(this.isTrend)
 
           ProductsService.addProduct(formData)
               .then(response => {
                 const newProduct = response.data.data; // Assuming the API returns the newly created product
                 this.products.push(newProduct);
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Created', life: 3000 });
+                this.product = {};
+             
               })
               .catch(error => {
                 console.error(error);
@@ -222,7 +243,6 @@ export default {
         }
 
         this.productDialog = false;
-        this.product = {};
         this.submitted = false;
       }
     },    

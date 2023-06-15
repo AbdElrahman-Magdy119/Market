@@ -17,7 +17,7 @@ const productService = {
         return apiClient.post('/products',product);
     },
     updateProduct(id, product) {
-        return apiClient.put(`/products/${id}`,product);
+        return apiClient.post(`/products/${id}`,product);
     },
     deleteProduct(id) {
         return apiClient.delete(`/products/${id}`);
