@@ -21,6 +21,7 @@
     </head>
     <body>
       <section class="product" id="product">
+      <Toast></Toast>
         <h1 class="heading">our <span>products</span></h1>
 
         <div class="box-container">
@@ -32,15 +33,8 @@
             <div class="content">
               <h3>{{ TrendingProduct.name }}</h3>
               <div class="price">{{ TrendingProduct.price }}</div><br>
-              <!-- <div class="stars">
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star"></i>
-                <i class="fas fa-star-half-alt"></i>
-              </div> -->
-              <i class="fas fa-shopping-cart"></i>
-              <i class="fas fa-heart"></i>
+              <i class="fas fa-shopping-cart" @click="addToCart(TrendingProduct.id)"></i>
+              <i class="fas fa-heart" @click="addToWishList(TrendingProduct.id)" ></i>
               <router-link :to="'/productDetails/'+TrendingProduct.id" >  <i class="fas fa-eye"></i> </router-link>
             </div>
           </div>
@@ -52,12 +46,37 @@
 </template>
 
 <script>
+import  Toast  from 'primevue/toast';
 import HomeService  from '@/services/HomeService';
+import WishListService  from '@/services/WishListService';CartService
+import CartService  from '@/services/CartService';
 export default {
+  components: {
+    Toast,
+  },
+  data() {
+    return {
+      TrendingProducts: [],
+      TrendingProduct: {},
+      wishList: [],
+      wishListCount: 0,
+      wishListProduct: {},
+      wishListProductCount: 0,
+      wishListProductImage: '',
+      wishListProductName: '',
+      wishListProductPrice: '',
+      wishListProductDescription: '',
+    }
+  },
+  mounted() {
+    this.getTrendingProducts();
+    this.getWishList();
+  },
   data() {
         return {
             TrendingProducts: [], // Initialize as an empty array
-        }
+            
+          }
     },
   mounted() {
     HomeService.getTrendingProduct().then((data) => {
@@ -66,10 +85,10 @@ export default {
 
     let cart = document.querySelector(".shopping-cart");
 
-    document.querySelector("#cart-btn").onclick = () => {
-      cart.classList.toggle("active");
-      navbar.classList.remove("active");
-    };
+    // document.querySelector("#cart-btn").onclick = () => {
+    //   cart.classList.toggle("active");
+    //   navbar.classList.remove("active");
+    // };
 
     let navbar = document.querySelector(".navbar");
 
@@ -83,6 +102,47 @@ export default {
       cart.classList.remove("active");
     };
   },
+  methods: {
+    addToWishList(product_id) {
+      const user_id = localStorage.getItem('id')
+      const data={
+        user_id: user_id,
+        product_id: product_id
+      }
+      WishListService.addToWishList(data)
+              .then(response => {
+                // const newRole = response.data; // Assuming the API returns the newly created role
+                // this.roles.push(newRole);
+                this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Favourite Created', life: 4000 });
+              })
+              .catch(error => {
+                console.error(error);
+                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to create Favourite', life: 3000 });
+              });
+
+      
+    },
+    addToCart(product_id) {
+      const user_id = localStorage.getItem('id')
+      const data={
+        user_id: user_id,
+        product_id: product_id,
+        prod_qty: 1
+      }
+      CartService.addToCart(data)
+              .then(response => {
+                // const newRole = response.data; // Assuming the API returns the newly created role
+                // this.roles.push(newRole);
+                this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Cart Created', life: 4000 });
+              })
+              .catch(error => {
+                console.error(error);
+                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to create Cart', life: 3000 });
+              });
+
+      
+    }
+  }
 };
 </script>
 

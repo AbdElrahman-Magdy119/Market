@@ -105,7 +105,6 @@ const router = createRouter({
           component: Products,
         },
         {
-<<<<<<< HEAD
           path: "categories",
           component: Categories,
         },
@@ -113,12 +112,11 @@ const router = createRouter({
           path: "subcategories",
           component: SubCategories,
         },
-                
-=======
-          path: "category",
-          component: Category,
-        },
->>>>>>> b4efca76f2924d3395aec52cf205d66c269a3575
+        // {
+        //   path: "category",
+        //   component: Category,
+        // },
+      
       ],
     },
     {

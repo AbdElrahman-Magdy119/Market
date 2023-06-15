@@ -36,49 +36,12 @@
 
         <!-- shopping cart -->
 
-        <div class="shopping-cart">
+         
 
-            <div class="box">
-                <i class="fas fa-times"></i>
-                <img src="images/cart1.jpg" alt="">
-                <div class="content">
-                    <h3>side dish</h3>
-                    <span class="price">$14.99</span>
-                </div>
-                <span>+</span>
-                <span>1</span>
-                <span>-</span>
-            </div>
+        <!-- Button trigger modal -->
 
-            <div class="box">
-                <i class="fas fa-times"></i>
-                <img src="images/cart2.jpg" alt="">
-                <div class="content">
-                    <h3>side dish</h3>
-                    <span class="price">$15.99</span>
-                </div>
-            </div>
 
-            <div class="box">
-                <i class="fas fa-times"></i>
-                <img src="images/cart3.png" alt="">
-                <div class="content">
-                    <h3>side dish</h3>
-                    <span class="price">$14.99</span>
-                </div>
-            </div>
 
-            <div class="box">
-                <i class="fas fa-times"></i>
-                <img src="images/cart4.jpg" alt="">
-                <div class="content">
-                    <h3>side dish</h3>
-                    <span class="price">$18.99</span>
-                </div>
-            </div>
-            <h3 class="total"> total: <span> $56.89</span></h3>
-            <router-link :to="'/checkout'" class="btn">checkout</router-link>
-        </div>    
 
     </header>
 
@@ -89,12 +52,23 @@
 </template>
 
 <script>
-
+import CartService  from '@/services/CartService';
+import CartComponent  from '../../../components/user/Cart/CartComponent.vue';
 export default {
-	data: () => ({
-        
-    }),
+  components:{
+    CartComponent
+     },
+    data() {
+        return {
+            UserCart: [], // Initialize as an empty array
+        }
+     },
     mounted() {
+          CartService.getUserCart().then((data) => {
+            this.UserCart = data.data.data;
+            console.log(this.UserCart);
+          });
+
         let cart = document.querySelector('.shopping-cart');
 
         // document.querySelector('#cart-btn').onclick = () =>{
@@ -111,10 +85,10 @@ export default {
         // cart.classList.remove('active');
         // }
 
-        window.onscroll = () =>{
-        navbar.classList.remove('active');
-        cart.classList.remove('active');
-        }
+        // window.onscroll = () =>{
+        // navbar.classList.remove('active');
+        // cart.classList.remove('active');
+        // }
 
    
             },

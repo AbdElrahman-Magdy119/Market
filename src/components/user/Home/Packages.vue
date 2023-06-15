@@ -64,10 +64,10 @@ export default {
 
     let cart = document.querySelector(".shopping-cart");
 
-    document.querySelector("#cart-btn").onclick = () => {
-      cart.classList.toggle("active");
-      navbar.classList.remove("active");
-    };
+    // document.querySelector("#cart-btn").onclick = () => {
+    //   cart.classList.toggle("active");
+    //   navbar.classList.remove("active");
+    // };
 
     let navbar = document.querySelector(".navbar");
 
