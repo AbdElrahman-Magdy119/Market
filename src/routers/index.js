@@ -24,6 +24,8 @@ import ProductBySubcategoryComponent from "@/layout/user/ProductBySubcategory/Pr
 import PackagesDetailsComponent from "@/layout/user/PackagesDetails/PackagesDetailsComponent.vue";
 import ProductDetailsComponent from "@/layout/user/ProductDetails/ProductDetailsComponent.vue";
 
+import Categories from "@/layout/admin/Categories/Categories.vue";
+import SubCategories from "@/layout/admin/Categories/SubCategories.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -102,6 +104,21 @@ const router = createRouter({
           path: "products",
           component: Products,
         },
+        {
+<<<<<<< HEAD
+          path: "categories",
+          component: Categories,
+        },
+        {
+          path: "subcategories",
+          component: SubCategories,
+        },
+                
+=======
+          path: "category",
+          component: Category,
+        },
+>>>>>>> b4efca76f2924d3395aec52cf205d66c269a3575
       ],
     },
     {

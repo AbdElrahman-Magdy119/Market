@@ -11,11 +11,14 @@ const apiClient = axios.create({
 
 
 const ReviewService = {
-    getAllReviews() {
-        return apiClient.get(`/review/product/3`);
+    getAllProducts() {
+        return apiClient.get(`/home/products`);
     },
-    deleteReview(productId) {
-        return apiClient.delete(`/review/product/3`);
+    getAllReviews(prdId) {
+        return apiClient.get(`/review/product/${prdId}`);
+    },
+    deleteReview(prdId) {
+        return apiClient.delete(`/review/product/${prdId}`);
     },
 };
 
