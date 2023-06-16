@@ -23,7 +23,7 @@ import Products from "@/layout/admin/Products/Products.vue";
 import Packages from "@/layout/admin/Packages/Packages.vue";
 import ProductBySubcategoryComponent from "@/layout/user/ProductBySubcategory/ProductBySubcategoryComponent.vue";
 import PackagesDetailsComponent from "@/layout/user/PackagesDetails/PackagesDetailsComponent.vue";
-import ProductDetailsComponent from "@/layout/user/ProductDetails/ProductDetailsComponent.vue";
+import ProductDetailsComponent from "@/layout/user/ProductDetails/productDetailsComponent.vue";
 
 import Categories from "@/layout/admin/Categories/Categories.vue";
 import SubCategories from "@/layout/admin/Categories/SubCategories.vue";
@@ -36,7 +36,7 @@ const router = createRouter({
       component: MainPageComponent,
       children: [
         {
-          path: "",
+          path: "/",
           component: HomeComponent,
         },
         {

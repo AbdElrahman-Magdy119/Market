@@ -163,7 +163,7 @@
 </template>
 
 <script>
-import '@/jquery.custom.js';
+// import '@/jquery.custom.js';
 export default {
     mounted() {
 		
