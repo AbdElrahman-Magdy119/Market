@@ -5,11 +5,11 @@
         </div>
 
         <div> 
-            <RouterView></RouterView>
+             <RouterView></RouterView> 
         </div>
 
         <div>
-          <FooterComponent/>
+           <FooterComponent/> 
         </div>
 
     </div>

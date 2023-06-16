@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="my-3">
     Header
-    <button @click="logout">Log Out</button>
+    <button class="btn btn-outline-warning" @click="logout">Log Out</button>
   </div>
 </template>
 

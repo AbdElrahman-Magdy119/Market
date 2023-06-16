@@ -9,17 +9,31 @@
                 </div>
                 <div class="p-4">
                     <h1>
-                        <router-link to="/admin" class="logo">Market <span>Online Market</span></router-link>
+                        <router-link to="/admin" class="logo">
+                            Market
+                            <span>Online Market</span>
+                        </router-link>
                     </h1>
                     <ul class="list-unstyled components mb-5">
                         <li class="active">
+<<<<<<< HEAD
                             <router-link to="/"><span class="fa fa-home mr-3"></span> Home</router-link>
+=======
+                            <router-link to="/admin"><span class="fa fa-home mr-3"></span> Home</router-link>
+>>>>>>> 6c22a19a04a6b55b10c4f51a4dc87e5bd6ffa061
                         </li>
                         <li>
                             <router-link to="/admin/roles"><span class="fa fa-user mr-3"></span> Roles</router-link>
                         </li>
                         <li>
-                            <a href="#"><span class="fa fa-briefcase mr-3"></span> Works</a>
+                            <router-link to="/admin/products"><span class="fa fa-user mr-3"></span> Products</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/admin/categories"><span class="fa fa-user mr-3"></span> Categories</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/admin/subcategories"><span class="fa fa-user mr-3"></span> Sub Categories</router-link>
+                            <router-link to="/admin/category"><span class="fa fa-briefcase mr-3"></span> Category</router-link>
                         </li>
                         <li>
                             <a href="#"><span class="fa fa-sticky-note mr-3"></span> Blog</a>

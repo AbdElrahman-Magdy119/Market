@@ -14,7 +14,11 @@ const OrderService = {
     getAllOrders() {
         return apiClient.get(`/order`);
     },
+    getOrderById(orderId){
+        return apiClient.get(`/order/${orderId}`);
+    },
     updateOrder(orderId, order) {
+        console.log(order);
         return apiClient.put(`/order/${orderId}`, order);
     },
     deleteOrder(orderId) {
