@@ -53,7 +53,6 @@ SubCategories: [],
 mounted() {
 HomeService.getٍSubcategoryByCategoryID(this.$route.params.id).then(
 (data) => {
-  console.log(data)
   this.SubCategories = data.data.Subcategories;
 }
 );

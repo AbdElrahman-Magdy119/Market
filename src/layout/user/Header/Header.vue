@@ -28,19 +28,12 @@
         </nav>
 
         <div class="icons">
-           <a> <div id="cart-btn" class="fas fa-shopping-basket"></div></a>
+           <router-link :to="'/cart'"> <div id="cart-btn" class="fas fa-shopping-basket"></div></router-link>
            <router-link :to="'/wishlist'"> <div class="fas fa-heart" ></div></router-link>
            <router-link :to="'/profile'"> <div id="login-btn" class="fas fa-user"></div></router-link>
             <div id="menu-btn" class="fas fa-bars"></div>
         </div>
-
-        <!-- shopping cart -->
-
-         
-
-        <!-- Button trigger modal -->
-
-
+      
 
 
     </header>
@@ -52,32 +45,10 @@
 </template>
 
 <script>
-import CartService  from '@/services/CartService';
-import CartComponent  from '../../../components/user/Cart/CartComponent.vue';
+
 export default {
-  components:{
-    CartComponent
-     },
-    data() {
-        return {
-            UserCart: [], // Initialize as an empty array
-        }
-     },
+    
     mounted() {
-          CartService.getUserCart().then((data) => {
-            this.UserCart = data.data.data;
-            console.log(this.UserCart);
-          });
-
-        let cart = document.querySelector('.shopping-cart');
-
-        // document.querySelector('#cart-btn').onclick = () =>{
-        // cart.classList.toggle('active');
-        // navbar.classList.remove('active');
-        // }
-
-       
-
         let navbar = document.querySelector('.navbar');
 
         // document.querySelector('#menu-btn').onclick = () =>{
@@ -92,6 +63,15 @@ export default {
 
    
             },
+          methods: {
+            // ShowCard() {
+            //      
+            //      let cart = document.querySelector('.shopping-cart');
+            //       document.querySelector('#cart-btn').onclick = () =>{
+            //       cart.classList.toggle('active');
+            //       }
+            // },
+          }
         }
 </script>
 

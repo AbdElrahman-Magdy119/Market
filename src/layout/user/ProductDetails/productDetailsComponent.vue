@@ -34,7 +34,6 @@ export default {
     mounted() {
 		ProductService.getProductById(this.$route.params.idProduct).then((data) => {
         this.product = data.data.data;
-        console.log(this.product);
 		});
     }
 }
