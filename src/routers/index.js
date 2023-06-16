@@ -20,6 +20,7 @@ import UserProfileComponent from "@/layout/user/UserProfile/UserProfileComponent
 import WishListComponent from "@/layout/user/WishList/WishListComponent.vue";
 import SubCategoryComponent from "@/layout/user/subcategory/SubCategoryComponent.vue";
 import Products from "@/layout/admin/Products/Products.vue";
+import Packages from "@/layout/admin/Packages/Packages.vue";
 import ProductBySubcategoryComponent from "@/layout/user/ProductBySubcategory/ProductBySubcategoryComponent.vue";
 import PackagesDetailsComponent from "@/layout/user/PackagesDetails/PackagesDetailsComponent.vue";
 import ProductDetailsComponent from "@/layout/user/ProductDetails/ProductDetailsComponent.vue";
@@ -36,42 +37,42 @@ const router = createRouter({
       component: MainPageComponent,
       children: [
         {
-          path: "",
+          path: "/",
           component: HomeComponent,
         },
         {
-            path:'/contact',
-            component:contactComponent
+          path: "/contact",
+          component: contactComponent,
         },
         {
-            path:'/checkout',
-            component:CheckOutComponent
+          path: "/checkout",
+          component: CheckOutComponent,
         },
         {
-            path:'/profile',
-            component:UserProfileComponent,
-            beforeEnter: requireAuth,
+          path: "/profile",
+          component: UserProfileComponent,
+          beforeEnter: requireAuth,
         },
         {
-            path:'/wishlist',
-            component:WishListComponent,
-            beforeEnter: requireAuth,
+          path: "/wishlist",
+          component: WishListComponent,
+          beforeEnter: requireAuth,
         },
         {
-          path:'/subcategory/:id',
-          component:SubCategoryComponent
+          path: "/subcategory/:id",
+          component: SubCategoryComponent,
         },
         {
-          path:'/productBySubcategory/:idSubCategory',
-          component:ProductBySubcategoryComponent
+          path: "/productBySubcategory/:idSubCategory",
+          component: ProductBySubcategoryComponent,
         },
         {
-          path:'/package/:idPackage',
-          component:PackagesDetailsComponent
+          path: "/package/:idPackage",
+          component: PackagesDetailsComponent,
         },
         {
-          path:'/productDetails/:idProduct',
-          component:ProductDetailsComponent
+          path: "/productDetails/:idProduct",
+          component: ProductDetailsComponent,
         },
         {
           path:'/cart',
@@ -111,6 +112,10 @@ const router = createRouter({
           component: Products,
         },
         {
+          path: "packages",
+          component: Packages,
+        },
+        {
           path: "categories",
           component: Categories,
         },
@@ -118,11 +123,6 @@ const router = createRouter({
           path: "subcategories",
           component: SubCategories,
         },
-        // {
-        //   path: "category",
-        //   component: Category,
-        // },
-      
       ],
     },
     {
@@ -140,6 +140,5 @@ const router = createRouter({
     //  Here Add any route to show in page that Not contains Header and footer Component
   ],
 });
-
 
 export default router;

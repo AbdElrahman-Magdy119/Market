@@ -1,5 +1,6 @@
 import { createApp } from 'vue/dist/vue.esm-bundler'
 import MainComponent from './MainComponent.vue'
+// import '@/jquery.custom.js';
 
 
 import PrimeVue from 'primevue/config'

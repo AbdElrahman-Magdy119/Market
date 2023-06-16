@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import '@/jquery.js';
+import '@/jquery.custom.js';
 import HeaderComponent from '@/layout/admin/Header/Header.vue'
 import FooterComponent from '@/layout/admin/Footer/Footer.vue'
 
