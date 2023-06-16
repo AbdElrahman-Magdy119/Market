@@ -27,6 +27,7 @@ import PackageComponent from "@/layout/user/Package/PackageComponent.vue";
 
 
 import Products from "@/layout/admin/Products/Products.vue";
+import Packages from "@/layout/admin/Packages/Packages.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -103,6 +104,10 @@ const router = createRouter({
           path: "products",
           component: Products,
         },
+        {
+          path:'packages',
+          component:Packages
+        }
       ],
     },
     {

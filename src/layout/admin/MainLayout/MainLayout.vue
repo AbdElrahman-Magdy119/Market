@@ -13,7 +13,7 @@
                     </h1>
                     <ul class="list-unstyled components mb-5">
                         <li class="active">
-                            <a href="#"><span class="fa fa-home mr-3"></span> Home</a>
+                            <router-link to="/"><span class="fa fa-home mr-3"></span> Home</router-link>
                         </li>
                         <li>
                             <router-link to="/admin/roles"><span class="fa fa-user mr-3"></span> Roles</router-link>
