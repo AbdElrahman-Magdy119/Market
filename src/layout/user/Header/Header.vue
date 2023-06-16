@@ -52,6 +52,7 @@
 </template>
 
 <script>
+import '@/jquery.custom.js';
 import CartService  from '@/services/CartService';
 import CartComponent  from '../../../components/user/Cart/CartComponent.vue';
 export default {

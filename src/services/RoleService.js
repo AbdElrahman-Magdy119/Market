@@ -1,5 +1,6 @@
 import axios from 'axios';
 const apiClient = axios.create({
+    // baseURL: process.env.API_URL,
     baseURL: 'http://localhost:8000/api',
     headers: {
         // Add any common headers if needed
@@ -11,6 +12,7 @@ const apiClient = axios.create({
 
 const RoleService = {
     getAllRoles() {
+        console.log(process.env.API_URL);
         return apiClient.get('/roles');
     },
     addRole(role) {
