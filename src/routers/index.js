@@ -37,7 +37,7 @@ const router = createRouter({
       component: MainPageComponent,
       children: [
         {
-          path: "/",
+          path: "",
           component: HomeComponent,
         },
         {
