@@ -48,6 +48,10 @@
         <small class="p-error" v-if="submitted && !package.name">Name is required.</small>
       </div>
       <div class="field">
+        <label for="description">Description</label>
+        <Textarea id="description" v-model.trim="package.description" />
+      </div>
+      <div class="field">
         <label for="total_price">Total Price</label>
         <input :readonly="true" v-model.trim="package.total_price"  />
       </div>
@@ -133,14 +137,13 @@ import Toolbar from 'primevue/toolbar';
 import FileUpload from 'primevue/fileupload';
 import Column from 'primevue/column';
 import Toast from 'primevue/toast';
-import product from "@/layout/user/shop/product.vue";
 
 export default {
-  computed: {
-    product() {
-      return product
-    }
-  },
+  // computed: {
+  //   product() {
+  //     return product
+  //   }
+  // },
   components: {
     Button,
     Dialog,
@@ -162,6 +165,7 @@ export default {
       deletePackageDialog: false,
       package: {
         name: '',
+        description: '',
         total_price: 0,
         image: null,
         package_items: [],
@@ -209,7 +213,7 @@ export default {
       }
     },
     updateProductData(prod){
-      console.log(prod)
+      // console.log(prod)
     },
     handleFileSelect(event) {
       if (event.target.files.length > 0) {
@@ -217,9 +221,9 @@ export default {
       }
     },
     calculatePrice(item) {
-      console.log(item);
+      // console.log(item);
       const selectedProduct = this.productOptions.value.find(product => product.value === item.product_id);
-      console.log('selected',selectedProduct);
+      // console.log('selected',selectedProduct);
       if (selectedProduct) {
         item.price = Number(selectedProduct.price) * Number(item.quantity);
       }
@@ -264,9 +268,12 @@ export default {
     savepackage() {
       this.submitted = true;
       if (this.package.name && this.package.total_price && this.package.image) {
+        console.log('desc',this.package.description);
+
         const formData = new FormData();
         formData.append('name', this.package.name);
         formData.append('total_price', this.package.total_price);
+        formData.append('description', this.package.description);
         formData.append('image', this.package.image, this.package.image.name); // Append the image file to the form data
         this.package.package_items.forEach((item, index) => {
           formData.append(`package_items[${index}][product_id]`, item.product_id);
@@ -286,7 +293,7 @@ export default {
                 });
               })
               .catch(error => {
-                console.error(error);
+                // console.error(error);
                 this.$toast.add({
                   severity: 'error',
                   summary: 'Error',
@@ -317,7 +324,6 @@ export default {
                 });
               });
         }
-
         this.packageDialog = false;
         this.package = {};
         this.submitted = false;
