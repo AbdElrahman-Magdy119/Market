@@ -29,8 +29,10 @@
                         </li>
                         <li>
                             <router-link to="/admin/subcategories"><span class="fa fa-user mr-3"></span> Sub Categories</router-link>
-                            <router-link to="/admin/category"><span class="fa fa-briefcase mr-3"></span> Category</router-link>
                         </li>
+                      <li>
+                        <router-link to="/admin/packages"><span class="fa fa-briefcase mr-3"></span>Packages</router-link>
+                      </li>
 <!--                        <li>-->
 <!--                            <a href="#"><span class="fa fa-sticky-note mr-3"></span> Blog</a>-->
 <!--                        </li>-->

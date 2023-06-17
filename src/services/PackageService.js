@@ -16,6 +16,9 @@ const PackageService = {
     addPackage(role) {
         return apiClient.post('/packages',role);
     },
+    getPackageByID(id) {
+        return apiClient.get(`/home/packageitems/${id}`);
+    },
     updatePackage(id,role) {
         return apiClient.put(`/packages/${id}`,role);
     },
