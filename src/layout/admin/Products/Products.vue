@@ -37,6 +37,12 @@
         <Column field="subcategory_id" header="Subcategory_id" sortable style="min-width:16rem"></Column>
         <Column field="trend" header="Trend" sortable style="min-width:16rem"></Column>
 
+          <Column header="Reviews">
+              <template #body="slotProps">
+                  <router-link :to="`/admin/reviews/product/${slotProps.data.id}`">Reviews</router-link>
+              </template>
+          </Column>
+
 
 
         <Column :exportable="false" style="min-width:8rem">
@@ -188,7 +194,6 @@ export default {
   },
 
   methods: {
-
     saveProduct() {
       this.submitted = true;
       if (this.product.name) {

@@ -104,7 +104,7 @@ const router = createRouter({
           component: Orders,
         },
         {
-          path: "reviews",
+          path: "reviews/product/:prdId",
           component: Reviews,
         },
         {

@@ -6,9 +6,9 @@
                 <template #start>
                     <Button label="New" icon="pi pi-plus" severity="success" class="mr-2" @click="openNew" />
                     <Button label="Delete" icon="pi pi-trash" severity="danger" @click="confirmDeleteSelected" :disabled="!selectedReviews || !selectedReviews.length" />
-                    <div class="field mx-3">
-                        <Dropdown @change="getAllReviews($event.value)" id="product" v-model.trim="prd.name" optionValue="value" :options="productOptions" optionLabel="label" />
-                    </div>
+<!--                    <div class="field mx-3">-->
+<!--                        <Dropdown @change="getAllReviews($event.value)" id="product" v-model.trim="prd.name" optionValue="value" :options="productOptions" optionLabel="label" />-->
+<!--                    </div>-->
                 </template>
 
 
@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import * as router from 'vue-router';
 import { FilterMatchMode } from 'primevue/api';
 import reviewService  from '@/services/ReviewService';
 import  Button  from 'primevue/button';
@@ -116,10 +117,15 @@ export default {
             filters: {},
             submitted: false,
             deleteSelectedReviews: [],
-            productOptions:[]
+            productOptions:[],
+            product_id: null,
         }
     },
     created() {
+        const url = this.$route.path;
+        this.product_id = url.substring(url.lastIndexOf('/') + 1);
+        console.log(this.product_id);
+
         this.initFilters();
         // Add index property to each review object
         this.reviews.forEach((review, index) => {
@@ -127,16 +133,16 @@ export default {
         });
     },
     mounted() {
-        reviewService.getAllProducts().then((data) => {
-            this.products = data.data.Products;
 
-            this.products.forEach(product =>{
-                this.prd = {};
-                this.prd.value = product.id;
-                this.prd.label = product.name;
-                this.productOptions.push(this.prd);
+        reviewService.getAllReviews(this.product_id).then((data) => {
+                console.log(data.data.data);
+                this.reviews = data.data.data;
+
+                // Add index property to each review object
+                this.reviews.forEach((review, index) => {
+                    review.index = index + 1; // Adding 1 to display index starting from 1
+                });
             })
-        });
     },
     methods: {
         getAllReviews(prdId) {
