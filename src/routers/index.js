@@ -91,7 +91,7 @@ const router = createRouter({
     {
       path: "/admin",
       component: MainLayout,
-      // beforeEnter: requireAdminAuth,
+      beforeEnter: requireAdminAuth,
       children: [
         {
           path: "",
