@@ -29,6 +29,7 @@ import Categories from "@/layout/admin/Categories/Categories.vue";
 import SubCategories from "@/layout/admin/Categories/SubCategories.vue";
 import CartComponent from "@/layout/user/Cart/CartComponent.vue";
 import ChatbotComponent from "@/layout/user/ChatbotComponent/ChatbotComponent.vue";
+import PackageDetails from "@/layout/admin/PackageDetails/PackageDetails.vue";
 
 
 const router = createRouter({
@@ -121,6 +122,10 @@ const router = createRouter({
         {
           path: "packages",
           component: Packages,
+        },
+        {
+          path: "package-details/:id",
+          component: PackageDetails
         },
         {
           path: "categories",
