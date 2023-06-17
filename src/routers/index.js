@@ -27,6 +27,7 @@ import ProductDetailsComponent from "@/layout/user/ProductDetails/ProductDetails
 import Categories from "@/layout/admin/Categories/Categories.vue";
 import SubCategories from "@/layout/admin/Categories/SubCategories.vue";
 import CartComponent from "@/layout/user/Cart/CartComponent.vue";
+import ChatbotComponent from "@/layout/user/ChatbotComponent/ChatbotComponent.vue";
 
 
 const router = createRouter({
@@ -75,9 +76,14 @@ const router = createRouter({
           component: ProductDetailsComponent,
         },
         {
-          path:'/cart',
-          component:CartComponent,
+          path: "/cart",
+          component: CartComponent,
           beforeEnter: requireAuth,
+        },
+        {
+          path: "/chatbot",
+          component: ChatbotComponent,
+          // beforeEnter: requireAuth,
         },
         //  Here Add any route to show in mainpage that contains Header and footer Component
       ],
