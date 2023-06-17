@@ -1,23 +1,20 @@
+
 <template>
-  <div>
-    <canvas ref="chartCanvas"></canvas>
+  <div class="card">
+    <Chart type="bar" :data="chartData" :options="chartOptions" />
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue';
-import { Chart, BarController, BarElement, CategoryScale, LinearScale, Title } from 'chart.js';
-
-export default defineComponent({
-  mounted() {
-    Chart.register(BarController, BarElement, CategoryScale, LinearScale, Title);
-
-    const ctx = this.$refs.chartCanvas.getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: this.chartData,
-      options: this.chartOptions,
-    });
+// import { defineComponent } from 'vue';
+import Chart from 'primevue/chart';
+export default {
+  components: {
+    Chart,
+  },
+  data() {
+    return {
+    };
   },
   props: {
     chartData: {
@@ -29,7 +26,7 @@ export default defineComponent({
       default: () => ({}),
     },
   },
-});
+};
 </script>
 
 <style scoped></style>

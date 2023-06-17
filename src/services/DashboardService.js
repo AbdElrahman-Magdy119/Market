@@ -13,6 +13,12 @@ const DashboardService = {
     analysis() {
         return apiClient.get('/dashboard');
     },
+    getMostSoldProducts() {
+        return apiClient.get('/dashboard/most-sold');
+    },
+    getMostUserPay() {
+        return apiClient.get('/dashboard/user-pay');
+    },
 };
 
 

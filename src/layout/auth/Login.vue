@@ -108,9 +108,11 @@ export default {
             const token = response.data.token;
             const name = response.data.name;
             const role = response.data.role.name;
+            const id = response.data.id;
             localStorage.setItem('token', token);
             localStorage.setItem('name', name);
             localStorage.setItem('role', role);
+            localStorage.setItem('id', id);
               // Navigate to admin component
               this.$router.push('/');
           })

@@ -1,4 +1,8 @@
 <template>
+        <header>
+            <HeaderComponent/>
+        </header>
+
 		<div class="wrapper d-flex">
 			<nav id="sidebar" class="">
 				<div class="custom-menu">
@@ -31,41 +35,35 @@
                             <router-link to="/admin/subcategories"><span class="fa fa-user mr-3"></span> Sub Categories</router-link>
                             <router-link to="/admin/category"><span class="fa fa-briefcase mr-3"></span> Category</router-link>
                         </li>
-                        <li>
-                            <a href="#"><span class="fa fa-sticky-note mr-3"></span> Blog</a>
-                        </li>
-                        <li>
-                            <a href="#"><span class="fa fa-suitcase mr-3"></span> Gallery</a>
-                        </li>
+<!--                        <li>-->
+<!--                            <a href="#"><span class="fa fa-sticky-note mr-3"></span> Blog</a>-->
+<!--                        </li>-->
+<!--                        <li>-->
+<!--                            <a href="#"><span class="fa fa-suitcase mr-3"></span> Gallery</a>-->
+<!--                        </li>-->
                         <li>
                             <router-link to="/admin/orders"><span class="fa fa-cogs mr-3"></span> Orders</router-link>
-                        </li>
-                        <li>
-                            <router-link to="/admin/reviews"><span class="fa fa-paper-plane mr-3"></span> Reviews</router-link>
                         </li>
                     </ul>
                 </div>
     	    </nav>
             <!-- Page Content  -->
             <div id="content" class="p-4 p-md-5 pt-5 ">
-                <div>
-                    <HeaderComponent/>
-                </div>
 
                 <div> 
                     <RouterView></RouterView>
                 </div>
 
-                <div>
-                    <FooterComponent/>
-                </div>
             </div>
         </div>
 
+        <footer>
+            <FooterComponent/>
+        </footer>
 </template>
 
 <script>
-import '@/jquery.js';
+import '@/jquery.custom.js';
 import HeaderComponent from '@/layout/admin/Header/Header.vue'
 import FooterComponent from '@/layout/admin/Footer/Footer.vue'
 

@@ -28,57 +28,14 @@
         </nav>
 
         <div class="icons">
-           <a> <div id="cart-btn" class="fas fa-shopping-basket"></div></a>
+           <router-link :to="'/cart'"> <div id="cart-btn" class="fas fa-shopping-basket"></div></router-link>
            <router-link :to="'/wishlist'"> <div class="fas fa-heart" ></div></router-link>
+             <router-link :to="'/chatbot'"> <div class="fas fa-message"></div></router-link>
            <router-link :to="'/profile'"> <div id="login-btn" class="fas fa-user"></div></router-link>
             <div id="menu-btn" class="fas fa-bars"></div>
         </div>
+      
 
-        <!-- shopping cart -->
-
-        <div class="shopping-cart">
-
-            <div class="box">
-                <i class="fas fa-times"></i>
-                <img src="images/cart1.jpg" alt="">
-                <div class="content">
-                    <h3>side dish</h3>
-                    <span class="price">$14.99</span>
-                </div>
-                <span>+</span>
-                <span>1</span>
-                <span>-</span>
-            </div>
-
-            <div class="box">
-                <i class="fas fa-times"></i>
-                <img src="images/cart2.jpg" alt="">
-                <div class="content">
-                    <h3>side dish</h3>
-                    <span class="price">$15.99</span>
-                </div>
-            </div>
-
-            <div class="box">
-                <i class="fas fa-times"></i>
-                <img src="images/cart3.png" alt="">
-                <div class="content">
-                    <h3>side dish</h3>
-                    <span class="price">$14.99</span>
-                </div>
-            </div>
-
-            <div class="box">
-                <i class="fas fa-times"></i>
-                <img src="images/cart4.jpg" alt="">
-                <div class="content">
-                    <h3>side dish</h3>
-                    <span class="price">$18.99</span>
-                </div>
-            </div>
-            <h3 class="total"> total: <span> $56.89</span></h3>
-            <router-link :to="'/checkout'" class="btn">checkout</router-link>
-        </div>    
 
     </header>
 
@@ -89,21 +46,9 @@
 </template>
 
 <script>
-
 export default {
-	data: () => ({
-        
-    }),
+    
     mounted() {
-        let cart = document.querySelector('.shopping-cart');
-
-        // document.querySelector('#cart-btn').onclick = () =>{
-        // cart.classList.toggle('active');
-        // navbar.classList.remove('active');
-        // }
-
-       
-
         let navbar = document.querySelector('.navbar');
 
         // document.querySelector('#menu-btn').onclick = () =>{
@@ -111,13 +56,22 @@ export default {
         // cart.classList.remove('active');
         // }
 
-        window.onscroll = () =>{
-        navbar.classList.remove('active');
-        cart.classList.remove('active');
-        }
+        // window.onscroll = () =>{
+        // navbar.classList.remove('active');
+        // cart.classList.remove('active');
+        // }
 
    
             },
+          methods: {
+            // ShowCard() {
+            //      
+            //      let cart = document.querySelector('.shopping-cart');
+            //       document.querySelector('#cart-btn').onclick = () =>{
+            //       cart.classList.toggle('active');
+            //       }
+            // },
+          }
         }
 </script>
 
