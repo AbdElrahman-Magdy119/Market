@@ -22,7 +22,7 @@ import SubCategoryComponent from "@/layout/user/subcategory/SubCategoryComponent
 import Products from "@/layout/admin/Products/Products.vue";
 import ProductBySubcategoryComponent from "@/layout/user/ProductBySubcategory/ProductBySubcategoryComponent.vue";
 import PackagesDetailsComponent from "@/layout/user/PackagesDetails/PackagesDetailsComponent.vue";
-import ProductDetailsComponent from "@/layout/user/ProductDetails/ProductDetailsComponent.vue";
+// import ProductDetailsComponent from "@/layout/user/ProductDetails/productDetailsComponent.vue";
 
 import Categories from "@/layout/admin/Categories/Categories.vue";
 import SubCategories from "@/layout/admin/Categories/SubCategories.vue";
@@ -70,7 +70,7 @@ const router = createRouter({
         },
         {
           path:'/productDetails/:idProduct',
-          component:ProductDetailsComponent
+          // component:ProductDetailsComponent
         },
         //  Here Add any route to show in mainpage that contains Header and footer Component
       ],
@@ -111,8 +111,7 @@ const router = createRouter({
         {
           path: "subcategories",
           component: SubCategories,
-        },
-                
+        }
       ],
     },
     {
