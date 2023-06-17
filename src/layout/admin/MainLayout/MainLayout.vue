@@ -51,14 +51,9 @@
     	    </nav>
             <!-- Page Content  -->
             <div id="content" class="p-4 p-md-5 pt-5 ">
-
-                <div> 
-                    <RouterView></RouterView>
-                </div>
-
+                <RouterView></RouterView>
             </div>
         </div>
-
         <footer>
             <FooterComponent/>
         </footer>
