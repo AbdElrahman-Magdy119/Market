@@ -63,7 +63,7 @@
         <input type="file" name="image" @change="handleFileSelect" accept="image/*" :maxFileSize="1000000" />
       </div>
       <div class="field">
-        <label for="package_items">Package Items</label>
+        <label for="package_items" >Package Items</label>
         <div v-for="(item, index) in package.package_items" :key="index" class="p-field">
           <div class="p-grid">
             <div class="p-col-4">
@@ -77,19 +77,18 @@
               />
             </div>
             <div class="p-col-4">
+              <label for="quantity">Quantity</label>
               <div class="quantity-control">
-                <button class="decrement" @click="decrementQuantity(item)">-</button>
-                <input type="number" v-model="item.quantity" :readonly="true" />
-                <button class="increment" @click="incrementQuantity(item)">+</button>
+                <Button class="decrement" icon="pi pi-minus" @click="decrementQuantity(item)"></Button>
+                <InputNumber v-model="item.quantity" readonly></InputNumber>
+                <Button class="increment" icon="pi pi-plus" @click="incrementQuantity(item)"></Button>
               </div>
             </div>
-            <!--            <div class="p-col-4">-->
-            <!--              <div>{{ calculateItemPrice(item) }}</div>-->
-            <!--            </div>-->
-            <input type="number" :readonly="true"  v-model.trim="item.price" />
+            <label for="price">Price</label>
+            <InputNumber v-model.trim="item.price" readonly></InputNumber>
           </div>
         </div>
-        <Button icon="pi pi-plus" label="Add Item" @click="addPackageItem" />
+        <Button icon="pi pi-plus" class="mt-3" label="Add Item" @click="addPackageItem"></Button>
       </div>
       <div class="field">
         <label for="discount">Discount (%)</label>
@@ -398,3 +397,8 @@ export default {
   }
 }
 </script>
+<style scoped>
+.quantity-control{
+  display:flex;
+}
+</style>
