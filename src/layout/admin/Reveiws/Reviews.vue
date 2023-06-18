@@ -173,11 +173,11 @@ export default {
                     reviewService.updateReview(this.review.id, this.review)
                         .then(() => {
                             this.reviews[this.findIndexById(this.review.id)] = this.review;
-                            this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'review Updated', life: 3000 });
+                            this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Review Updated', life: 3000 });
                         })
                         .catch(error => {
                             console.error(error);
-                            this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to update review', life: 3000 });
+                            this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed To Update Review', life: 3000 });
                         });
                 } else {
                     // Create a new review
@@ -185,11 +185,11 @@ export default {
                         .then(response => {
                             const newreview = response.data; // Assuming the API returns the newly created review
                             this.reviews.push(newreview);
-                            this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'review Created', life: 3000 });
+                            this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Review Created', life: 3000 });
                         })
                         .catch(error => {
                             console.error(error);
-                            this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to create review', life: 3000 });
+                            this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed To Create Review', life: 3000 });
                         });
                 }
 
@@ -213,11 +213,11 @@ export default {
                     this.reviews = this.reviews.filter(val => val.id !== this.review.id);
                     this.deleteReviewDialog = false;
                     this.review = {};
-                    this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'review Deleted', life: 3000 });
+                    this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Review Deleted', life: 3000 });
                 })
                 .catch(error => {
                     console.error(error);
-                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete review', life: 3000 });
+                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed To Delete Review', life: 3000 });
                 });
         },
         findIndexById(id) {
