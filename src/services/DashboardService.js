@@ -19,6 +19,9 @@ const DashboardService = {
     getMostUserPay() {
         return apiClient.get('/dashboard/user-pay');
     },
+    getOrdersStatus(){
+        return apiClient.get('/dashboard/order-status');
+    }
 };
 
 

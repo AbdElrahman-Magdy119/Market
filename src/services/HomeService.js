@@ -29,7 +29,6 @@ const HomeService = {
     getPackageByID(id) {
         return apiClient.get(`/home/packageitems/${id}`);
     },
-  
 };
 
 
