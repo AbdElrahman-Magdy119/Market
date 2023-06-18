@@ -1,15 +1,9 @@
 <template>
-    <div class="chatbot" style="margin-top: 30rem;">
-        <div v-if="messages.length > 0" class="chat-container">
-            <div v-for="message in messages" :key="message.id" class="message">
-                <div v-if="message.isBot" class="bot-message">{{ message.content }}</div>
-                <div v-else class="user-message">{{ message.content }}</div>
-            </div>
+    <div style="margin-top: 10rem;">
+        <div v-for="message in chatMessages" :key="message.id">
+            {{ message }}
         </div>
-        <div class="input-container">
-            <input v-model="userMessage" @keyup.enter="sendMessage" type="text" placeholder="Type a message...">
-            <button @click="sendMessage">Send</button>
-        </div>
+        <input v-model="userInput" @keydown.enter="sendMessage" />
     </div>
 </template>
 
@@ -19,79 +13,75 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            messages: [],
-            userMessage: '',
+            chatMessages: [],
+            userInput: '',
+            languageOptions: [],
+            selectedLanguage: '',
+            questions: [],
+            currentQuestionId: 0,
         };
     },
+    mounted() {
+        this.fetchLanguageOptions();
+    },
     methods: {
-        async sendMessage() {
-            if (this.userMessage.trim() !== '') {
-                this.messages.push({
-                    id: this.messages.length,
-                    content: this.userMessage,
-                    isBot: false,
-                });
-
-                try {
-                    const response = await axios.post('http://localhost:8000/api/chatbot', {
-                        message: this.userMessage,
-                    });
-                    console.log(response);
-                    this.messages.push({
-                        id: this.messages.length,
-                        content: response.data.message,
-                        isBot: true,
-                    });
-
-                    this.userMessage = '';
-                } catch (error) {
+        fetchLanguageOptions() {
+            axios.get('http://localhost:8000/api/chatbot/language-options')
+                .then(response => {
+                    this.languageOptions = response.data.languages;
+                    this.chatMessages.push('Welcome! Please select your preferred language:');
+                    this.chatMessages.push(this.languageOptions.join(', '));
+                })
+                .catch(error => {
                     console.error(error);
-                }
+                });
+        },
+        sendMessage() {
+            const message = this.userInput;
+            this.chatMessages.push(message);
+            this.userInput = '';
+
+            if (!this.selectedLanguage) {
+                // Language selection
+                this.selectedLanguage = message;
+                this.chatMessages.push(`Language selected: ${this.selectedLanguage}`);
+
+                axios.post('http://localhost:8000/api/chatbot/language-selection', { language: this.selectedLanguage })
+                    .then(response => {
+                        this.questions = response.data.questions;
+                        this.chatMessages.push(this.questions[0]);
+                        this.currentQuestionId = 0;
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
+            } else {
+                // Answer submission
+                const answer = message;
+
+                axios.post('http://localhost:8000/api/chatbot/answer', {
+                    language: this.selectedLanguage,
+                    questionId: this.currentQuestionId,
+                    answer: answer
+                })
+                    .then(response => {
+                        const botResponse = response.data.response;
+                        this.chatMessages.push(botResponse);
+
+                        if (this.currentQuestionId < this.questions.length - 1) {
+                            this.currentQuestionId++;
+                            this.chatMessages.push(this.questions[this.currentQuestionId]);
+                        } else {
+                            this.selectedLanguage = '';
+                            this.questions = [];
+                            this.chatMessages.push('Do you want to start over or close the chat?');
+                        }
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    });
             }
         },
     },
 };
 </script>
-
-<style scoped>
-.chatbot {
-    max-width: 400px;
-    margin: 0 auto;
-}
-
-.chat-container {
-    height: 200px;
-    overflow-y: scroll;
-    border: 1px solid #ccc;
-    padding: 10px;
-}
-
-.message {
-    margin-bottom: 10px;
-}
-
-.bot-message {
-    background-color: #f2f2f2;
-    padding: 10px;
-}
-
-.user-message {
-    background-color: #d0edff;
-    padding: 10px;
-}
-
-.input-container {
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.input-container input {
-    flex-grow: 1;
-    padding: 5px;
-}
-
-.input-container button {
-    padding: 5px 10px;
-}
-</style>
