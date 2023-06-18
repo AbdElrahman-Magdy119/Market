@@ -3,8 +3,8 @@ const apiClient = axios.create({
     baseURL: 'http://localhost:8000/api',
     headers: {
         // Add any common headers if needed
-        'Content-Type': 'application/json',
-        'Accept':'application/json',
+        'Content-Type': 'multipart/form-data',
+        // 'Accept':'application/json',
         'Authorization': 'Bearer ' + localStorage.getItem('token')
     },
 });
@@ -16,8 +16,11 @@ const PackageService = {
     addPackage(role) {
         return apiClient.post('/packages',role);
     },
+    getPackageByID(id) {
+        return apiClient.get(`/home/packageitems/${id}`);
+    },
     updatePackage(id,role) {
-        return apiClient.put(`/packages/${id}`,role);
+        return apiClient.post(`/packages/${id}`,role);
     },
     deletePackage(id) {
         return apiClient.delete(`/packages/${id}`);

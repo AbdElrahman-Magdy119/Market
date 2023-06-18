@@ -251,11 +251,11 @@ export default({
                              this.orderStatus = event.status
                             console.log("after updating");
                             console.log(this.orderStatus);
-                            this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'order Updated', life: 3000 });
+                            this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Order Updated', life: 3000 });
                         })
                         .catch(error => {
                             console.error(error);
-                            this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to update order', life: 3000 });
+                            this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed To Update Order', life: 3000 });
                         });
                 }
                 console.log("event");
@@ -305,11 +305,11 @@ export default({
                     this.orders = this.orders.filter(val => val.id !== this.order.id);
                     this.deleteOrderDialog = false;
                     this.order = {};
-                    this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'order Deleted', life: 3000 });
+                    this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Order Deleted', life: 3000 });
                 })
                 .catch(error => {
                     console.error(error);
-                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete order', life: 3000 });
+                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed To Delete Order', life: 3000 });
                 });
         },
         findIndexById(id) {
@@ -332,11 +332,11 @@ export default({
                     this.orders = this.orders.filter(val => !this.selectedorders.includes(val));
                     this.deleteordersDialog = false;
                     this.selectedorders = null;
-                    this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'orders Deleted', life: 3000 });
+                    this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Orders Deleted', life: 3000 });
                 })
                 .catch(error => {
                     console.error(error);
-                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete orders', life: 3000 });
+                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed To Delete Orders', life: 3000 });
                 });
         },
         initFilters() {
