@@ -11,7 +11,7 @@
 	                    <span class="sr-only">Toggle Menu</span>
 	                </button>
                 </div>
-                <div class="p-4">
+                <div class="p-4 navbar-container">
                     <h1>
                         <router-link to="/admin" class="logo">
                             Market

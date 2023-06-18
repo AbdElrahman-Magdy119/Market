@@ -27,7 +27,7 @@ export default {
         }
     },
     created() {
-        this.userName = localStorage.getItem('name').toUpperCase();
+        this.userName = localStorage.getItem('name');
     },
     methods:{
     logout(){

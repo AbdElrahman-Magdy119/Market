@@ -116,7 +116,7 @@ export default {
         deleteSubCategoryDialog: false,
         subCategory: {},
         selectedSubCategories: null,
-        selectedFile:null,
+        selectedFile:[],
         filters: {},
         submitted: false,
     }
@@ -162,7 +162,8 @@ export default {
               .then(() => {
                 this.subCategories[this.findIndexById(this.subCategory.id)] = this.subCategory;
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Updated', life: 3000 });
-                this.subCategory = {};              
+                this.subCategory = {};
+                this.selectedFile = [];
               })
               .catch(error => {
                 console.error(error);
@@ -181,6 +182,7 @@ export default {
                 this.subCategories.push(newCategory);
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Created', life: 3000 });
                 this.subCategory = {};
+                this.selectedFile = [];
               })
               .catch(error => {
                 console.error(error);

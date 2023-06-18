@@ -162,7 +162,7 @@ export default {
       deleteProductDialog: false,
       product: {},
       selectedProducts: null,
-      selectedFile:null,
+      selectedFile:[],
       selectedCate:null,
       isTrend:null,
       filters: {},
@@ -215,6 +215,7 @@ export default {
                 this.subCategories[this.findIndexById(this.product.id)] = this.product;
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Updated', life: 3000 });
                 this.product = {};
+                this.selectedFile = [];
               
               })
               .catch(error => {
@@ -239,6 +240,7 @@ export default {
                 this.products.push(newProduct);
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Created', life: 3000 });
                 this.product = {};
+                this.selectedFile = [];
              
               })
               .catch(error => {
