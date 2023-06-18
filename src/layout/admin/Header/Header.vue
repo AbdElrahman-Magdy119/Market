@@ -10,7 +10,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <form class="d-flex" role="search">
-        <a class="nav-link" aria-current="page" href="#">User Name</a>
+        <a id="username" class="nav-link" aria-current="page" href="#">{{ userName }}</a>
         <button class="logout-button btn btn btn-outline-success" @click="logout">Log Out</button>
       </form>
     </div>
@@ -21,7 +21,15 @@
 <script>
     import * as router from 'vue-router';
 export default {
-  methods:{
+    data(){
+        return{
+            userName:null
+        }
+    },
+    created() {
+        this.userName = localStorage.getItem('name').toUpperCase();
+    },
+    methods:{
     logout(){
       localStorage.clear();
       this.$router.push('/login');
@@ -48,5 +56,9 @@ export default {
 .logout-button:focus
 {
   background-color: #D32F2F !important;
+}
+
+#username:hover{
+    color:WHITE;
 }
 </style>
