@@ -24,7 +24,14 @@
 
         <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
         <Column :field="'index'" header="#" style="width: 3rem" :exportable="false"></Column>
-        <Column field="name" header="Name" sortable style="min-width:16rem"></Column>
+<!--        <Column field="name" header="Name" sortable style="min-width:16rem"></Column>-->
+        <Column header="Name">
+          <template #body="slotProps">
+            <router-link :to="`/admin/package-details/${slotProps.data.id}`">{{ slotProps.data.name }}</router-link>
+          </template>
+        </Column>
+
+
         <Column field="total_price" header="total price" sortable style="min-width:16rem"></Column>
         <Column field="image" header="Image" :exportable="false">
           <template #body="slotProps">

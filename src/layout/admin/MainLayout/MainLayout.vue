@@ -1,4 +1,8 @@
 <template>
+        <header>
+            <HeaderComponent/>
+        </header>
+
 		<div class="wrapper d-flex">
 			<nav id="sidebar" class="">
 				<div class="custom-menu">
@@ -29,8 +33,10 @@
                         </li>
                         <li>
                             <router-link to="/admin/subcategories"><span class="fa fa-user mr-3"></span> Sub Categories</router-link>
-                            <router-link to="/admin/category"><span class="fa fa-briefcase mr-3"></span> Category</router-link>
                         </li>
+                      <li>
+                        <router-link to="/admin/packages"><span class="fa fa-briefcase mr-3"></span>Packages</router-link>
+                      </li>
 <!--                        <li>-->
 <!--                            <a href="#"><span class="fa fa-sticky-note mr-3"></span> Blog</a>-->
 <!--                        </li>-->
@@ -45,20 +51,12 @@
     	    </nav>
             <!-- Page Content  -->
             <div id="content" class="p-4 p-md-5 pt-5 ">
-                <div>
-                    <HeaderComponent/>
-                </div>
-
-                <div> 
-                    <RouterView></RouterView>
-                </div>
-
-                <div>
-                    <FooterComponent/>
-                </div>
+                <RouterView></RouterView>
             </div>
         </div>
-
+        <footer>
+            <FooterComponent/>
+        </footer>
 </template>
 
 <script>
