@@ -20,7 +20,7 @@ const PackageService = {
         return apiClient.get(`/home/packageitems/${id}`);
     },
     updatePackage(id,role) {
-        return apiClient.put(`/packages/${id}`,role);
+        return apiClient.post(`/packages/${id}`,role);
     },
     deletePackage(id) {
         return apiClient.delete(`/packages/${id}`);

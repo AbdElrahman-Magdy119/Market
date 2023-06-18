@@ -59,14 +59,6 @@
         <Textarea id="description" v-model.trim="package.description" />
       </div>
       <div class="field">
-        <label for="total_price">Total Price</label>
-        <input :readonly="true" v-model.trim="package.total_price"  />
-      </div>
-      <div class="field">
-        <label for="discount">Discount (%)</label>
-        <input type="number" v-model="package.discount"  @input="calculateDiscount" />
-      </div>
-      <div class="field">
         <label for="image">Image</label>
         <input type="file" name="image" @change="handleFileSelect" accept="image/*" :maxFileSize="1000000" />
       </div>
@@ -98,6 +90,15 @@
           </div>
         </div>
         <Button icon="pi pi-plus" label="Add Item" @click="addPackageItem" />
+      </div>
+      <div class="field">
+        <label for="discount">Discount (%)</label>
+        <InputNumber v-model="package.discount" @input="calculateDiscount"></InputNumber>
+      </div>
+
+      <div class="field">
+        <label for="total_price">Total Price</label>
+        <InputNumber :readonly="true" v-model.trim="package.total_price"></InputNumber>
       </div>
       <template #footer>
         <Button label="Cancel" icon="pi pi-times" text @click="hideDialog" />
@@ -274,21 +275,25 @@ export default {
     },
     savepackage() {
       this.submitted = true;
-      if (this.package.name && this.package.total_price && this.package.image) {
+      if (this.package.name && this.package.total_price) {
         console.log('desc',this.package.description);
-
-        const formData = new FormData();
-        formData.append('name', this.package.name);
-        formData.append('total_price', this.package.total_price);
-        formData.append('description', this.package.description);
-        formData.append('image', this.package.image, this.package.image.name); // Append the image file to the form data
-        this.package.package_items.forEach((item, index) => {
-          formData.append(`package_items[${index}][product_id]`, item.product_id);
-          formData.append(`package_items[${index}][quantity]`, item.quantity);
-          formData.append(`package_items[${index}][price]`, item.price);
-        });
         if (this.package.id) {
+          const formData = new FormData();
+          formData.append('name', this.package.name);
+          formData.append('total_price', this.package.total_price);
+          formData.append('description', this.package.description);
+          if (this.package.image) {
+            formData.append('image', this.package.image, this.package.image.name);
+          } else {
+            formData.append('image', null);
+          }
+          this.package.package_items.forEach((item, index) => {
+            formData.append(`package_items[${index}][product_id]`, item.product_id);
+            formData.append(`package_items[${index}][quantity]`, item.quantity);
+            formData.append(`package_items[${index}][price]`, item.price);
+          });
           // Update existing package
+          formData.append('_method','PUT')
           PackageService.updatePackage(this.package.id, formData)
               .then(() => {
                 this.packages[this.findIndexById(this.package.id)] = this.package;
@@ -309,6 +314,21 @@ export default {
                 });
               });
         } else {
+
+          const formData = new FormData();
+          formData.append('name', this.package.name);
+          formData.append('total_price', this.package.total_price);
+          formData.append('description', this.package.description);
+          if (this.package.image) {
+            formData.append('image', this.package.image, this.package.image.name);
+          } else {
+            formData.append('image', null);
+          }
+          this.package.package_items.forEach((item, index) => {
+            formData.append(`package_items[${index}][product_id]`, item.product_id);
+            formData.append(`package_items[${index}][quantity]`, item.quantity);
+            formData.append(`package_items[${index}][price]`, item.price);
+          });
           // Create a new package
           PackageService.addPackage(formData)
               .then(response => {
