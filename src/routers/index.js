@@ -24,6 +24,7 @@ import Packages from "@/layout/admin/Packages/Packages.vue";
 import ProductBySubcategoryComponent from "@/layout/user/ProductBySubcategory/ProductBySubcategoryComponent.vue";
 import PackagesDetailsComponent from "@/layout/user/PackagesDetails/PackagesDetailsComponent.vue";
 import ProductDetailsComponent from "@/layout/user/ProductDetails/ProductDetailsComponent.vue";
+
 import Categories from "@/layout/admin/Categories/Categories.vue";
 import SubCategories from "@/layout/admin/Categories/SubCategories.vue";
 import CartComponent from "@/layout/user/Cart/CartComponent.vue";
@@ -92,7 +93,7 @@ const router = createRouter({
     {
       path: "/admin",
       component: MainLayout,
-      beforeEnter: requireAdminAuth,
+      // beforeEnter: requireAdminAuth,
       children: [
         {
           path: "",

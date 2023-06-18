@@ -1,4 +1,8 @@
 <template>
+        <header>
+            <HeaderComponent/>
+        </header>
+
 		<div class="wrapper d-flex">
 			<nav id="sidebar" class="">
 				<div class="custom-menu">
@@ -47,20 +51,12 @@
     	    </nav>
             <!-- Page Content  -->
             <div id="content" class="p-4 p-md-5 pt-5 ">
-                <div>
-                    <HeaderComponent/>
-                </div>
-
-                <div> 
-                    <RouterView></RouterView>
-                </div>
-
-                <div>
-                    <FooterComponent/>
-                </div>
+                <RouterView></RouterView>
             </div>
         </div>
-
+        <footer>
+            <FooterComponent/>
+        </footer>
 </template>
 
 <script>
