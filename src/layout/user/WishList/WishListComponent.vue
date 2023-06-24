@@ -16,7 +16,7 @@
 
 </head>
 <body>
-  <div>
+  <div style="margin-top: 10rem;">
     wishlist
   </div>
 </body>
@@ -29,6 +29,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 </style>
