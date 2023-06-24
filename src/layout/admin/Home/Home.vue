@@ -136,11 +136,6 @@ export default {
           return {
               responsive: true,
               maintainAspectRatio: false,
-              scales: {
-                  y: {
-                      beginAtZero: true,
-                  },
-              },
           };
       },
   },

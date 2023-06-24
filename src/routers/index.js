@@ -30,6 +30,7 @@ import SubCategories from "@/layout/admin/Categories/SubCategories.vue";
 import CartComponent from "@/layout/user/Cart/CartComponent.vue";
 import ChatbotComponent from "@/layout/user/ChatbotComponent/ChatbotComponent.vue";
 import PackageDetails from "@/layout/admin/PackageDetails/PackageDetails.vue";
+import Users from "@/layout/admin/Users/Users.vue";
 
 
 const router = createRouter({
@@ -134,6 +135,10 @@ const router = createRouter({
         {
           path: "subcategories",
           component: SubCategories,
+        },
+        {
+          path: "users",
+          component: Users,
         },
       ],
     },

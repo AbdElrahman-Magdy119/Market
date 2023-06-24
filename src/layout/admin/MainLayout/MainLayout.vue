@@ -26,25 +26,22 @@
                             <router-link to="/admin/roles"><span class="fa fa-user mr-3"></span> Roles</router-link>
                         </li>
                         <li>
-                            <router-link to="/admin/products"><span class="fa fa-user mr-3"></span> Products</router-link>
+                            <router-link to="/admin/products"><span class="mr-3 fa-brands fa-product-hunt"></span> Products</router-link>
                         </li>
                         <li>
-                            <router-link to="/admin/categories"><span class="fa fa-user mr-3"></span> Categories</router-link>
+                            <router-link to="/admin/categories"><span class="fa-solid fa-book-open mr-3"></span> Categories</router-link>
                         </li>
                         <li>
-                            <router-link to="/admin/subcategories"><span class="fa fa-user mr-3"></span> Sub Categories</router-link>
+                            <router-link to="/admin/subcategories"><span class="fa-solid fa-code-branch mr-3"></span> Sub Categories</router-link>
                         </li>
                       <li>
                         <router-link to="/admin/packages"><span class="fa fa-briefcase mr-3"></span>Packages</router-link>
                       </li>
-<!--                        <li>-->
-<!--                            <a href="#"><span class="fa fa-sticky-note mr-3"></span> Blog</a>-->
-<!--                        </li>-->
-<!--                        <li>-->
-<!--                            <a href="#"><span class="fa fa-suitcase mr-3"></span> Gallery</a>-->
-<!--                        </li>-->
                         <li>
-                            <router-link to="/admin/orders"><span class="fa fa-cogs mr-3"></span> Orders</router-link>
+                            <router-link to="/admin/orders"><span class="fa-brands fa-first-order mr-3"></span> Orders</router-link>
+                        </li>
+                        <li>
+                            <router-link to="/admin/users"><span class="fa fa-users mr-3"></span> Users</router-link>
                         </li>
                     </ul>
                 </div>
