@@ -230,7 +230,7 @@ export default {
                 .then(() => {
                     this.users = this.users.filter(val => val.id !== this.user.id);
                     this.deleteuserDialog = false;
-                    this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'user Deleted', life: 3000 });
+                    this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'User Deleted', life: 3000 });
                     usersService.getAllUsers().then((data) => {
                         this.users = data.data.users;
                         console.log(this.users)
