@@ -56,11 +56,13 @@
       </div>
       <div class="field">
         <label for="description">Description</label>
-        <Textarea id="description" v-model.trim="package.description" />
+        <Textarea id="description" v-model.trim="package.description" :class="{'p-invalid': submitted && !package.description}" />
+        <small class="p-error" v-if="submitted && !package.description">Description is required.</small>
       </div>
       <div class="field">
         <label for="image">Image</label>
         <input type="file" name="image" @change="handleFileSelect" accept="image/*" :maxFileSize="1000000" />
+        <small class="p-error" v-if="submitted && !package.image">Image is required.</small>
       </div>
       <div class="field">
         <label for="package_items" >Package Items</label>
@@ -274,13 +276,15 @@ export default {
     },
     savepackage() {
       this.submitted = true;
-      if (this.package.name && this.package.total_price) {
-        console.log('desc',this.package.description);
+      if (this.package.name && this.package.total_price && this.package.description) {
+        // console.log('desc',this.package.description);
         if (this.package.id) {
           const formData = new FormData();
           formData.append('name', this.package.name);
           formData.append('total_price', this.package.total_price);
           formData.append('description', this.package.description);
+          formData.append('discount', this.package.discount);
+
           if (this.package.image) {
             formData.append('image', this.package.image, this.package.image.name);
           } else {
@@ -318,6 +322,7 @@ export default {
           formData.append('name', this.package.name);
           formData.append('total_price', this.package.total_price);
           formData.append('description', this.package.description);
+          formData.append('discount', this.package.discount);
           if (this.package.image) {
             formData.append('image', this.package.image, this.package.image.name);
           } else {
