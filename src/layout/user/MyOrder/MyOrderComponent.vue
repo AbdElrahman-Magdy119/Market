@@ -7,36 +7,30 @@
                           <table>
                               <thead>
                                   <tr>
-                                      <th class="shoping__product">id</th> 
-                                      <th>Quantity</th>
+                                      <th class="shoping__product">ID</th>
+                                      <th>Status</th>
                                       <th>Tracking Number</th>
                                       <th>Total Price</th>
+                                      <th></th>
                                   </tr>
                               </thead>
                               <tbody>
   
-                                  <tr v-for="usercart in UserCart" :key="usercart.id">
-                                      <td class="shoping__cart__item">
-                                          <img :src="`http://localhost:8000/`+ usercart.product_id.image" :alt="usercart.product_id.name" >
-                                          <h5>{{ usercart.product_id.name }}</h5>
+                                  <tr v-for="(userorder, index) in UserOrders" :key="userorder.id">
+                                      <td class="shoping__cart__price">
+                                          {{ index + 1 }}
                                       </td>
                                       <td class="shoping__cart__price">
-                                          {{ usercart.product_id.price }}
+                                          {{ userorder.status }}
                                       </td>
-                                      <td class="shoping__cart__quantity">
-                                          <div class="quantity">
-                                              <div class="pro-qty">
-                                                  <span class="increase h1">+</span>
-                                                  <input type="text" value="1">
-                                                  <span class="decrease h1"><b>-</b></span>
-                                              </div>
-                                          </div>
+                                      <td class="shoping__cart__price">
+                                          {{ userorder.tracking_no }}
                                       </td>
-                                      <td class="shoping__cart__total">
-                                          $110.00
+                                      <td class="shoping__cart__price">
+                                          {{ userorder.total_price }}
                                       </td>
-                                      <td class="shoping__cart__item__close">
-                                          <span class="icon_close"><i class="fa-solid fa-xmark" @click="deleteProductFromCart(usercart.product_id.id)"></i></span>
+                                      <td v-if="userorder.status === 'Processing'" class="shoping__cart__price">
+                                        <a class="btn btn-outline-danger" @click="deleteOrder(userorder.id)">Delete</a>
                                       </td>
                                   </tr>
                                  
@@ -51,7 +45,12 @@
   
   <script>
   import HomeService  from '@/services/HomeService';
+  import Button from 'primevue/button'
+  import usersService from "@/services/UserService";
   export default {
+      components:{
+          Button,
+      },
       data() {
           return {
               UserOrders: [], // Initialize as an empty array
@@ -60,11 +59,28 @@
        mounted() {
         const UserId = localStorage.getItem('id');
         HomeService.getOrderByUserId(UserId).then((data) => {
-        this.UserOrders = data.data;
+        this.UserOrders = data.data.data;
           console.log(this.UserOrders)
           });
        },
        methods:{
+           deleteOrder(order_id){
+               HomeService.deleteOrder(order_id)
+                   .then(() => {
+                       this.UserOrders = this.UserOrders.filter(val => val.id !== order_id);
+                       this.deleteuserDialog = false;
+                       this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Order Deleted', life: 3000 });
+                       const UserId = localStorage.getItem('id');
+                       HomeService.getOrderByUserId(UserId).then((data) => {
+                           this.UserOrders = data.data.data;
+                           console.log(this.UserOrders)
+                       });
+                   })
+                   .catch(error => {
+                       console.error(error);
+                       this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete order', life: 3000 });
+                   });
+           },
           
        },
      

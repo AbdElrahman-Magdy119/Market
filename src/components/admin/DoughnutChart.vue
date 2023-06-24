@@ -1,6 +1,6 @@
 <template>
     <div class="card flex justify-content-center">
-        <Chart type="doughnut" :data="doughnutData" :options="doughnutOptions" class="w-full md:w-30rem"/>
+        <Chart type="doughnut" :data="doughnutData" width="100px" height="100px" :options="doughnutOptions" class="w-full md:w-40rem"/>
     </div>
 </template>
 
