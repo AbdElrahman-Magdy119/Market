@@ -22,7 +22,7 @@
 
         <nav class="navbar">
             <router-link :to="'/'"> Home </router-link>
-            <router-link :to="'/shop'">product</router-link>
+            <router-link :to="'/allproducts'">product</router-link>
             <router-link :to="'/allpackages'">Package</router-link>
             <router-link :to="'/contact'">Contact</router-link>
         </nav>
