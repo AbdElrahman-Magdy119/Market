@@ -15,6 +15,12 @@ const WishListService = {
     },
     updateUser(user_id, updatedUser){
         return apiClient.put(`/users/${user_id}/role`, updatedUser);
+    },
+    addUser(new_user){
+        return apiClient.post(`/register`, new_user);
+    },
+    deleteUser(user_id){
+        return apiClient.delete(`/users/${user_id}`);
     }
 };
 

@@ -51,14 +51,32 @@
 
         <div class="field">
             <label for="lastName">Last Name</label>
-            <Textarea id="lastName" v-model="user.lastName" required="true" rows="3" cols="20" />
+            <InputText id="lastName" v-model="user.lastName" required="true" rows="3" cols="20" :class="{'p-invalid': submitted && !user.lastName}"/>
+            <small class="p-error" v-if="submitted && !user.lastName">Last Name is required.</small>
+        </div>
+
+        <div class="field">
+            <label for="email">E-mail</label>
+            <InputText id="email" v-model="user.email" required="true" rows="3" cols="20" :class="{'p-invalid': submitted && !user.email}"/>
+            <small class="p-error" v-if="submitted && !user.email">E-mail is required.</small>
+        </div>
+
+
+        <div class="field">
+            <label for="lastName">Password</label>
+            <InputText id="lastName" v-model="user.password" required="true" rows="3" cols="20" :class="{'p-invalid': submitted && !user.password}"/>
+            <small class="p-error" v-if="submitted && !user.password">Password is required.</small>
         </div>
 
         <div class="field">
             <label for="role_id">Role</label>
-            <Dropdown id="role_id" v-model="selectedCate" :options="roles" optionLabel="name"
-                      option-value="id" placeholder="Select a Role" @change="saveuser($event)"
-                      class="w-full md:w-14rem" :class="{'p-invalid': submitted && !user.role_id}" />
+            <Dropdown id="role_id"
+                      :options="roles" optionLabel="name"
+                      :value="roles.name"
+                      placeholder="Change User Role"
+                      optionValue="id" @change="saveuser($event)"
+                      class="w-full md:w-14rem"
+                      :class="{'p-invalid': submitted && !user.role_id}" />
             <small class="p-error" v-if="submitted && !user.role_id">Role is required.</small>
         </div>
 
@@ -114,7 +132,6 @@ export default {
         FileUpload,
         Toast
     },
-
     data() {
         return {
             users: [], // Initialize as an empty array
@@ -123,13 +140,12 @@ export default {
             user: {},
             selectedusers: null,
             selectedFile:[],
-            selectedCate:null,
+            roles:null,
             isTrend:null,
             filters: {},
             submitted: false,
         }
     },
-
     created() {
         this.initFilters();
         // Add index property to each user object
@@ -137,7 +153,6 @@ export default {
             user.index = index + 1; // Adding 1 to display index starting from 1
         });
     },
-
     mounted() {
         usersService.getAllUsers().then((data) => {
             this.users = data.data.users;
@@ -152,10 +167,8 @@ export default {
             this.roles = data.data.data;
         });
     },
-
     methods: {
         saveuser(event) {
-            // console.log("User id: "+this.user.id + " role number: " + event.value);
             this.submitted = true;
             if (this.user.name) {
                 if (this.user.id) {
@@ -169,8 +182,6 @@ export default {
                             this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Role Updated', life: 3000 });
                             usersService.getAllUsers().then((data) => {
                                 this.users = data.data.users;
-                                console.log(this.users)
-
                                 this.users.forEach((user, index) => {
                                     user.index = index + 1; // Adding 1 to display index starting from 1
                                 });
@@ -182,31 +193,29 @@ export default {
                         });
                 } else {
                     // Create a new user
-                    const formData = new FormData();
-                    formData.append('image', this.selectedFile);
-                    formData.append('name', this.user.name);
-                    formData.append('description', this.user.description);
-                    formData.append('price', this.user.price);
-                    formData.append('quantity', this.user.quantity);
-                    formData.append('discount', this.user.discount);
-                    formData.append('subcategory_id', this.selectedCate);
-                    formData.append('trend', 1);
-
-                    usersService.adduser(formData)
+                    const new_user = {
+                        email: this.user.email,
+                        name: this.user.name,
+                        lastName:this.user.lastName,
+                        password: this.user.password
+                    }
+                    usersService.addUser(new_user)
                         .then(response => {
                             const newuser = response.data.data; // Assuming the API returns the newly created user
                             this.users.push(newuser);
                             this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Created', life: 3000 });
-                            this.user = {};
-                            this.selectedFile = [];
-
+                            usersService.getAllUsers().then((data) => {
+                                this.users = data.data.users;
+                                this.users.forEach((user, index) => {
+                                    user.index = index + 1; // Adding 1 to display index starting from 1
+                                });
+                            });
                         })
                         .catch(error => {
                             console.error(error);
                             this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to create user', life: 3000 });
                         });
                 }
-
                 this.userDialog = false;
                 this.submitted = false;
             }
@@ -217,25 +226,30 @@ export default {
         },
         deleteuser()
         {
-            usersService.deleteuser(this.user.id)
+            usersService.deleteUser(this.user.id)
                 .then(() => {
                     this.users = this.users.filter(val => val.id !== this.user.id);
                     this.deleteuserDialog = false;
-                    this.user = {};
                     this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'user Deleted', life: 3000 });
+                    usersService.getAllUsers().then((data) => {
+                        this.users = data.data.users;
+                        console.log(this.users)
+
+                        this.users.forEach((user, index) => {
+                            user.index = index + 1; // Adding 1 to display index starting from 1
+                        });
+                    });
                 })
                 .catch(error => {
                     console.error(error);
                     this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to delete user', life: 3000 });
                 });
         },
-
         confirmDeleteuser(user)
         {
             this.user = user;
             this.deleteuserDialog = true;
         },
-
         openNew() {
             this.user = {};
             this.submitted = false;
@@ -245,7 +259,6 @@ export default {
             this.userDialog = false;
             this.submitted = false;
         },
-
         findIndexById(id) {
             let index = -1;
             for (let i = 0; i < this.users.length; i++) {
@@ -256,22 +269,14 @@ export default {
             }
             return index;
         },
-
         confirmDeleteSelected() {
             this.deleteuserDialog = true;
         },
-
         initFilters() {
             this.filters = {
                 'global': { value: null, matchMode: FilterMatchMode.CONTAINS },
             }
         },
-        handleFileSelect(event) {
-            if (event.target.files.length >= 0) {
-                this.selectedFile = event.target.files[0];
-            }
-        }
     }
-
 }
 </script>
