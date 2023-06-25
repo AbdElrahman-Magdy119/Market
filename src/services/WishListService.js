@@ -10,18 +10,18 @@ const apiClient = axios.create({
 });
 
 const WishListService = {
-    // getAllRoles() {
-    //     return apiClient.get('/roles');
-    // },
-    addToWishList(product) {
-        return apiClient.post('/wishlist',product);
-    },
-    // updateRole(id,role) {
-    //     return apiClient.put(`/roles/${id}`,role);
-    // },
-    // deleteRole(id) {
-    //     return apiClient.delete(`/roles/${id}`);
-    // },
+  getWishlist() {
+      return apiClient.get("/wishlist");
+  },
+  addToWishList(product) {
+    return apiClient.post("/wishlist", product);
+  },
+  // updateRole(id,role) {
+  //     return apiClient.put(`/roles/${id}`,role);
+  // },
+  deleteProduct(id) {
+      return apiClient.delete(`/wishlist/${id}`);
+  },
 };
 
 
