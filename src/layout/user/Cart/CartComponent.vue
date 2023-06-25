@@ -27,9 +27,9 @@
                                     <td class="shoping__cart__quantity">
                                         <div class="quantity">
                                             <div class="pro-qty">
-                                                <span class="increase h1">+</span>
+												<span class="dec qtybtn">-</span> 
                                                 <input type="text" value="1">
-                                                <span class="decrease h1"><b>-</b></span>
+                                                <span class="inc qtybtn">+</span>
                                             </div>
                                         </div>
                                     </td>
@@ -205,7 +205,8 @@ p {
 }
 
 img {
-	max-width: 100%;
+	width: 100px;
+	height: 100px;
 }
 
 input:focus,
