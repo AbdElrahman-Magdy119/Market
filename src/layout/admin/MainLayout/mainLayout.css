@@ -11803,13 +11803,11 @@ h5,
     max-width: 280px;
     height: 100%;
     background: #343a40;
-    padding-top: 20px;
+    padding-left: 7px;
     color: #fff;
-    -webkit-transition: all 0.3s;
-    -o-transition: all 0.3s;
     transition: all 0.3s;
-    position: fixed;
-    top: 0;
+    position: relative;
+    top: -4px;
     left: 0;
     z-index: 1;
 }
@@ -11876,15 +11874,30 @@ h5,
 @media (max-width: 991.98px) {
     #sidebar {
         margin-left: -280px;
+        padding-left: 7px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1;
 
     }
     #content
     {
         width: 100% !important;
     }
+    #content .card
+    {
+        width: 100%;
+    }
     #sidebar.active {
         margin-left: 0;
     }
+
+    .navbar-container
+    {
+        overflow: scroll;
+        height: 108vh;
+    }    
 }
 
 #sidebar .custom-menu {
@@ -11965,7 +11978,7 @@ a[data-toggle="collapse"] {
 }
 
 #content {
-    width: 80%;
+    width: 100%;
     padding: 0;
     min-height: 100vh;
     -webkit-transition: all 0.3s;
@@ -11973,6 +11986,8 @@ a[data-toggle="collapse"] {
     transition: all 0.3s;
     padding: 0px 10px;
     margin: auto;
+    height: 100vh;
+    overflow: scroll;    
 }
 
 .btn.btn-primary {
@@ -12041,4 +12056,10 @@ a[data-toggle="collapse"] {
     background-color: #343a40;
     border-radius: 5px;
 
+}
+
+#content .card
+{
+    width: 80%;
+    margin: auto;
 }

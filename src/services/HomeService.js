@@ -5,7 +5,7 @@ const apiClient = axios.create({
         // Add any common headers if needed
         'Content-Type': 'application/json',
         'Accept':'application/json',
-        // 'Authorization': 'Bearer ' + localStorage.getItem('token')
+        'Authorization': 'Bearer ' + localStorage.getItem('token')
     },
 });
 
@@ -29,6 +29,12 @@ const HomeService = {
     getPackageByID(id) {
         return apiClient.get(`/home/packageitems/${id}`);
     },
+    getOrderByUserId(userId){
+        return apiClient.get(`/home/orders/${userId}`);
+    },
+    deleteOrder(order_tracking){
+        return apiClient.delete(`/home/orders/${order_tracking}`);
+    }
 };
 
 

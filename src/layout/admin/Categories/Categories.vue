@@ -110,7 +110,7 @@ export default {
       deleteCategoryDialog: false,
       category: {},
       selectedCategories: null,
-      selectedFile:null,
+      selectedFile:[],
       filters: {},
       submitted: false,
     }
@@ -151,6 +151,7 @@ export default {
                 this.categories[this.findIndexById(this.category.id)] = this.category;
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Updated', life: 3000 });
                 this.category = {};
+                this.selectedFile = [];
               })
               .catch(error => {
                 console.error(error);
@@ -168,7 +169,7 @@ export default {
                 this.categories.push(newCategory);
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Created', life: 3000 });
                 this.category = {};
-             
+                this.selectedFile = [];
               })
               .catch(error => {
                 console.error(error);

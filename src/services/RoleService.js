@@ -12,7 +12,6 @@ const apiClient = axios.create({
 
 const RoleService = {
     getAllRoles() {
-        console.log(process.env.API_URL);
         return apiClient.get('/roles');
     },
     addRole(role) {
