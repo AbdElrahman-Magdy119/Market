@@ -15,6 +15,9 @@ const authService = {
     register(credentials) {
         return apiClient.post('/register', credentials);
     },
+    googleLogin(token) {
+        return apiClient.post('/login/google', { token });
+    },
 };
 
 
