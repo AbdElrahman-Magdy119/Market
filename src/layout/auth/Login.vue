@@ -51,7 +51,7 @@
         <i class="fab fa-facebook-f"></i>
       </button>
 
-      <button type="button" class="btn btn-link btn-floating mx-1">
+      <button type="button" class="btn btn-link btn-floating mx-1" @click="googleLogin">
         <i class="fab fa-google"></i>
       </button>
 
@@ -79,10 +79,12 @@ import 'primeicons/primeicons.css';
 import authService from '@/services/AuthService';
 import * as router from 'vue-router';
 import { useAuthStore } from '@/store/AuthStore' ;
+import  GoogleSignInButton  from 'vue-google-signin-button';
 
 export default {
   components: {
     Toast,
+    GoogleSignInButton
   },
   data() {
     return {
@@ -98,7 +100,6 @@ export default {
         email: this.email,
         password: this.password,
       };
-
       authService
           .login(credentials)
           .then(response => {
@@ -139,6 +140,41 @@ export default {
               console.log(error);
             this.message = "Wrong E-mail or Password"
           });
+    },
+    googleLogin() {
+      // Call the Google Sign-In API or navigate to the Google Sign-In page
+      gapi.gload('auth2', () => {
+        gapi.auth2.init({
+          client_id: '380461466531-96gor4tmukkkijan8kia9plir6c1g112.apps.googleusercontent.com',
+        }).then(() => {
+          const auth2 = gapi.auth2.getAuthInstance();
+          auth2.signIn().then((googleUser) => {
+            const id_token = googleUser.getAuthResponse().id_token;
+
+            // Call your backend API to authenticate the user with the Google ID token
+            authService.googleLogin({ id_token })
+                .then((response) => {
+                  // Handle successful login
+                  const token = response.data.token;
+                  const name = response.data.name;
+                  const role = response.data.role.name;
+                  const id = response.data.id;
+                  localStorage.setItem('token', token);
+                  localStorage.setItem('name', name);
+                  localStorage.setItem('role', role);
+                  localStorage.setItem('id', id);
+                  // Navigate to the desired route or perform any other action
+                })
+                .catch((error) => {
+                  // Handle login error
+                  console.log(error);
+                });
+          }).catch((error) => {
+            // Handle sign-in error
+            console.log(error);
+          });
+        });
+      });
     },
   },
 };
