@@ -32,8 +32,8 @@ const HomeService = {
     getOrderByUserId(userId){
         return apiClient.get(`/home/orders/${userId}`);
     },
-    deleteOrder(order_id){
-        return apiClient.delete(`/home/orders/${order_id}`);
+    deleteOrder(order_tracking){
+        return apiClient.delete(`/home/orders/${order_tracking}`);
     }
 };
 

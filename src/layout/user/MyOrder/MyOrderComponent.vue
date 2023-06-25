@@ -33,7 +33,7 @@
                                           {{ userorder.total_price }}
                                       </td>
                                       <td v-if="userorder.status === 'Processing'" class="shoping__cart__price">
-                                        <a class="btn btn-outline-danger" @click="deleteOrder(userorder.id)">Delete</a>
+                                        <a class="btn btn-outline-danger" @click="deleteOrder(userorder.tracking_no)">Cancel</a>
                                       </td>
                                   </tr>
                                  
@@ -70,10 +70,10 @@
           });
        },
        methods:{
-           deleteOrder(order_id){
-               HomeService.deleteOrder(order_id)
+           deleteOrder(order_tracking_number){
+               HomeService.deleteOrder(order_tracking_number)
                    .then(() => {
-                       this.UserOrders = this.UserOrders.filter(val => val.id !== order_id);
+                       this.UserOrders = this.UserOrders.filter(val => val.tracking_no !== order_tracking_number);
                        this.deleteuserDialog = false;
                        this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Order Deleted', life: 3000 });
                        const UserId = localStorage.getItem('id');
