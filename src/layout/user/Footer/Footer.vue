@@ -76,7 +76,6 @@ export default {
 
         document.querySelector('#menu-btn').onclick = () =>{
         navbar.classList.toggle('active');
-        cart.classList.remove('active');
         }
 
         // window.onscroll = () =>{
