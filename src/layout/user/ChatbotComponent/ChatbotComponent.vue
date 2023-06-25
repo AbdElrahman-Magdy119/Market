@@ -66,6 +66,7 @@
         <div class="input-container">
             <button @click="sendMessage">Send</button>
         </div>
+        <input v-model="userInput" @keydown.enter="sendMessage" />
     </div>
 </template>
 

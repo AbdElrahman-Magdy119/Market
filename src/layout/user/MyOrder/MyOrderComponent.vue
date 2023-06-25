@@ -1,5 +1,8 @@
-<template>
+<template>        
+
     <section class="shoping-cart spad">
+        <Toast></Toast>
+
           <div class="container">
               <div class="row">
                   <div class="col-lg-12">
@@ -47,9 +50,12 @@
   import HomeService  from '@/services/HomeService';
   import Button from 'primevue/button'
   import usersService from "@/services/UserService";
+  import  Toast  from 'primevue/toast';
+
   export default {
       components:{
           Button,
+          Toast
       },
       data() {
           return {
