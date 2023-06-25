@@ -127,7 +127,7 @@ export default {
               email: email,
             }
 
-            AuthStore.user=userData;
+            useAuthStore().setUser(userData); // Update the user data in the store
             console.log(AuthStore.user);
             localStorage.setItem('token', token);
             localStorage.setItem('name', name);
