@@ -124,7 +124,7 @@ export default {
     },
     googleLogin() {
       // Call the Google Sign-In API or navigate to the Google Sign-In page
-      gapi.gload('auth2', () => {
+      gapi.load('auth2', () => {
         gapi.auth2.init({
           client_id: '380461466531-96gor4tmukkkijan8kia9plir6c1g112.apps.googleusercontent.com',
         }).then(() => {
