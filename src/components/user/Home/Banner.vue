@@ -20,7 +20,7 @@
 
     <div class="content">
         <h3>buy best <span> organic product </span> online </h3>
-        <router-link :to="'/shop'" class="btn"> Shop Now </router-link>
+        <router-link :to="'/allproducts'" class="btn"> Shop Now </router-link>
     </div>
 
 </section>

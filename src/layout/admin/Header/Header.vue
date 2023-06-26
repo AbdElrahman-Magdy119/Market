@@ -20,6 +20,7 @@
 
 <script>
     import * as router from 'vue-router';
+    import authService from '@/services/AuthService';
 export default {
     data(){
         return{
@@ -41,6 +42,8 @@ export default {
     logout(){
       localStorage.clear();
       this.$router.push('/login');
+      authService.userData = {};
+      console.log(authService.userData);
     }
   }
 }

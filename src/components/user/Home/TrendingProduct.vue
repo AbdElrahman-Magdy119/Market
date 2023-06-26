@@ -28,7 +28,7 @@
 
           <div class="box" v-for="TrendingProduct in TrendingProducts" :key="TrendingProduct.id">
             <div class="image">
-              <!-- <img :src="`http://localhost:8000/`+ TrendingProduct.image" alt="TrendingProduct.name" /> -->
+            <img :src="`http://localhost:8000/`+ TrendingProduct.image" alt="TrendingProduct.name" /> 
             </div>
             <div class="content">
               <h3>{{ TrendingProduct.name }}</h3>

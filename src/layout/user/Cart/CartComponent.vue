@@ -254,7 +254,8 @@ p {
 }
 
 img {
-	max-width: 100%;
+	width: 100px;
+	height: 100px;
 }
 
 input:focus,

@@ -10,6 +10,7 @@ const apiClient = axios.create({
 });
 
 const CartService = {
+    cartItems:[],
     getUserCart() {
         return apiClient.get('/cart');
     },

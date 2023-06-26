@@ -9,6 +9,7 @@ const apiClient = axios.create({
 });
 
 const authService = {
+    userData:{},
     login(credentials) {
         return apiClient.post('/login', credentials);
     },

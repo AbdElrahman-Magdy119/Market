@@ -78,6 +78,7 @@ import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import authService from '@/services/AuthService';
 import * as router from 'vue-router';
+import { useAuthStore } from '@/store/AuthStore' ;
 import  GoogleSignInButton  from 'vue-google-signin-button';
 import GoogleLogin from "@/layout/auth/GoogleLogin.vue";
 
@@ -104,14 +105,32 @@ export default {
       authService
           .login(credentials)
           .then(response => {
-            console.log(response.data);
+            // console.log(response.data);
             // Handle successful login
             this.loginSuccess = true;
             this.message = '';
+            const user={
+              
+            }
             const token = response.data.token;
             const name = response.data.name;
+            const lastName = response.data.lastName;
+            const address = response.data.address;
+            const phone = response.data.phone;
             const role = response.data.role.name;
+            const email=response.data.email;
             const id = response.data.id;
+            const AuthStore=useAuthStore();
+            const userData = {
+              name: name,
+              lastName: lastName,
+              address: address,
+              phone: phone,
+              email: email,
+            }
+
+            useAuthStore().setUser(userData); // Update the user data in the store
+            console.log(AuthStore.user);
             localStorage.setItem('token', token);
             localStorage.setItem('name', name);
             localStorage.setItem('role', role);

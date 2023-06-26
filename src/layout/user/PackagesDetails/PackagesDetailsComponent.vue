@@ -1,42 +1,76 @@
 <template>
-        <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Complete Responsive Grocery Store Website</title>
+    <div v-if="package" class="card mt-5">
+    <div style="margin-top: 10rem">
+      <h1>Package Details</h1>
 
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+      <div class="row">
+        <div class="col-md-6">
+          <img :src="`http://localhost:8000/` + package.image" class="package-image" alt="Package Image">
+        </div>
+        <div class="col-md-6">
+          <div class="card-body">
+            <h5 class="card-title">{{ package.name }}</h5>
+            <p class="card-text">{{ package.description }}</p>
+            <p class="card-text">Total Price: {{ package.total_price }}</p>
+            <p class="card-text">Discount: {{ package.discount }}%</p>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    <!-- font awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <h2>Package Items</h2>
 
-    <link rel="stylesheet" href="/css/style.css">
-
-</head>
-<body>
-  <div style="margin-top:10rem">
-   package details
+    <div class="row">
+      <div class="col-md-6">
+        <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div v-for="(item, index) in PackageItems" :key="item.id" :class="['carousel-item', index === 0 ? 'active' : '']">
+              <img :src="`http://localhost:8000/` + item.product.image" class="d-block w-100" alt="Product Image">
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+          <div v-for="item in PackageItems" :key="item.id" class="col">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">{{ item.product.name }}</h5>
+                <p class="card-text">Quantity: {{ item.quantity }}</p>
+                <p class="card-text">Price: {{ item.price }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</body>
-    </html>
 </template>
 
 <script>
-import HomeService  from '@/services/HomeService';
+import HomeService from '@/services/HomeService';
+
 export default {
-    data() {
-        return {
-            PackageItems: [], // Initialize as an empty array
-        }
-    },
-    mounted() {
-    HomeService.getPackageByID(this.$route.params.idPackage).then((data) => {
-        this.PackageItems = data.data.data;
-        console.log(this.PackageItems);
-		});
+  data() {
+    return {
+      package: null,
+      PackageItems: [],
     }
+  },
+  mounted() {
+    HomeService.getPackageByID(this.$route.params.idPackage).then((data) => {
+      this.package = data.data.data;
+      this.PackageItems = data.data.data.package_items;
+    });
+  },
 }
 </script>
 
