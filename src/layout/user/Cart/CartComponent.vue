@@ -81,6 +81,8 @@
 
 <script>
 import CartService  from '@/services/CartService';
+import { useCartStore } from '@/store/CartStore';
+
 import Toast from "primevue/toast";
 
 export default {
@@ -89,7 +91,7 @@ export default {
     },
     data() {
         return {
-            UserCart: [], // Initialize as an empty array
+            UserCart: [],
         }
      },
      mounted() {
@@ -144,7 +146,7 @@ export default {
                  })
          },
          proceedArray(){
-            CartService.cart_arr = this.UserCart;
+            useCartStore().set_items(this.UserCart)
          },
      },
    

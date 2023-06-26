@@ -29,7 +29,6 @@ const CartService = {
     deleteCart(id) {
         return apiClient.delete(`/cart/${id}`);
     },
-    cart_arr:[],
 };
 
 
