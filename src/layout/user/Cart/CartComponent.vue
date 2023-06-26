@@ -71,7 +71,8 @@
                             <li>Subtotal <span>$454.98</span></li>
                             <li>Total <span>$454.98</span></li>
                         </ul>
-                        <router-link :to="'/checkout'" @click="proceedArray" class="primary-btn"> PROCEED TO CHECKOUT </router-link>
+                        <router-link :to="'/checkout'" @click="proceedToCheckout" class="primary-btn"> PROCEED TO CHECKOUT </router-link>
+<!--                        <button @click="proceedToCheckout">Click me</button>-->
                     </div>
                 </div>
             </div>
@@ -84,6 +85,7 @@ import CartService  from '@/services/CartService';
 import { useCartStore } from '@/store/CartStore';
 
 import Toast from "primevue/toast";
+import {useAuthStore} from "@/store/AuthStore";
 
 export default {
     components:{
@@ -92,6 +94,7 @@ export default {
     data() {
         return {
             UserCart: [],
+            CartStore: useCartStore(),
         }
      },
      mounted() {
@@ -145,15 +148,11 @@ export default {
                      console.log(err);
                  })
          },
-         proceedArray(){
-            useCartStore().set_items(this.UserCart)
+         proceedToCheckout(){
+             this.CartStore.items = this.UserCart;
+             console.log(this.CartStore.items);
          },
      },
-   
-
-     
-
-
 }
 </script>
 
