@@ -31,7 +31,6 @@
            <router-link :to="'/cart'"> <div id="cart-btn" class="fas fa-shopping-basket"></div></router-link>
            <router-link :to="'/wishlist'"> <div class="fas fa-heart" ></div></router-link>
            <router-link :to="'/myorder'"> <div class="fas fa-shop" ></div></router-link>
-             <router-link :to="'/chatbot'"> <div class="fas fa-message"></div></router-link>
            <router-link :to="'/profile'"> <div id="login-btn" class="fas fa-user"></div></router-link>
             <div id="menu-btn" class="fas fa-bars"></div>
         </div>

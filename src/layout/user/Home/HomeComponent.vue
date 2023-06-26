@@ -247,6 +247,7 @@ export default {
                   var element = document.getElementById("chatbot");
                   if (element) {
                     element.style.display = "none";
+                    this.messages=[]
                   }
                   
                 }, 6000); // 1000 milliseconds = 1 second

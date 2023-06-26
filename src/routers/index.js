@@ -28,7 +28,6 @@ import ProductDetailsComponent from "@/layout/user/ProductDetails/ProductDetails
 import Categories from "@/layout/admin/Categories/Categories.vue";
 import SubCategories from "@/layout/admin/Categories/SubCategories.vue";
 import CartComponent from "@/layout/user/Cart/CartComponent.vue";
-import ChatbotComponent from "@/layout/user/ChatbotComponent/ChatbotComponent.vue";
 import PackageDetails from "@/layout/admin/PackageDetails/PackageDetails.vue";
 import Users from "@/layout/admin/Users/Users.vue";
 import AllPackagesComponent from "@/layout/user/AllPackages/AllPackagesComponent.vue";
@@ -84,11 +83,6 @@ const router = createRouter({
         {
           path: "/cart",
           component: CartComponent,
-          beforeEnter: requireAuth,
-        },
-        {
-          path: "/chatbot",
-          component: ChatbotComponent,
           beforeEnter: requireAuth,
         },
         {
