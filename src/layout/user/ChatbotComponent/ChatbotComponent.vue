@@ -63,10 +63,6 @@
             </div>
 
         </div>
-        <div class="input-container">
-            <button @click="sendMessage">Send</button>
-        </div>
-        <input v-model="userInput" @keydown.enter="sendMessage" />
     </div>
 </template>
 
@@ -253,18 +249,5 @@ img{
     /* #d0edff */
 }
 
-.input-container {
-    margin-top: 10px;
-    display: flex;
-    justify-content: space-between;
-}
 
-.input-container input {
-    flex-grow: 1;
-    padding: 5px;
-}
-
-.input-container button {
-    padding: 5px 10px;
-}
 </style>

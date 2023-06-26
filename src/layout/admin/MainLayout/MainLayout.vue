@@ -1,4 +1,5 @@
 <template>
+    <div> 
         <header>
             <HeaderComponent/>
         </header>
@@ -54,6 +55,7 @@
         <footer>
             <FooterComponent/>
         </footer>
+    </div>        
 </template>
 
 <script>
@@ -93,4 +95,4 @@ export default {
 }
 </script>
 
-<style src="./mainLayout.css"></style>
+<style src="./mainLayout.css" scoped></style>

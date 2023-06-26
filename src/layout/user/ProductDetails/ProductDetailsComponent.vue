@@ -256,6 +256,7 @@ export default {
 </script>
 
 <style scoped>
+
 /******************************************************************
   Template Name: Ogani
   Description:  Ogani eCommerce  HTML Template
