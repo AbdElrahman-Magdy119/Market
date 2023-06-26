@@ -1,5 +1,6 @@
 <template>
   <section class="shoping-cart spad">
+      <toast></toast>
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
@@ -22,22 +23,22 @@
                                         <h5>{{ usercart.product_id.name }}</h5>
                                     </td>
                                     <td class="shoping__cart__price">
-                                        {{ usercart.product_id.price }}
+                                       ${{ usercart.product_id.price }}
                                     </td>
                                     <td class="shoping__cart__quantity">
                                         <div class="quantity">
                                             <div class="pro-qty">
-                                                <span class="increase h1">+</span>
-                                                <input type="text" value="1">
-                                                <span class="decrease h1"><b>-</b></span>
+                                                <span @click="increaseQty(usercart.product_id.id, usercart.user_id.id)" class="increase h1">+</span>
+                                                <input type="text" :value="usercart.prod_qty">
+                                                <button @click="decreaseQty(usercart.product_id.id, usercart.user_id.id)" class="decrease h1"><b>-</b></button>
                                             </div>
                                         </div>
                                     </td>
                                     <td class="shoping__cart__total">
-                                        $110.00
+                                        ${{usercart.prod_qty * usercart.product_id.price}}
                                     </td>
                                     <td class="shoping__cart__item__close">
-                                        <span class="icon_close"><i class="fa-solid fa-xmark" @click="deleteProductFromCart(usercart.product_id.id)"></i></span>
+                                        <span class="icon_close"><i class="fa-solid fa-xmark" @click="deleteProductFromCart(usercart.id)"></i></span>
                                     </td>
                                 </tr>
                                
@@ -70,8 +71,7 @@
                             <li>Subtotal <span>$454.98</span></li>
                             <li>Total <span>$454.98</span></li>
                         </ul>
-                        <router-link :to="'/checkout'" class="primary-btn"> PROCEED TO CHECKOUT </router-link>
-
+                        <router-link :to="'/checkout'" @click="proceedArray" class="primary-btn"> PROCEED TO CHECKOUT </router-link>
                     </div>
                 </div>
             </div>
@@ -81,7 +81,12 @@
 
 <script>
 import CartService  from '@/services/CartService';
+import Toast from "primevue/toast";
+
 export default {
+    components:{
+        Toast,
+    },
     data() {
         return {
             UserCart: [], // Initialize as an empty array
@@ -94,9 +99,53 @@ export default {
         });
      },
      methods:{
-        deleteProductFromCart(id) {
-           alert(id)
-        }
+         increaseQty(prd_id, user_id){
+            CartService.increaseQuantity(prd_id, user_id)
+                .then((res)=>{
+                    console.log(res);
+                    CartService.getUserCart().then((data) => {
+                        this.UserCart = data.data.data;
+                        console.log(this.UserCart);
+                    });
+                    this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Cart Updated', life: 3000 });
+                })
+                .catch((err)=>{
+                    console.log(err)
+                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed In Updating Cart', life: 3000 });
+                })
+         },
+         decreaseQty(prd_id, user_id){
+             CartService.decreaseQuantity(prd_id, user_id)
+                 .then((res)=>{
+                     this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Cart Updated', life: 3000 });
+                     console.log(res)
+                     CartService.getUserCart().then((data) => {
+                         this.UserCart = data.data.data;
+                         console.log(this.UserCart);
+                     });
+                 })
+                 .catch((err)=>{
+                     this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed In Updating Cart', life: 3000 });
+                     console.log(err)
+                 })
+         },
+         deleteProductFromCart(id) {
+             CartService.deleteCart(id)
+                 .then((res)=>{
+                     console.log(res);
+                     this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
+                     CartService.getUserCart().then((data) => {
+                         this.UserCart = data.data.data;
+                         console.log(this.UserCart);
+                     });
+                 })
+                 .catch((err)=>{
+                     console.log(err);
+                 })
+         },
+         proceedArray(){
+            CartService.cart_arr = this.UserCart;
+         },
      },
    
 

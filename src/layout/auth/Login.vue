@@ -50,7 +50,7 @@
       <button type="button" class="btn btn-link btn-floating mx-1">
         <i class="fab fa-facebook-f"></i>
       </button>
-
+      <GoogleLogin></GoogleLogin>
       <button type="button" class="btn btn-link btn-floating mx-1" @click="googleLogin">
         <i class="fab fa-google"></i>
       </button>
@@ -79,9 +79,11 @@ import 'primeicons/primeicons.css';
 import authService from '@/services/AuthService';
 import * as router from 'vue-router';
 import  GoogleSignInButton  from 'vue-google-signin-button';
+import GoogleLogin from "@/layout/auth/GoogleLogin.vue";
 
 export default {
   components: {
+      GoogleLogin,
     Toast,
     GoogleSignInButton
   },
@@ -124,7 +126,7 @@ export default {
     },
     googleLogin() {
       // Call the Google Sign-In API or navigate to the Google Sign-In page
-      gapi.gload('auth2', () => {
+      gapi.load('auth2', () => {
         gapi.auth2.init({
           client_id: '380461466531-96gor4tmukkkijan8kia9plir6c1g112.apps.googleusercontent.com',
         }).then(() => {

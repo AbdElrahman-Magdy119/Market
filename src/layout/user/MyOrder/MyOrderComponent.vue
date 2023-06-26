@@ -2,9 +2,9 @@
     <section class="shoping-cart spad">
           <div class="container">
               <div class="row">
-                  <div class="col-lg-12">
+                  <div class="col-lg-12 w-100">
                       <div class="shoping__cart__table">
-                          <table>
+                          <table class="table table-responsive">
                               <thead>
                                   <tr>
                                       <th>ID</th>

@@ -53,6 +53,7 @@ export default {
             console.error('Error fetching doughnut data: ', error);
         })
   },
+
   computed: {
       chartData() {
         if (this.analysis) {
@@ -143,6 +144,20 @@ export default {
           };
       },
   },
+    // watch: {
+    //     doughnut(newValue) {
+    //         if (newValue) {
+    //             DashboardService.getOrdersStatus()
+    //                 .then(response => {
+    //                     // console.log(response.data);
+    //                     this.doughnut = response.data;
+    //                 })
+    //                 .catch(error =>{
+    //                     console.error('Error fetching doughnut data: ', error);
+    //                 })
+    //         }
+    //     },
+    // },
 };
 </script>
 
