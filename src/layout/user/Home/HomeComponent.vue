@@ -78,8 +78,8 @@
 
      </div>
    </div>
-
-
+   <video id="recive-video" src="../../../../public/Voice/recive.mp3"></video>
+   <video id="send-video" src="../../../../public/Voice/send.mp3"></video>
 </div>
 
 </template>
@@ -106,19 +106,26 @@ export default {
             clickOnceAnswer:false
         };
     },
-    mounted() {
+     mounted() {
         ChatbotService.getLanguage().then((data) => {
-        this.messages.push({
+         this.messages.push({
             isBot: true,
             content: data.data.languages,
             id:1
-        })
+         })
+        
 		});
+        
     },
   methods:{
        toggleChatBot() {
            var chatbotDiv = document.getElementById("chatbot");
            chatbotDiv.style.display = chatbotDiv.style.display === "none" ? "block" : "none";
+           if( chatbotDiv.style.display == "block" )
+           {
+            const video = document.getElementById('recive-video');
+            video.play();
+           }
        },
        async getAnswer(questionId,event)
          {
@@ -128,6 +135,8 @@ export default {
                     isBot: false,
                     id:4
             })
+            const video = document.getElementById('send-video');
+            video.play();
             const data={
                 "questionId":questionId,
                 "language":this.language.language
@@ -138,6 +147,8 @@ export default {
                      content: data.data.answer,
                      id:4
               })
+              const video = document.getElementById('recive-video');
+              video.play();
 	         	});
             if(this.language.language == "English")
               {
@@ -146,11 +157,14 @@ export default {
                     isBot: true,
                     id:5
                 })
+                const video = document.getElementById('recive-video');
+                video.play();
                 this.messages.push({
                     content:"End Chat",
                     isBot: true,
                     id:6
                 })
+                video.play();
               }
             else
             {
@@ -159,11 +173,14 @@ export default {
                     isBot: true,
                     id:5
                 })
+                const video = document.getElementById('recive-video');
+                video.play();
                 this.messages.push({
                     content:"إنهاء الشات",
                     isBot: true,
                     id:6
                 })
+                video.play();
             }
             
             
@@ -181,11 +198,15 @@ export default {
                     isBot: false,
                     id:2
                 })
+                const video = document.getElementById('send-video');
+                video.play();
                 this.messages.push({
                     content:"Hello! How can I assist you today?",
                     isBot: true,
                     id:2
                 })
+                const videoRecive = document.getElementById('recive-video');
+                videoRecive.play();
               }
             else
             {
@@ -194,11 +215,15 @@ export default {
                     isBot: false,
                     id:2
                 })
+                const video = document.getElementById('send-video');
+                video.play();
                 this.messages.push({
                     content:"مرحبًا! كيف يمكنني مساعدتك اليوم؟",
                     isBot: true,
                     id:2
                 })
+                const videoRecive = document.getElementById('recive-video');
+                videoRecive.play();
             }
             ChatbotService.getQuestionAfterSendLanguage(this.language).then((data) => {
               this.messages.push({
@@ -206,6 +231,8 @@ export default {
                      content: data.data.questions,
                      id:3
               })
+              const videoRecive = document.getElementById('recive-video');
+              videoRecive.play();
 	        	});
 	    	
          },
@@ -223,6 +250,8 @@ export default {
                         content: "End Chat",
                         id:7
                     })
+                    const video = document.getElementById('send-video');
+                    video.play();
                 }
                 else
                 {
@@ -231,6 +260,8 @@ export default {
                         content: "إنهاء الشات",
                         id:7
                     })
+                    const video = document.getElementById('send-video');
+                    video.play();
                 }
 
                 ChatbotService.getCloseChat(data).then((data) => {
@@ -239,6 +270,8 @@ export default {
                         content: data.data.message,
                         id:7
                     })
+                    const video = document.getElementById('recive-video');
+                    video.play();
 	    	        })  
 
                
@@ -247,7 +280,6 @@ export default {
                   var element = document.getElementById("chatbot");
                   if (element) {
                     element.style.display = "none";
-                    this.messages=[]
                   }
                   
                 }, 6000); // 1000 milliseconds = 1 second
@@ -264,6 +296,8 @@ export default {
                         content: "Return To The Previous List",
                         id:7
                     })
+                    const video = document.getElementById('send-video');
+                    video.play();
                 }
                 else
                 {
@@ -272,6 +306,8 @@ export default {
                         content: "الرجوع الي القائمه السابقه",
                         id:7
                     })
+                    const video = document.getElementById('send-video');
+                    video.play();
                 }
                 ChatbotService.getQuestionAfterSendLanguage(this.language).then((data) => {
                 this.messages.push({
@@ -279,6 +315,8 @@ export default {
                      content: data.data.questions,
                        id:3
                   })
+                  const video = document.getElementById('recive-video');
+                    video.play();
 	          	});
              }
                
@@ -374,6 +412,12 @@ img{
 }
 
 
+#recive-video{
+    display: none;
+}
 
+#send-video{
+    display: none;
+}
 
 </style>
