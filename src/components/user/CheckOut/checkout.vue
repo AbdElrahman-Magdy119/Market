@@ -1,5 +1,6 @@
 <template>
       <section class="checkout spad mt-5">
+          <Toast></Toast>
           <div class="container">
               <div class="row">
                   <div class="col-lg-12">
@@ -18,33 +19,33 @@
                                       <div class="checkout__input">
 
                                           <p>Fist Name<span>*</span></p>
-<!--                                          <input type="text" v-model=userStore.user.name >-->
+                                          <input type="text" v-model=userStore.user.name >
                                       </div>
                                   </div>
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
                                           <p>Last Name<span>*</span></p>
-<!--                                          <input type="text" v-model=userStore.user.lastName>-->
+                                          <input type="text" v-model=userStore.user.lastName>
                                       </div>
                                   </div>
                               </div>
 
                               <div class="checkout__input">
                                   <p>Address<span>*</span></p>
-<!--                                  <input type="text" placeholder="Street Address" class="checkout__input__add" v-model=userStore.user.address>-->
+                                  <input type="text" placeholder="Street Address" class="checkout__input__add" v-model=userStore.user.address>
                               </div>
 
                               <div class="row">
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
                                           <p>Phone<span>*</span></p>
-<!--                                          <input type="text" v-model=userStore.user.phone>-->
+                                          <input type="text" v-model=userStore.user.phone>
                                       </div>
                                   </div>
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
                                           <p>Email<span>*</span></p>
-<!--                                          <input type="text" v-model=userStore.user.email>-->
+                                          <input type="text" v-model=userStore.user.email>
                                       </div>
                                   </div>
                               </div>
@@ -95,7 +96,7 @@
                                           <span class="checkmark"></span>
                                       </label>
                                   </div>
-                                  <button type="submit" class="site-btn">PLACE ORDER</button>
+                                  <button @click.prevent="createOrder">PLACE ORDER</button>
                               </div>
                           </div>
                       </div>
@@ -107,22 +108,29 @@
   
   <script>
   import '@/jquery.custom.js';
+  import  Toast  from 'primevue/toast';
+
   import authService from '@/services/AuthService';
   import CartService from '@/services/CartService';
   import { useAuthStore } from '@/store/AuthStore';
   import { useCartStore } from '@/store/CartStore';
+  import orderService from "@/services/OrderService";
   export default {
+      components:{
+          Toast,
+      },
     data() {
           return {
               userStore: useAuthStore(),
               itemsStore: useCartStore(),
               total_price: 0,
+              order:{},
           };
       },
       mounted() {
         this.calc_total_price();
-        // this.user= useAuthStore.user;
-        // console.log(this.userStore.user.name);
+        this.user= this.userStore.user;
+        console.log(this.userStore.user);
         // this.items= CartService.cartItems;
         },
       methods:{
@@ -131,6 +139,38 @@
                 this.total_price += (this.itemsStore.items[i].product_id.price * this.itemsStore.items[i].prod_qty);
             }
         },
+          createOrder(){
+            // this.order.user = {};
+            this.order.firstName = this.userStore.user.name;
+            this.order.lastName = this.userStore.user.lastName;
+            this.order.address = this.userStore.user.address;
+            this.order.email = this.userStore.user.email;
+            this.order.phone = this.userStore.user.phone;
+
+            // for (const i in this.itemsStore.items) {
+            //       this.total_price += (this.itemsStore.items[i].product_id.price * this.itemsStore.items[i].prod_qty);
+            // }
+            this.order.total_price = this.total_price;
+            this.order.order_items = [];
+              for (const i in this.itemsStore.items) {
+                  this.order.order_items.push({
+                      product_id: this.itemsStore.items[i].product_id.id,
+                      quantity: this.itemsStore.items[i].product_id.quantity,
+                      price: this.itemsStore.items[i].product_id.price,
+                  });
+              }
+              orderService.createOrder(this.order)
+                  .then((res)=>{
+                      this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Submitted Order', life: 3000 });
+                      setTimeout(() => {
+                          this.$router.push("/myorder");
+                      }, 4000);
+                  })
+                  .catch((err)=>{
+                      this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Error in submission', life: 3000 });
+                      console.log(err)
+                  })
+          },
       }
   }
   </script>

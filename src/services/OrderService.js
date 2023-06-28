@@ -24,6 +24,10 @@ const OrderService = {
     deleteOrder(orderId) {
         return apiClient.delete(`/order/${orderId}`);
     },
+    createOrder(order){
+        console.log(order)
+        return apiClient.post(`/home/orders`, order);
+    }
    
 };
 

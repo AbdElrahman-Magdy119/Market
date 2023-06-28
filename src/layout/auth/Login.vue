@@ -112,7 +112,7 @@ export default {
             const token = response.data.token;
             const name = response.data.name;
             const lastName = response.data.lastName;
-            const address = response.data.address;
+            const address = response.data.address1;
             const phone = response.data.phone;
             const role = response.data.role.name;
             const email=response.data.email;
