@@ -10,18 +10,25 @@ const apiClient = axios.create({
 });
 
 const CartService = {
+    cartItems:[],
     getUserCart() {
         return apiClient.get('/cart');
     },
     addToCart(product) {
         return apiClient.post('/cart',product);
     },
+    increaseQuantity(prd_id, user_id){
+      return apiClient.patch(`/inc/product/${prd_id}/user/${user_id}`);
+    },
+    decreaseQuantity(prd_id, user_id){
+        return apiClient.patch(`/dec/product/${prd_id}/user/${user_id}`);
+    },
     // updateRole(id,role) {
     //     return apiClient.put(`/roles/${id}`,role);
     // },
-    // deleteRole(id) {
-    //     return apiClient.delete(`/roles/${id}`);
-    // },
+    deleteCart(id) {
+        return apiClient.delete(`/cart/${id}`);
+    },
 };
 
 

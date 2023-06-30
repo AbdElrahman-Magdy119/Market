@@ -50,8 +50,8 @@
       <button type="button" class="btn btn-link btn-floating mx-1">
         <i class="fab fa-facebook-f"></i>
       </button>
-
-      <button type="button" class="btn btn-link btn-floating mx-1">
+      <GoogleLogin></GoogleLogin>
+      <button type="button" class="btn btn-link btn-floating mx-1" @click="googleLogin">
         <i class="fab fa-google"></i>
       </button>
 
@@ -77,18 +77,23 @@ import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import authService from '@/services/AuthService';
-import * as router from 'vue-router';
+import {useAuthStore} from '@/store/AuthStore';
+import GoogleSignInButton from 'vue-google-signin-button';
+import GoogleLogin from "@/layout/auth/GoogleLogin.vue";
 
 export default {
   components: {
+      GoogleLogin,
     Toast,
+    GoogleSignInButton
   },
   data() {
     return {
         email: '',
         password: '',
         loginSuccess: false,
-        message:''
+        message:'',
+        UserStore: useAuthStore(),
     };
   },
   methods: {
@@ -97,18 +102,29 @@ export default {
         email: this.email,
         password: this.password,
       };
-
       authService
           .login(credentials)
           .then(response => {
-            console.log(response.data);
+            // console.log(response.data);
             // Handle successful login
             this.loginSuccess = true;
             this.message = '';
             const token = response.data.token;
             const name = response.data.name;
+            const lastName = response.data.lastName;
+            const address = response.data.address1;
+            const phone = response.data.phone;
             const role = response.data.role.name;
+            const email=response.data.email;
             const id = response.data.id;
+              this.UserStore.user = {
+                name: name,
+                lastName: lastName,
+                address: address,
+                phone: phone,
+                email: email,
+            }; // Update the user data in the store
+            console.log(this.UserStore.user);
             localStorage.setItem('token', token);
             localStorage.setItem('name', name);
             localStorage.setItem('role', role);
@@ -120,6 +136,41 @@ export default {
               console.log(error);
             this.message = "Wrong E-mail or Password"
           });
+    },
+    googleLogin() {
+      // Call the Google Sign-In API or navigate to the Google Sign-In page
+      gapi.load('auth2', () => {
+        gapi.auth2.init({
+          client_id: '380461466531-96gor4tmukkkijan8kia9plir6c1g112.apps.googleusercontent.com',
+        }).then(() => {
+          const auth2 = gapi.auth2.getAuthInstance();
+          auth2.signIn().then((googleUser) => {
+            const id_token = googleUser.getAuthResponse().id_token;
+
+            // Call your backend API to authenticate the user with the Google ID token
+            authService.googleLogin({ id_token })
+                .then((response) => {
+                  // Handle successful login
+                  const token = response.data.token;
+                  const name = response.data.name;
+                  const role = response.data.role.name;
+                  const id = response.data.id;
+                  localStorage.setItem('token', token);
+                  localStorage.setItem('name', name);
+                  localStorage.setItem('role', role);
+                  localStorage.setItem('id', id);
+                  // Navigate to the desired route or perform any other action
+                })
+                .catch((error) => {
+                  // Handle login error
+                  console.log(error);
+                });
+          }).catch((error) => {
+            // Handle sign-in error
+            console.log(error);
+          });
+        });
+      });
     },
   },
 };

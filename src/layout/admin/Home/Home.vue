@@ -1,15 +1,17 @@
 <template>
-  <div>
-    <h1>Admin Home</h1>
-    <div v-if="analysis">
-      <AnalysisChartBar :chart-data="chartData" :chart-options="chartOptions"></AnalysisChartBar>
-    </div>
-      <div v-if="doughnut" class="my-4">
-          <DoughnutChart :doughnut-data="doughnutData" :doughnut-options="doughnutOptions"></DoughnutChart>
-      </div>
-    <div v-else>
-      Loading...
-    </div>
+    <div>
+        <h1>Admin Home</h1>
+        <div v-if="analysis">
+            <AnalysisChartBar :chart-data="chartData" :chart-options="chartOptions"></AnalysisChartBar>
+        </div>
+        <div v-if="doughnut" class="my-5">
+            <DoughnutChart :doughnut-data="doughnutData" :doughnut-options="doughnutOptions"></DoughnutChart>
+        </div>
+        <div v-else class="card flex justify-content-center">
+<!--            <ProgressSpinner style="width: 50px; height: 50px" strokeWidth="8" fill="var(&#45;&#45;surface-ground)"-->
+<!--                             animationDuration=".5s" aria-label="Custom ProgressSpinner" />-->
+            <ProgressSpinner />
+        </div>
   </div>
 </template>
 
@@ -18,11 +20,13 @@
 import DashboardService from "@/services/DashboardService";
 import AnalysisChartBar from "@/components/admin/AnalysisChart.vue";
 import DoughnutChart from "@/components/admin/DoughnutChart.vue";
+import ProgressSpinner from "primevue/progressspinner";
 
 export default {
   components: {
     AnalysisChartBar,
       DoughnutChart,
+      ProgressSpinner,
   },
   data() {
     return {
@@ -49,6 +53,7 @@ export default {
             console.error('Error fetching doughnut data: ', error);
         })
   },
+
   computed: {
       chartData() {
         if (this.analysis) {
@@ -136,14 +141,23 @@ export default {
           return {
               responsive: true,
               maintainAspectRatio: false,
-              scales: {
-                  y: {
-                      beginAtZero: true,
-                  },
-              },
           };
       },
   },
+    // watch: {
+    //     doughnut(newValue) {
+    //         if (newValue) {
+    //             DashboardService.getOrdersStatus()
+    //                 .then(response => {
+    //                     // console.log(response.data);
+    //                     this.doughnut = response.data;
+    //                 })
+    //                 .catch(error =>{
+    //                     console.error('Error fetching doughnut data: ', error);
+    //                 })
+    //         }
+    //     },
+    // },
 };
 </script>
 

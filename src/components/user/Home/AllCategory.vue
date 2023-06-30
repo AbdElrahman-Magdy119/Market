@@ -18,7 +18,7 @@
       <section class="banner-container">
 
         <div class="banner" v-for="category in categories" :key="category.id">
-           <!-- <img  :src="`http://localhost:8000/`+ category.image" alt="category.name"> -->
+            <img  :src="`http://localhost:8000/`+ category.image" alt="category.name"> 
            <div class="content">
               <h3>{{ category.name }}</h3>
               <router-link :to="'/subcategory/'+category.id" class="btn">Show More</router-link>
@@ -54,10 +54,10 @@ export default {
 
         let navbar = document.querySelector('.navbar');
 
-        document.querySelector('#menu-btn').onclick = () =>{
-        navbar.classList.toggle('active');
-        cart.classList.remove('active');
-        }
+        // document.querySelector('#menu-btn').onclick = () =>{
+        // navbar.classList.toggle('active');
+        // cart.classList.remove('active');
+        // }
 
         // window.onscroll = () =>{
         // navbar.classList.remove('active');

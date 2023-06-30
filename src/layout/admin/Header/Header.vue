@@ -10,7 +10,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <form class="d-flex" role="search">
-        <a id="username" class="nav-link" aria-current="page" href="#">{{ userName }}</a>
+        <a id="username" class="nav-link" aria-current="page" href="#">{{ capitalizedName }}</a>
         <button class="logout-button btn btn btn-outline-success" @click="logout">Log Out</button>
       </form>
     </div>
@@ -20,6 +20,7 @@
 
 <script>
     import * as router from 'vue-router';
+    import authService from '@/services/AuthService';
 export default {
     data(){
         return{
@@ -29,10 +30,20 @@ export default {
     created() {
         this.userName = localStorage.getItem('name');
     },
+    computed:{
+        capitalizedName() {
+            return this.capitalize(this.userName);
+        }
+    },
     methods:{
+        capitalize(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        },
     logout(){
       localStorage.clear();
       this.$router.push('/login');
+      authService.userData = {};
+      console.log(authService.userData);
     }
   }
 }

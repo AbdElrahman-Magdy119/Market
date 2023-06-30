@@ -1,32 +1,6 @@
 <template>
-    <!DOCTYPE html>
-  <html lang="">
-  
-  <head>
-      <meta charset="UTF-8">
-      <meta name="description" content="Ogani Template">
-      <meta name="keywords" content="Ogani, unica, creative, html">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta http-equiv="X-UA-Compatible" content="ie=edge">
-      <title>Ogani | Template</title>
-  
-      <!-- Google Font -->
-      <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-  
-      <!-- Css Styles -->
-      <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-      <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-      <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-      <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-      <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-      <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-      <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-      <link rel="stylesheet" href="/css/style.css" type="text/css">
-  </head>
-  
-  <body>
-  
       <section class="checkout spad mt-5">
+          <Toast></Toast>
           <div class="container">
               <div class="row">
                   <div class="col-lg-12">
@@ -34,6 +8,7 @@
                       </h6>
                   </div>
               </div>
+
               <div class="checkout__form">
                   <h4>Billing Details</h4>
                   <form action="#">
@@ -42,90 +17,63 @@
                               <div class="row">
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
+
                                           <p>Fist Name<span>*</span></p>
-                                          <input type="text">
+                                          <input type="text" v-model=userStore.user.name >
                                       </div>
                                   </div>
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
                                           <p>Last Name<span>*</span></p>
-                                          <input type="text">
+                                          <input type="text" v-model=userStore.user.lastName>
                                       </div>
                                   </div>
                               </div>
-                              <div class="checkout__input">
-                                  <p>Country<span>*</span></p>
-                                  <input type="text">
-                              </div>
+
                               <div class="checkout__input">
                                   <p>Address<span>*</span></p>
-                                  <input type="text" placeholder="Street Address" class="checkout__input__add">
-                                  <input type="text" placeholder="Apartment, suite, unite ect (optinal)">
+                                  <input type="text" placeholder="Street Address" class="checkout__input__add" v-model=userStore.user.address>
                               </div>
-                              <div class="checkout__input">
-                                  <p>Town/City<span>*</span></p>
-                                  <input type="text">
-                              </div>
-                              <div class="checkout__input">
-                                  <p>Country/State<span>*</span></p>
-                                  <input type="text">
-                              </div>
-                              <div class="checkout__input">
-                                  <p>Postcode / ZIP<span>*</span></p>
-                                  <input type="text">
-                              </div>
+
                               <div class="row">
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
                                           <p>Phone<span>*</span></p>
-                                          <input type="text">
+                                          <input type="text" v-model=userStore.user.phone>
                                       </div>
                                   </div>
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
                                           <p>Email<span>*</span></p>
-                                          <input type="text">
+                                          <input type="text" v-model=userStore.user.email>
                                       </div>
                                   </div>
                               </div>
-                              <div class="checkout__input__checkbox">
-                                  <label for="acc">
-                                      Create an account?
-                                      <input type="checkbox" id="acc">
-                                      <span class="checkmark"></span>
-                                  </label>
-                              </div>
-                              <p>Create an account by entering the information below. If you are a returning customer
-                                  please login at the top of the page</p>
+
                               <div class="checkout__input">
-                                  <p>Account Password<span>*</span></p>
-                                  <input type="text">
-                              </div>
-                              <div class="checkout__input__checkbox">
-                                  <label for="diff-acc">
-                                      Ship to a different address?
-                                      <input type="checkbox" id="diff-acc">
-                                      <span class="checkmark"></span>
-                                  </label>
-                              </div>
-                              <div class="checkout__input">
-                                  <p>Order notes<span>*</span></p>
+                                  <p>Order notes</p>
                                   <input type="text"
                                       placeholder="Notes about your order, e.g. special notes for delivery.">
                               </div>
                           </div>
+
                           <div class="col-lg-4 col-md-6">
                               <div class="checkout__order">
                                   <h4>Your Order</h4>
-                                  <div class="checkout__order__products">Products <span>Total</span></div>
+                                  <div class="checkout__order__products">
+                                      Products
+                                      <span>Total</span>
+                                  </div>
                                   <ul>
-                                      <li>Vegetable's Package <span>$75.99</span></li>
-                                      <li>Fresh Vegetable <span>$151.99</span></li>
-                                      <li>Organic Bananas <span>$53.99</span></li>
+                                      <li v-for="item in itemsStore.items" :key="item.id">
+                                          {{item.prod_qty}}x
+                                          {{item.product_id.name}}
+                                          <span>${{ item.product_id.price * item.prod_qty}}</span>
+                                      </li>
                                   </ul>
-                                  <div class="checkout__order__subtotal">Subtotal <span>$750.99</span></div>
-                                  <div class="checkout__order__total">Total <span>$750.99</span></div>
-                                  <div class="checkout__input__checkbox">
+<!--                                  <div class="checkout__order__subtotal">Subtotal <span>$750.99</span></div>-->
+                                  <div class="checkout__order__total">Total <span>${{total_price}}</span></div>
+                                  <!-- <div class="checkout__input__checkbox">
                                       <label for="acc-or">
                                           Create an account?
                                           <input type="checkbox" id="acc-or">
@@ -133,10 +81,10 @@
                                       </label>
                                   </div>
                                   <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
-                                      ut labore et dolore magna aliqua.</p>
+                                      ut labore et dolore magna aliqua.</p> -->
                                   <div class="checkout__input__checkbox">
                                       <label for="payment">
-                                          Check Payment
+                                          Cash
                                           <input type="checkbox" id="payment">
                                           <span class="checkmark"></span>
                                       </label>
@@ -148,7 +96,7 @@
                                           <span class="checkmark"></span>
                                       </label>
                                   </div>
-                                  <button type="submit" class="site-btn">PLACE ORDER</button>
+                                  <button @click.prevent="createOrder">PLACE ORDER</button>
                               </div>
                           </div>
                       </div>
@@ -156,19 +104,74 @@
               </div>
           </div>
       </section>
-  
-  </body>
-  
-  </html>
   </template>
   
   <script>
   import '@/jquery.custom.js';
+  import  Toast  from 'primevue/toast';
+
+  import authService from '@/services/AuthService';
+  import CartService from '@/services/CartService';
+  import { useAuthStore } from '@/store/AuthStore';
+  import { useCartStore } from '@/store/CartStore';
+  import orderService from "@/services/OrderService";
   export default {
+      components:{
+          Toast,
+      },
+    data() {
+          return {
+              userStore: useAuthStore(),
+              itemsStore: useCartStore(),
+              total_price: 0,
+              order:{},
+          };
+      },
       mounted() {
-          
-  },
-  
+        this.calc_total_price();
+        this.user= this.userStore.user;
+        console.log(this.userStore.user);
+        // this.items= CartService.cartItems;
+        },
+      methods:{
+        calc_total_price(){
+            for (const i in this.itemsStore.items) {
+                this.total_price += (this.itemsStore.items[i].product_id.price * this.itemsStore.items[i].prod_qty);
+            }
+        },
+          createOrder(){
+            // this.order.user = {};
+            this.order.firstName = this.userStore.user.name;
+            this.order.lastName = this.userStore.user.lastName;
+            this.order.address = this.userStore.user.address;
+            this.order.email = this.userStore.user.email;
+            this.order.phone = this.userStore.user.phone;
+
+            // for (const i in this.itemsStore.items) {
+            //       this.total_price += (this.itemsStore.items[i].product_id.price * this.itemsStore.items[i].prod_qty);
+            // }
+            this.order.total_price = this.total_price;
+            this.order.order_items = [];
+              for (const i in this.itemsStore.items) {
+                  this.order.order_items.push({
+                      product_id: this.itemsStore.items[i].product_id.id,
+                      quantity: this.itemsStore.items[i].product_id.quantity,
+                      price: this.itemsStore.items[i].product_id.price,
+                  });
+              }
+              orderService.createOrder(this.order)
+                  .then((res)=>{
+                      this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Submitted Order', life: 3000 });
+                      setTimeout(() => {
+                          this.$router.push("/myorder");
+                      }, 4000);
+                  })
+                  .catch((err)=>{
+                      this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Error in submission', life: 3000 });
+                      console.log(err)
+                  })
+          },
+      }
   }
   </script>
   
