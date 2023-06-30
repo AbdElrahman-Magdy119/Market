@@ -26,8 +26,8 @@
         <Column :field="'index'" header="#" style="width: 3rem" :exportable="false"></Column>
         <Column field="name" header="Name" sortable style="min-width:16rem"></Column>
         <Column field="image" header="Image" sortable style="min-width:16rem">
-          <template #body="{data}">
-              <img  :src="'http://localhost:8000/'+data.image" :alt="data.image" class="product-image"/>
+          <template #body="slotProps">
+              <img  :src="'http://localhost:8000/'+slotProps.data.image" :alt="slotProps.data.image" class="product-image"/>
           </template>        
         </Column>
         <Column field="description" header="Description" sortable style="min-width:16rem"></Column>
@@ -87,7 +87,7 @@
       </div>       
 
       <div class="field">
-        <label for="category">Discount</label>
+        <label for="category">Category</label>
         <Dropdown id="category" v-model="selectedCate" :options="categories" optionLabel="name"  option-value="id" placeholder="Select a Category" class="w-full md:w-14rem" :class="{'p-invalid': submitted && !product.subCategory}" />
         <small class="p-error" v-if="submitted && !product.subCategory">Category is required.</small>        
       </div>
@@ -156,13 +156,13 @@ export default {
 
   data() {
     return {
-      categories: [],
       products: [], // Initialize as an empty array
+      categories: [],
       productDialog: false,
       deleteProductDialog: false,
       product: {},
       selectedProducts: null,
-      selectedFile:[],
+      selectedFile:null,
       selectedCate:null,
       isTrend:null,
       filters: {},
@@ -181,7 +181,6 @@ export default {
   mounted() {
     ProductsService.getAllProducts().then((data) => {
       this.products = data.data.data;
-      console.log(this.products)
       // Add index property to each Product object
       this.products.forEach((Product, index) => {
         Product.index = index + 1; // Adding 1 to display index starting from 1
@@ -199,7 +198,6 @@ export default {
       if (this.product.name) {
         if (this.product.id) {
           const formData = new FormData();
-          formData.append('image', this.selectedFile);
           formData.append('name', this.product.name);
           formData.append('description', this.product.description);
           formData.append('price', Number(this.product.price));
@@ -209,10 +207,14 @@ export default {
           formData.append('trend', 1);
           formData.append('_method', 'put');
 
+          if(this.selectedFile != null) {
+            formData.append('image', this.selectedFile);
+          }
+
           // Update existing product
           ProductsService.updateProduct(this.product.id, formData)
-              .then(() => {
-                this.subCategories[this.findIndexById(this.product.id)] = this.product;
+              .then((response) => {
+                this.products[this.findIndexById(this.product.id)] = response.data;
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Updated', life: 3000 });
                 this.product = {};
                 this.selectedFile = [];
@@ -232,16 +234,15 @@ export default {
           formData.append('quantity', this.product.quantity);
           formData.append('discount', this.product.discount);
           formData.append('subcategory_id', this.selectedCate);
-          formData.append('trend', 1);
+          formData.append('trend', this.isTrend ? 1 : 0);
 
           ProductsService.addProduct(formData)
               .then(response => {
-                const newProduct = response.data.data; // Assuming the API returns the newly created product
+                const newProduct = response.data; // Assuming the API returns the newly created product
                 this.products.push(newProduct);
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Created', life: 3000 });
                 this.product = {};
                 this.selectedFile = [];
-             
               })
               .catch(error => {
                 console.error(error);

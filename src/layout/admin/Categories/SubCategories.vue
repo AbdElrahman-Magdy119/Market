@@ -116,7 +116,7 @@ export default {
         deleteSubCategoryDialog: false,
         subCategory: {},
         selectedSubCategories: null,
-        selectedFile:[],
+        selectedFile:null,
         filters: {},
         submitted: false,
     }
@@ -152,15 +152,19 @@ export default {
       if (this.subCategory.name) {
         if (this.subCategory.id) {
           const formData = new FormData();
-          formData.append('image', this.selectedFile);
+          
           formData.append('name', this.subCategory.name);
           formData.append('category_id', this.subCategory.category_id);
           formData.append('_method', 'put');
 
+          if(this.selectedFile != null) {
+            formData.append('image', this.selectedFile);
+          }
+
           // Update existing subCategory
           SubCategoriesService.updateSubCategory(this.subCategory.id, formData)
-              .then(() => {
-                this.subCategories[this.findIndexById(this.subCategory.id)] = this.subCategory;
+              .then((response) => {
+                this.subCategories[this.findIndexById(this.subCategory.id)] = response.data;
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Updated', life: 3000 });
                 this.subCategory = {};
                 this.selectedFile = [];

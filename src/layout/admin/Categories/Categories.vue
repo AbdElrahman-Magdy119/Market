@@ -26,8 +26,8 @@
         <Column :field="'index'" header="#" style="width: 3rem" :exportable="false"></Column>
         <Column field="name" header="Name" sortable style="min-width:16rem"></Column>
         <Column field="image" header="Image" sortable style="min-width:16rem">
-          <template #body="{data}">
-              <img  :src="'http://localhost:8000/'+data.image" :alt="data.image" class="product-image"/>
+          <template #body="slotProps">
+              <img  :src="'http://localhost:8000/'+slotProps.data.image" :alt="slotProps.data.image" class="product-image"/>
           </template>        
         </Column>
 
@@ -110,7 +110,7 @@ export default {
       deleteCategoryDialog: false,
       category: {},
       selectedCategories: null,
-      selectedFile:[],
+      selectedFile:null,
       filters: {},
       submitted: false,
     }
@@ -141,14 +141,17 @@ export default {
       if (this.category.name) {
         if (this.category.id) {
           const formData = new FormData();
-          formData.append('image', this.selectedFile);
           formData.append('name', this.category.name);
           formData.append('_method', 'put');
+
+          if(this.selectedFile != null) {
+            formData.append('image', this.selectedFile);
+          }
           
           // Update existing category
           CategoriesService.updateCategory(this.category.id, formData)
-              .then(() => {
-                this.categories[this.findIndexById(this.category.id)] = this.category;
+              .then((response) => {
+                this.categories[this.findIndexById(this.category.id)] = response.data;
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Updated', life: 3000 });
                 this.category = {};
                 this.selectedFile = [];
