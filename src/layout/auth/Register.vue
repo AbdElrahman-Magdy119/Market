@@ -111,7 +111,7 @@ export default {
             const lastName = response.data.lastName;
             const email = response.data.email;
             const phone = response.data.phone;
-            const address1 = response.data.address;
+            const address = response.data.address;
             localStorage.setItem('token', token);
             localStorage.setItem('name', name);
             localStorage.setItem('role', role);
@@ -119,7 +119,7 @@ export default {
             localStorage.setItem('lastName',lastName);
             localStorage.setItem('phone',phone);
             localStorage.setItem('email',email);
-            localStorage.setItem('address1',address1);
+            localStorage.setItem('address',address);
             this.$router.push('/');
           })
           .catch(error => {

@@ -112,7 +112,7 @@ export default {
             const token = response.data.token;
             const name = response.data.name;
             const lastName = response.data.lastName;
-            const address1 = response.data.address1;
+            const address = response.data.address;
             const phone = response.data.phone;
             const role = response.data.role.name;
             const email=response.data.email;
@@ -120,7 +120,7 @@ export default {
               this.UserStore.user = {
                 name: name,
                 lastName: lastName,
-                address: address1,
+                address: address,
                 phone: phone,
                 email: email,
             }; // Update the user data in the store
@@ -132,7 +132,7 @@ export default {
             localStorage.setItem('lastName',lastName);
             localStorage.setItem('phone',phone);
             localStorage.setItem('email',email);
-            localStorage.setItem('address1',address1);
+            localStorage.setItem('address',address);
               // Navigate to admin component
               this.$router.push('/');
           })
@@ -162,7 +162,7 @@ export default {
                   const lastName = response.data.lastName;
                   const email = response.data.email;
                   const phone = response.data.phone;
-                  const address1 = response.data.address1;
+                  const address = response.data.address;
                   localStorage.setItem('token', token);
                   localStorage.setItem('name', name);
                   localStorage.setItem('role', role);
@@ -170,7 +170,7 @@ export default {
                   localStorage.setItem('lastName',lastName);
                   localStorage.setItem('phone',phone);
                   localStorage.setItem('email',email);
-                  localStorage.setItem('address1',address1);
+                  localStorage.setItem('address',address);
                   // Navigate to the desired route or perform any other action
                 })
                 .catch((error) => {
