@@ -24,7 +24,9 @@
             <router-link :to="'/'"> Home </router-link>
             <router-link :to="'/allproducts'">product</router-link>
             <router-link :to="'/allpackages'">Package</router-link>
-            <router-link :to="'/contact'">Contact</router-link>
+            <router-link v-if="!isLogged" :to="'/login'">Login</router-link>
+            <router-link v-if="!isLogged" :to="'/register'">Register</router-link>
+            <a style="cursor: pointer" v-if="isLogged"  @click="logout">Logout</a>
         </nav>
 
         <div class="icons">
@@ -46,33 +48,39 @@
 </template>
 
 <script>
+import authService from "@/services/AuthService";
+
 export default {
-    
-    mounted() {
-        let navbar = document.querySelector('.navbar');
+  data() {
+    return {
+      isLogged: false,
+    }
+  },
+  mounted() {
+    if(localStorage.getItem('token')) this.isLogged=true
+    let navbar = document.querySelector('.navbar');
 
-        // document.querySelector('#menu-btn').onclick = () =>{
-        // navbar.classList.toggle('active');
-        // cart.classList.remove('active');
-        // }
+    // document.querySelector('#menu-btn').onclick = () =>{
+    // navbar.classList.toggle('active');
+    // cart.classList.remove('active');
+    // }
 
-        // window.onscroll = () =>{
-        // navbar.classList.remove('active');
-        // cart.classList.remove('active');
-        // }
+    // window.onscroll = () =>{
+    // navbar.classList.remove('active');
+    // cart.classList.remove('active');
+    // }
 
-   
-            },
-          methods: {
-            // ShowCard() {
-            //      
-            //      let cart = document.querySelector('.shopping-cart');
-            //       document.querySelector('#cart-btn').onclick = () =>{
-            //       cart.classList.toggle('active');
-            //       }
-            // },
-          }
-        }
+
+  },
+  methods: {
+    logout() {
+      localStorage.clear();
+      this.$router.push('/login');
+      authService.userData = {};
+      console.log(authService.userData);
+    }
+  }
+}
 </script>
 
 <style scoped>
