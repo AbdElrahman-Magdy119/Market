@@ -44,6 +44,11 @@
             </div>
           </div>
         </div>
+        <div class="row">
+            <div class="col-12 text-center" >
+                <Button class="fontSize" severity="success" label="Order Now" @click="proceedFromPackageDetailsToCheckout" />
+            </div>
+        </div>
       </div>
     </div>
 
@@ -52,17 +57,23 @@
 
 <script>
 import HomeService from '@/services/HomeService';
+import { useCartStore } from '@/store/CartStore';
+
 import Galleria from 'primevue/galleria';
+import Button from 'primevue/button';
 
 export default {
   components: {
-    Galleria
+    Galleria,
+      Button
   },
   data() {
     return {
       images: null,
       package: null,
-      PackageItems: [],
+        // UserCart: [],
+        CartStore: useCartStore(),
+        PackageItems: [],
       responsiveOptions: [
         {
           breakpoint: '991px',
@@ -83,8 +94,15 @@ export default {
     HomeService.getPackageByID(this.$route.params.idPackage).then((data) => {
       this.package = data.data.data;
       this.PackageItems = data.data.data.package_items;
+
     });
   },
+    methods:{
+        proceedFromPackageDetailsToCheckout(){
+          this.CartStore.items = this.package;
+          this.$router.push('/checkoutpackage');
+      },
+    },
 }
 </script>
 

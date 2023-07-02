@@ -56,7 +56,7 @@
 <script>
 import  Toast  from 'primevue/toast';
 import HomeService  from '@/services/HomeService';
-import WishListService  from '@/services/WishListService';CartService
+import WishListService  from '@/services/WishListService';
 import CartService  from '@/services/CartService';
 export default {
   components: {
@@ -76,16 +76,6 @@ export default {
       wishListProductDescription: '',
     }
   },
-  mounted() {
-    this.getTrendingProducts();
-    this.getWishList();
-  },
-  data() {
-        return {
-            TrendingProducts: [], // Initialize as an empty array
-            
-          }
-    },
   mounted() {
     HomeService.getTrendingProduct().then((data) => {
         this.TrendingProducts = data.data.Products;
