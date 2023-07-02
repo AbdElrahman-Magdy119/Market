@@ -17,35 +17,34 @@
                               <div class="row">
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
-
                                           <p>Fist Name<span>*</span></p>
-                                          <input type="text" v-model=userStore.user.name >
+                                          <input type="text" v-model=user.name>
                                       </div>
                                   </div>
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
                                           <p>Last Name<span>*</span></p>
-                                          <input type="text" v-model=userStore.user.lastName>
+                                          <input type="text" v-model=user.lastName>
                                       </div>
                                   </div>
                               </div>
 
                               <div class="checkout__input">
                                   <p>Address<span>*</span></p>
-                                  <input type="text" placeholder="Street Address" class="checkout__input__add" v-model=userStore.user.address>
+                                  <input type="text" placeholder="Street Address" class="checkout__input__add" v-model=user.address>
                               </div>
 
                               <div class="row">
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
                                           <p>Phone<span>*</span></p>
-                                          <input type="text" v-model=userStore.user.phone>
+                                          <input type="text" v-model=user.phone>
                                       </div>
                                   </div>
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
                                           <p>Email<span>*</span></p>
-                                          <input type="text" v-model=userStore.user.email>
+                                          <input type="text" v-model=user.email>
                                       </div>
                                   </div>
                               </div>
@@ -82,21 +81,25 @@
                                   </div>
                                   <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
                                       ut labore et dolore magna aliqua.</p> -->
-                                  <div class="checkout__input__checkbox">
-                                      <label for="payment">
-                                          Cash
-                                          <input type="checkbox" id="payment">
-                                          <span class="checkmark"></span>
-                                      </label>
-                                  </div>
-                                  <div class="checkout__input__checkbox">
-                                      <label for="paypal">
-                                          Paypal
-                                          <input type="checkbox" id="paypal">
-                                          <span class="checkmark"></span>
-                                      </label>
-                                  </div>
-                                  <button @click.prevent="createOrder">PLACE ORDER</button>
+<!--                                  <div class="checkout__input__checkbox">-->
+<!--                                      <label for="payment">-->
+<!--                                          Cash-->
+<!--                                          <input type="checkbox" id="payment">-->
+<!--                                          <span class="checkmark"></span>-->
+<!--                                      </label>-->
+<!--                                  </div>-->
+<!--                                  <div class="checkout__input__checkbox">-->
+<!--                                      <label for="paypal">-->
+<!--                                          Paypal-->
+<!--                                          <input type="checkbox" id="paypal">-->
+<!--                                          <span class="checkmark"></span>-->
+<!--                                      </label>-->
+<!--                                  </div>-->
+<!--                                <button @click.prevent="paypalPayment">PayPal</button>-->
+                                <button class="paypal-button" @click.prevent="paypalPayment">
+                                  <i class="fab fa-paypal"></i> Pay with PayPal
+                                </button>
+                                <button @click.prevent="createOrder">PLACE ORDER</button>
                               </div>
                           </div>
                       </div>
@@ -115,6 +118,7 @@
   import { useAuthStore } from '@/store/AuthStore';
   import { useCartStore } from '@/store/CartStore';
   import orderService from "@/services/OrderService";
+  import axios from "axios";
   export default {
       components:{
           Toast,
@@ -125,12 +129,19 @@
               itemsStore: useCartStore(),
               total_price: 0,
               order:{},
+            user:{
+              firstName:localStorage.getItem('name'),
+              lastName:localStorage.getItem('lastName'),
+              email:localStorage.getItem('email'),
+              phone:localStorage.getItem('phone'),
+              address:localStorage.getItem('address'),
+            }
           };
       },
       mounted() {
         this.calc_total_price();
-        this.user= this.userStore.user;
-        console.log(this.userStore.user);
+        // this.user= this.userStore.user;
+        // console.log(this.userStore.user);
         // this.items= CartService.cartItems;
         },
       methods:{
@@ -139,13 +150,13 @@
                 this.total_price += (this.itemsStore.items[i].product_id.price * this.itemsStore.items[i].prod_qty);
             }
         },
-          createOrder(){
+        createOrder(){
             // this.order.user = {};
-            this.order.firstName = this.userStore.user.name;
-            this.order.lastName = this.userStore.user.lastName;
-            this.order.address = this.userStore.user.address;
-            this.order.email = this.userStore.user.email;
-            this.order.phone = this.userStore.user.phone;
+            this.order.firstName = this.user.firstName;
+            this.order.lastName = this.user.lastName;
+            this.order.address = this.user.address;
+            this.order.email = this.user.email;
+            this.order.phone = this.user.phone;
 
             // for (const i in this.itemsStore.items) {
             //       this.total_price += (this.itemsStore.items[i].product_id.price * this.itemsStore.items[i].prod_qty);
@@ -171,11 +182,59 @@
                       console.log(err)
                   })
           },
+        paypalPayment() {
+          this.order.firstName = this.user.firstName;
+          this.order.lastName = this.user.lastName;
+          this.order.address = this.user.address;
+          this.order.email = this.user.email;
+          this.order.phone = this.user.phone;
+          this.order.total_price = this.total_price;
+          this.order.order_items = [];
+          for (const i in this.itemsStore.items) {
+            this.order.order_items.push({
+              product_id: this.itemsStore.items[i].product_id.id,
+              quantity: this.itemsStore.items[i].product_id.quantity,
+              price: this.itemsStore.items[i].product_id.price,
+            });
+          }
+          orderService.paypal(this.order)
+              .then(async (response) => {
+                console.log(response);
+                const url = await response.data.redirect_url;
+                if(url===undefined) {
+                  alert('Error Paying With Paypal Service under maintenance')
+                }else{
+                  window.location.href = await response.data.redirect_url;
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+        },
       }
   }
   </script>
   
   <style scoped>
+  .paypal-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #003087;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .paypal-button i {
+    margin-right: 5px;
+  }
+
+  .paypal-button:hover {
+    background-color: #001e5a;
+  }
   /******************************************************************
     Template Name: Ogani
     Description:  Ogani eCommerce  HTML Template

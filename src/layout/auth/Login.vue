@@ -112,7 +112,7 @@ export default {
             const token = response.data.token;
             const name = response.data.name;
             const lastName = response.data.lastName;
-            const address = response.data.address1;
+            const address = response.data.address;
             const phone = response.data.phone;
             const role = response.data.role.name;
             const email=response.data.email;
@@ -129,6 +129,10 @@ export default {
             localStorage.setItem('name', name);
             localStorage.setItem('role', role);
             localStorage.setItem('id', id);
+            localStorage.setItem('lastName',lastName);
+            localStorage.setItem('phone',phone);
+            localStorage.setItem('email',email);
+            localStorage.setItem('address',address);
               // Navigate to admin component
               this.$router.push('/');
           })
@@ -155,10 +159,18 @@ export default {
                   const name = response.data.name;
                   const role = response.data.role.name;
                   const id = response.data.id;
+                  const lastName = response.data.lastName;
+                  const email = response.data.email;
+                  const phone = response.data.phone;
+                  const address = response.data.address;
                   localStorage.setItem('token', token);
                   localStorage.setItem('name', name);
                   localStorage.setItem('role', role);
                   localStorage.setItem('id', id);
+                  localStorage.setItem('lastName',lastName);
+                  localStorage.setItem('phone',phone);
+                  localStorage.setItem('email',email);
+                  localStorage.setItem('address',address);
                   // Navigate to the desired route or perform any other action
                 })
                 .catch((error) => {

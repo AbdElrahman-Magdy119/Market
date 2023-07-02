@@ -19,7 +19,20 @@
     </div>
     <div class="m-5">
       <h2>Package Items</h2>
-
+      <div class="card flex justify-content-center mb-5">
+        <Galleria :value="images" :responsiveOptions="responsiveOptions" :numVisible="5" :circular="true" containerStyle="max-width: 640px"
+                  :showItemNavigators="true" :showThumbnails="false">
+          <template #item="slotProps">
+            <img :src="`http://localhost:8000/`+slotProps.item.product.image" :alt="slotProps.item.alt" style="width: 100%;height:50%; display: block;" />
+          </template>
+<!--          <template #thumbnail="slotProps">-->
+<!--            <img :src="slotProps.item.product.image" :alt="slotProps.item.alt" style="display: block;" />-->
+<!--          </template>-->
+        </Galleria>
+      </div>
+<!--      <div v-for="item in PackageItems" :key="item.id">-->
+<!--        <img :src="item.product.image" :alt="item.product.name" />-->
+<!--      </div>-->
       <div class="row">
         <div class="col-md-6">
           <div class="row row-cols-1 row-cols-md-2 g-4">
@@ -42,42 +55,43 @@
 <script>
 import HomeService from '@/services/HomeService';
 import Carousel from 'primevue/carousel';
+import Galleria from 'primevue/galleria';
 
 export default {
   components: {
-    Carousel
+    Carousel,
+    Galleria
   },
   data() {
     return {
-
-      package: null,
-      PackageItems: [],
-      id: this.$route.params.id, //this is the id from the browser
+      images: null,
       responsiveOptions: [
         {
-          breakpoint: '1199px',
-          numVisible: 3,
-          numScroll: 3
-        },
-        {
           breakpoint: '991px',
-          numVisible: 2,
-          numScroll: 2
+          numVisible: 4
         },
         {
           breakpoint: '767px',
-          numVisible: 1,
-          numScroll: 1
+          numVisible: 3
+        },
+        {
+          breakpoint: '575px',
+          numVisible: 1
         }
       ],
+      package: null,
+      PackageItems: [],
+      id: this.$route.params.id, //this is the id from the browser
     }
   },
   mounted() {
-    console.log(this.id);
     HomeService.getPackageByID(this.id).then((data) => {
       this.package = data.data.data;
       this.PackageItems = data.data.data.package_items;
+      this.images = data.data.data.package_items;
+      console.log(this.images);
     });
+
   },
 }
 </script>

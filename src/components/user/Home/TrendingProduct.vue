@@ -56,7 +56,7 @@
 <script>
 import  Toast  from 'primevue/toast';
 import HomeService  from '@/services/HomeService';
-import WishListService  from '@/services/WishListService';CartService
+import WishListService  from '@/services/WishListService';
 import CartService  from '@/services/CartService';
 export default {
   components: {

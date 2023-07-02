@@ -27,8 +27,10 @@ const OrderService = {
     createOrder(order){
         console.log(order)
         return apiClient.post(`/home/orders`, order);
+    },
+    paypal(order){
+      return apiClient.post(`/payment`,order);
     }
-   
 };
 
 
