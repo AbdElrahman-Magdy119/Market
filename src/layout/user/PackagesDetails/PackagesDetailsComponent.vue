@@ -1,41 +1,35 @@
 <template>
-    <div v-if="package" class="card mt-5">
+  <div v-if="package" class="container mt-5">
     <div style="margin-top: 10rem">
-      <h1>Package Details</h1>
-
+      <h1 class="text-center m-5">Package Details</h1>
       <div class="row">
         <div class="col-md-6">
           <img :src="`http://localhost:8000/` + package.image" class="package-image" alt="Package Image">
         </div>
         <div class="col-md-6">
           <div class="card-body">
-            <h5 class="card-title">{{ package.name }}</h5>
-            <p class="card-text">{{ package.description }}</p>
-            <p class="card-text">Total Price: {{ package.total_price }}</p>
-            <p class="card-text">Discount: {{ package.discount }}%</p>
+            <h1 class="card-title">{{ package.name }}</h1>
+            <p class="card-text fontSize">{{ package.description }}</p>
+            <p class="card-text fontSize">Total Price: {{ package.total_price }}</p>
+            <p class="card-text fontSize">Discount: {{ package.discount }}%</p>
           </div>
         </div>
       </div>
     </div>
+    <div class="row mt-3">
+      <h2 class="text-center">Package Items</h2>
 
-    <h2>Package Items</h2>
-
-    <div class="row">
       <div class="col-md-6">
-        <div id="productCarousel" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <div v-for="(item, index) in PackageItems" :key="item.id" :class="['carousel-item', index === 0 ? 'active' : '']">
-              <img :src="`http://localhost:8000/` + item.product.image" class="d-block w-100" alt="Product Image">
-            </div>
-          </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
+        <div class="card flex justify-content-center mb-5">
+          <Galleria :value="PackageItems" :responsiveOptions="responsiveOptions" :numVisible="5" containerStyle="max-width: 640px"
+                    :circular="true" :autoPlay="true" :transitionInterval="2000">
+            <template #item="slotProps">
+              <img :src="`http://localhost:8000/`+slotProps.item.product.image" :alt="slotProps.item.alt" style="width: 50%; display: block;" />
+            </template>
+            <template #thumbnail="slotProps">
+              <img :src="`http://localhost:8000/`+slotProps.item.product.image" :alt="slotProps.item.alt" style="width: 50%; display: block;" />
+            </template>
+          </Galleria>
         </div>
       </div>
       <div class="col-md-6">
@@ -44,25 +38,45 @@
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">{{ item.product.name }}</h5>
-                <p class="card-text">Quantity: {{ item.quantity }}</p>
-                <p class="card-text">Price: {{ item.price }}</p>
+                <p class="card-text fontSize">Quantity: {{ item.quantity }}</p>
+                <p class="card-text fontSize">Price: {{ item.price }}</p>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
 import HomeService from '@/services/HomeService';
+import Galleria from 'primevue/galleria';
 
 export default {
+  components: {
+    Galleria
+  },
   data() {
     return {
+      images: null,
       package: null,
       PackageItems: [],
+      responsiveOptions: [
+        {
+          breakpoint: '991px',
+          numVisible: 4
+        },
+        {
+          breakpoint: '767px',
+          numVisible: 3
+        },
+        {
+          breakpoint: '575px',
+          numVisible: 1
+        }
+      ]
     }
   },
   mounted() {
@@ -74,6 +88,15 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+img{
+  width:100%;
+  margin:10px;
+}
+.fontSize{
+  font-size:15px;
+}
+.card{
+  margin:4rem;
+}
 </style>
