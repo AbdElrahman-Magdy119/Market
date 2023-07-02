@@ -129,7 +129,7 @@
                               <button
 							    v-if="userId == review.user_id.id "
                                 ref="removeButton"
-                                @click="removeComment()"
+                                @click="removeComment(review.id)"
                                 class="bg-danger me-3 fs-4 p-2 mt-3"
                               >
                                 remove
@@ -336,17 +336,18 @@ export default {
 		 }
     
 	},
-	removeComment(){
-        const comment = {
-				user_id : this.userId
-  		}
-		ReviewService.deleteReview(comment,this.product.id).then((data) => {
-              this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Comment Deleted Successfully', life: 4000 });
-			  ReviewService.getAllReviews(this.product.id).then((data) => {
-				this.allReviews = data.data;
-			  })
-        })
-       
+	removeComment(reviewId){
+           console.log(reviewId)
+			// const formData = new FormData();
+            // formData.append('comment', "");
+			// formData.append('user_id',this.userId);
+            // formData.append('_method', 'PATCH');
+			// ReviewService.updateReview(formData,this.product.id).then((data) => {
+            //   this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Comment Deleted Successfully', life: 4000 });
+			//   ReviewService.getAllReviews(this.product.id).then((data) => {
+            //   this.allReviews = data.data;
+		    //   this.averageRating = this.allReviews.avg });
+            // })
 	}
   },
 };
