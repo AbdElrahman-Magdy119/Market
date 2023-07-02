@@ -52,7 +52,7 @@
 
       <div class="field ">
         <label for="image" class="col-form-label">Image</label>
-        <input type="file" name="image" id="image" class="form-control" @change="handleFileSelect"  accept="image/*" :maxFileSize="1000000"  />
+        <input class="form-control" type="file" name="image" id="image"  @change="handleFileSelect"  accept="image/*" :maxFileSize="1000000"  />
         <small class="p-error" v-if="submitted && !subCategory.name">Name is required.</small>
       </div>
       <Dropdown v-model="subCategory.category_id" :options="categories" optionLabel="name"  option-value="id" placeholder="Select a City" class="w-full md:w-14rem" />
@@ -272,5 +272,10 @@ export default {
   width: 175px;
   height: 175px;
   border-radius: 8px;
+}
+
+.field
+{
+  margin-bottom: 15px;
 }
 </style>

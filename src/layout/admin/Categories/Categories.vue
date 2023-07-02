@@ -44,14 +44,14 @@
     <Dialog v-model:visible="categoryDialog" :style="{width: '450px'}" header="category Details" :modal="true" class="p-fluid">
       
       <div class="field">
-        <label for="name">Name</label>
+        <label for="name" class="form-label">Name</label>
         <InputText id="name" name="name" v-model.trim="category.name" required="true" autofocus :class="{'p-invalid': submitted && !category.name}" />
         <small class="p-error" v-if="submitted && !category.name">Name is required.</small>
       </div>
 
       <div class="field">
-        <label for="name">Image</label>
-        <input type="file" name="image"  @change="handleFileSelect"  accept="image/*" :maxFileSize="1000000"  />
+        <label for="image" class="form-label">Image</label>
+        <input class="form-control" type="file" name="image"  @change="handleFileSelect"  accept="image/*" :maxFileSize="1000000"  />
       </div>
 
       <template #footer>
@@ -258,5 +258,10 @@ export default {
   width: 175px;
   height: 175px;
   border-radius: 8px;
+}
+
+.field
+{
+  margin-bottom: 15px;
 }
 </style>

@@ -93,14 +93,14 @@
       </div>
 
       <div class="field">
-        <label for="trend">Trend</label>
+        <label for="trend" class="form-label">Trend</label>
         <InputSwitch id="trend" v-model="isTrend" />
       </div>
 
 
       <div class="field">
-        <label for="name">Image</label>
-        <input type="file" name="image"  @change="handleFileSelect"  accept="image/*" :maxFileSize="1000000"  />
+        <label for="image" class="form-label">Image</label>
+        <input class="form-control" type="file"  name="image"  @change="handleFileSelect"  accept="image/*" :maxFileSize="1000000"  />
       </div>      
       <template #footer>
         <Button label="Cancel" icon="pi pi-times" text @click="hideDialog"/>
@@ -321,3 +321,23 @@ export default {
    
 }
 </script>
+
+<style>
+.product-image
+{
+  width: 175px;
+  height: 175px;
+  border-radius: 8px;
+}
+
+.field
+{
+  margin-bottom: 15px;
+}
+
+.p-inputswitch
+{
+  top: 7px;
+  left: 5px;
+}
+</style>

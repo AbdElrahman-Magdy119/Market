@@ -18,7 +18,7 @@
 <div class="container">
 <div class="row">
 <div
-  class="col-lg-3 col-md-4 col-sm-6 ms-5"
+  class="col-lg-3 col-md-4 col-sm-6 "
   v-for="SubCategory in SubCategories"
   :key="SubCategory.id"
 >
@@ -63,7 +63,15 @@ methods: {},
 
 <style scoped>
 .container {
-margin-top: 10rem;
+  margin-top: 15rem;
+}
+
+.container > div {
+justify-content: center;
+}
+.container .row > div
+{
+  margin-bottom: 4rem;
 }
 .category {
 color: #5c5c5c;
@@ -71,16 +79,20 @@ font-size: 5rem;
 margin-top: 2rem;
 }
 
-a {
-text-decoration: none;
+.h1, h1 {
+  font-size: 2rem;
 }
+
 img {
 height: 20rem;
-width: 15rem;
+width: 100%;
+margin-bottom: 10px;
+border-radius: 10px;
 }
+
 a {
 text-decoration: none;
-color: #444;
+color: black;
 }
 
 .example-card {

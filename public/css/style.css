@@ -329,6 +329,8 @@ section{
   position: absolute;
   top: 50%; left: 2rem;
   transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
 }
 
 .banner-container .banner .content span{
@@ -338,8 +340,11 @@ section{
 
 .banner-container .banner .content h3{
   font-size: 2.8rem;
-  padding-top: .5rem;
-  color: var(--black);
+  background-color: #0000009c;
+  color: white !important;
+  padding: 7px !important;
+  border-radius: 5px;
+  text-align: center;
 }
 
 .banner-container .banner .content .btn{
