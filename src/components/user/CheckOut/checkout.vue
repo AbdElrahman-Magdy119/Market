@@ -140,16 +140,11 @@
             }
         },
           createOrder(){
-            // this.order.user = {};
             this.order.firstName = this.userStore.user.name;
             this.order.lastName = this.userStore.user.lastName;
             this.order.address = this.userStore.user.address;
             this.order.email = this.userStore.user.email;
             this.order.phone = this.userStore.user.phone;
-
-            // for (const i in this.itemsStore.items) {
-            //       this.total_price += (this.itemsStore.items[i].product_id.price * this.itemsStore.items[i].prod_qty);
-            // }
             this.order.total_price = this.total_price;
             this.order.order_items = [];
               for (const i in this.itemsStore.items) {
