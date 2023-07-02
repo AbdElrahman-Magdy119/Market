@@ -77,16 +77,6 @@ export default {
     }
   },
   mounted() {
-    this.getTrendingProducts();
-    this.getWishList();
-  },
-  data() {
-        return {
-            TrendingProducts: [], // Initialize as an empty array
-            
-          }
-    },
-  mounted() {
     HomeService.getTrendingProduct().then((data) => {
         this.TrendingProducts = data.data.Products;
 		});

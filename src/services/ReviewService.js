@@ -15,11 +15,23 @@ const ReviewService = {
         return apiClient.get(`/home/products`);
     },
     getAllReviews(prdId) {
-        return apiClient.get(`/review/product/${prdId}`);
+        return apiClient.get(`/review/product/${prdId}`); // patch review   and add /review +  puductid + اي حاجه 
     },
     deleteReview(prdId) {
         return apiClient.delete(`/review/product/${prdId}`);
     },
+    addReview(review) {
+        return apiClient.post('/review',review);
+    },
+    updateReview(review,prdId) {
+        return apiClient.post(`/review/product/${prdId}`,review);
+    },
+    deleteReview(review,prdId) {
+        return apiClient.delete(`/review/product/4`,{
+            user_id:3,
+        });
+    },
+
 };
 
 
