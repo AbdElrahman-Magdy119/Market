@@ -33,6 +33,7 @@ import Users from "@/layout/admin/Users/Users.vue";
 import AllPackagesComponent from "@/layout/user/AllPackages/AllPackagesComponent.vue";
 import MyOrderComponent from "@/layout/user/MyOrder/MyOrderComponent.vue";
 import AllProductsComponent from "@/layout/user/AllProducts/AllProductsComponent.vue";
+import success from "@/layout/user/CheckOutComponent/success.vue";
 
 
 const router = createRouter({
@@ -157,6 +158,10 @@ const router = createRouter({
     {
       path: "/login",
       component: Login,
+    },
+    {
+      path: "/success",
+      component: success,
     },
     {
       path: "/register",

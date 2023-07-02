@@ -105,8 +105,21 @@ export default {
           .then(response => {
             this.registrationSuccess = true;
             const token = response.data.token;
+            const name = response.data.name;
+            const role = response.data.role.name;
+            const id = response.data.id;
+            const lastName = response.data.lastName;
+            const email = response.data.email;
+            const phone = response.data.phone;
+            const address1 = response.data.address;
             localStorage.setItem('token', token);
-
+            localStorage.setItem('name', name);
+            localStorage.setItem('role', role);
+            localStorage.setItem('id', id);
+            localStorage.setItem('lastName',lastName);
+            localStorage.setItem('phone',phone);
+            localStorage.setItem('email',email);
+            localStorage.setItem('address1',address1);
             this.email = '';
             this.name = '';
             this.lastName = '';
