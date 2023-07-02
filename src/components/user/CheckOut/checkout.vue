@@ -81,22 +81,25 @@
                                   </div>
                                   <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
                                       ut labore et dolore magna aliqua.</p> -->
-                                  <div class="checkout__input__checkbox">
-                                      <label for="payment">
-                                          Cash
-                                          <input type="checkbox" id="payment">
-                                          <span class="checkmark"></span>
-                                      </label>
-                                  </div>
-                                  <div class="checkout__input__checkbox">
-                                      <label for="paypal">
-                                          Paypal
-                                          <input type="checkbox" id="paypal">
-                                          <span class="checkmark"></span>
-                                        <button class="btn btn-primary" @click.prevent="paypalPayment">PayPal</button>
-                                      </label>
-                                  </div>
-                                  <button @click.prevent="createOrder">PLACE ORDER</button>
+<!--                                  <div class="checkout__input__checkbox">-->
+<!--                                      <label for="payment">-->
+<!--                                          Cash-->
+<!--                                          <input type="checkbox" id="payment">-->
+<!--                                          <span class="checkmark"></span>-->
+<!--                                      </label>-->
+<!--                                  </div>-->
+<!--                                  <div class="checkout__input__checkbox">-->
+<!--                                      <label for="paypal">-->
+<!--                                          Paypal-->
+<!--                                          <input type="checkbox" id="paypal">-->
+<!--                                          <span class="checkmark"></span>-->
+<!--                                      </label>-->
+<!--                                  </div>-->
+<!--                                <button @click.prevent="paypalPayment">PayPal</button>-->
+                                <button class="paypal-button" @click.prevent="paypalPayment">
+                                  <i class="fab fa-paypal"></i> Pay with PayPal
+                                </button>
+                                <button @click.prevent="createOrder">PLACE ORDER</button>
                               </div>
                           </div>
                       </div>
@@ -213,6 +216,25 @@
   </script>
   
   <style scoped>
+  .paypal-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #003087;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .paypal-button i {
+    margin-right: 5px;
+  }
+
+  .paypal-button:hover {
+    background-color: #001e5a;
+  }
   /******************************************************************
     Template Name: Ogani
     Description:  Ogani eCommerce  HTML Template
