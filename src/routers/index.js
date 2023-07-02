@@ -33,6 +33,8 @@ import Users from "@/layout/admin/Users/Users.vue";
 import AllPackagesComponent from "@/layout/user/AllPackages/AllPackagesComponent.vue";
 import MyOrderComponent from "@/layout/user/MyOrder/MyOrderComponent.vue";
 import AllProductsComponent from "@/layout/user/AllProducts/AllProductsComponent.vue";
+import CheckOutForPackageDetailsComponent
+  from "@/layout/user/CheckOutForPackageDetailsComponent/CheckOutForPackageDetailsComponent.vue";
 
 
 const router = createRouter({
@@ -53,6 +55,10 @@ const router = createRouter({
         {
           path: "/checkout",
           component: CheckOutComponent,
+        },
+        {
+          path: "/checkoutpackage",
+          component: CheckOutForPackageDetailsComponent,
         },
         {
           path: "/profile",

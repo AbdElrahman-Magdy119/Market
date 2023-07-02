@@ -131,6 +131,7 @@
         this.calc_total_price();
         this.user= this.userStore.user;
         console.log(this.userStore.user);
+          console.log(this.itemsStore.items);
         // this.items= CartService.cartItems;
         },
       methods:{
