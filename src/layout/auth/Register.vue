@@ -120,11 +120,7 @@ export default {
             localStorage.setItem('phone',phone);
             localStorage.setItem('email',email);
             localStorage.setItem('address1',address1);
-            this.email = '';
-            this.name = '';
-            this.lastName = '';
-            this.password = '';
-            this.confirmPassword = '';
+            this.$router.push('/');
           })
           .catch(error => {
             // Handle error
