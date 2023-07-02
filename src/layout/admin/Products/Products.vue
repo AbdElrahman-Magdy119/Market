@@ -27,7 +27,7 @@
         <Column field="name" header="Name" sortable style="min-width:16rem"></Column>
         <Column field="image" header="Image" sortable style="min-width:16rem">
           <template #body="slotProps">
-              <img  :src="'http://localhost:8000/'+slotProps.data.image" :alt="slotProps.data.image" class="product-image"/>
+              <img width="50" height="50" :src="'http://localhost:8000/'+slotProps.data.image" :alt="slotProps.data.image"/>
           </template>        
         </Column>
         <Column field="description" header="Description" sortable style="min-width:16rem"></Column>
