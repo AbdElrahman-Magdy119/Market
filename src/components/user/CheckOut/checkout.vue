@@ -17,9 +17,8 @@
                               <div class="row">
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
-
                                           <p>Fist Name<span>*</span></p>
-                                          <input type="text" v-model=user.name >
+                                          <input type="text" v-model=user.name>
                                       </div>
                                   </div>
                                   <div class="col-lg-6">
@@ -32,7 +31,7 @@
 
                               <div class="checkout__input">
                                   <p>Address<span>*</span></p>
-                                  <input type="text" placeholder="Street Address" class="checkout__input__add" v-model=user.address1>
+                                  <input type="text" placeholder="Street Address" class="checkout__input__add" v-model=user.address>
                               </div>
 
                               <div class="row">
@@ -132,7 +131,7 @@
               lastName:localStorage.getItem('lastName'),
               email:localStorage.getItem('email'),
               phone:localStorage.getItem('phone'),
-              address1:localStorage.getItem('address1'),
+              address:localStorage.getItem('address'),
             }
           };
       },
@@ -152,7 +151,7 @@
             // this.order.user = {};
             this.order.firstName = this.user.firstName;
             this.order.lastName = this.user.lastName;
-            this.order.address1 = this.user.address1;
+            this.order.address = this.user.address;
             this.order.email = this.user.email;
             this.order.phone = this.user.phone;
 
@@ -181,11 +180,11 @@
                   })
           },
         paypalPayment() {
-          this.order.firstName = this.userStore.user.name;
-          this.order.lastName = this.userStore.user.lastName;
-          this.order.address = this.userStore.user.address;
-          this.order.email = this.userStore.user.email;
-          this.order.phone = this.userStore.user.phone;
+          this.order.firstName = this.user.firstName;
+          this.order.lastName = this.user.lastName;
+          this.order.address = this.user.address;
+          this.order.email = this.user.email;
+          this.order.phone = this.user.phone;
           this.order.total_price = this.total_price;
           this.order.order_items = [];
           for (const i in this.itemsStore.items) {
@@ -198,7 +197,12 @@
           orderService.paypal(this.order)
               .then(async (response) => {
                 console.log(response);
-                window.location.href = await response.data.redirect_url;
+                const url = await response.data.redirect_url;
+                if(url===undefined) {
+                  alert('Error Paying With Paypal Service under maintenance')
+                }else{
+                  window.location.href = await response.data.redirect_url;
+                }
               })
               .catch((error) => {
                 console.log(error);
