@@ -54,6 +54,9 @@
 
 
 <script>
+import Sidebar from 'primevue/sidebar';
+import Button from 'primevue/button';
+import Tree from 'primevue/tree';
 import HomeService from "@/services/HomeService";
 import ProgressSpinner from "primevue/progressspinner";
 import  Toast  from 'primevue/toast';
