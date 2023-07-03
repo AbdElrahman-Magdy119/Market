@@ -52,9 +52,6 @@
                 <RouterView></RouterView>
             </div>
         </div>
-        <footer>
-            <FooterComponent/>
-        </footer>
     </div>        
 </template>
 
