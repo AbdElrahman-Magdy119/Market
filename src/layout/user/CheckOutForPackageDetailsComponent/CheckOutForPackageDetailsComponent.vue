@@ -82,20 +82,9 @@
                                   </div>
                                   <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
                                       ut labore et dolore magna aliqua.</p> -->
-                                <div class="checkout__input__checkbox">
-                                    <label for="payment">
-                                        Cash
-                                        <input type="checkbox" id="payment">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <div class="checkout__input__checkbox">
-                                    <label for="paypal">
-                                        Paypal
-                                        <input type="checkbox" id="paypal">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
+                                <button class="paypal-button" @click.prevent="paypalPayment">
+                                    <i class="fab fa-paypal"></i> Pay with PayPal
+                                </button>
                                 <button @click.prevent="createOrder">PLACE ORDER</button>
                             </div>
                         </div>
@@ -174,6 +163,46 @@ export default {
                     console.log(err)
                 })
         },
+        paypalPayment() {
+            if (!this.user.firstName || !this.user.lastName || !this.user.address || !this.user.phone || !this.user.email) {
+                // Display an error message or toast notification
+                this.$toast.add({
+                    severity: 'error',
+                    summary: 'Error',
+                    detail: 'Please fill in all required fields.',
+                    life: 3000
+                });
+                return;
+            }
+            this.order.firstName = this.user.firstName;
+            this.order.lastName = this.user.lastName;
+            this.order.address = this.user.address;
+            this.order.email = this.user.email;
+            this.order.phone = this.user.phone;
+            this.order.total_price = this.total_price;
+            this.order.order_items = [];
+            for (const i in this.package_items) {
+                console.log(this.package_items[i]);
+                this.order.order_items.push({
+                    product_id: this.package_items[i].product.id,
+                    quantity: this.package_items[i].quantity,
+                    price: this.package_items[i].product.price,
+                });
+            }
+            orderService.paypal(this.order)
+                .then(async (response) => {
+                    console.log(response);
+                    const url = await response.data.redirect_url;
+                    if(url===undefined) {
+                        alert('Error Paying With Paypal Service under maintenance')
+                    }else{
+                        window.location.href = await response.data.redirect_url;
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+        },
     }
 }
 </script>
@@ -219,6 +248,25 @@ body {
     font-smoothing: antialiased;
 }
 
+.paypal-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #003087;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.paypal-button i {
+    margin-right: 5px;
+}
+
+.paypal-button:hover {
+    background-color: #001e5a;
+}
 h1,
 h2,
 h3,

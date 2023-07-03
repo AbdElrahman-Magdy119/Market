@@ -20,37 +20,16 @@
         <link rel="stylesheet" href="/css/style.css" />
       </head>
       <body>
-        <section class="blog" id="blog">
-          <h1 class="heading">Our <span> Packages</span></h1>
-          <div class="box-container">
-              
-            <div class="box" v-for="packagee in packages" :key="packagee.id">
-              <div class="image">
-                <img src="images/blog1.png" alt="" />
-              </div>
-              <div class="content">
-                <div class="icons">
-                  <a> <i class="fas fa-user"></i> by admin </a>
-                </div>
-                <h3>{{ packagee.name }}</h3>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Suscipit voluptates voluptatum magni similique beatae doloribus
-                  qui facilis officia.
-                </p>
-                <router-link :to="'/package/'+packagee.id" class="btn"> read more </router-link>
-              </div>
-            </div>
-  
-          </div>
-        </section>
+      <Packages />
       </body>
     </html>
   </template>
   
   <script>
   import HomeService  from '@/services/HomeService';
+  import Packages from "@/components/user/Home/Packages.vue";
   export default {
+    components: {Packages},
       data() {
           return {
               packages: [], // Initialize as an empty array

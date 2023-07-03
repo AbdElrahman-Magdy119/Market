@@ -22,7 +22,7 @@
 
 			<div class="box">
 				<h3>find us here</h3>
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In accusamus praesentium.</p>
+				<p>Our Social Media Accounts.</p>
 				<div class="share">
 					<a href="#" class="fab fa-facebook-f"></a>
 					<a href="#" class="fab fa-twitter"></a>
@@ -34,7 +34,7 @@
 			<div class="box">
 				<h3>contact us</h3>
 				<p>+52 2 1478 7412</p>
-				<a href="#" class="link">ninjashub@gmail.com</a>
+				<a href="#" class="link">marketAssiut123@gmail.com</a>
 			</div>
 
 			<div class="box">
@@ -47,7 +47,7 @@
 
 	    	</div>
 
-	    	<div class="credit">created by <span> ninjashub </span> all rights reserved!</div>
+	    	<div class="credit">created by <span> ITI Market Team </span> all rights reserved!</div>
 
 	  	</section>
 
