@@ -9,6 +9,7 @@
                             <thead>
                                 <tr>
                                     <th class="shoping__product">Products</th>
+                                    <th>Availability</th>
                                     <th>Price</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
@@ -21,6 +22,18 @@
                                     <td class="shoping__cart__item">
                                         <img :src="`http://localhost:8000/`+ usercart.product_id.image" :alt="usercart.product_id.name" >
                                         <h5>{{ usercart.product_id.name }}</h5>
+                                    </td>
+                                    <td class="shoping__cart__total">
+                                        <Badge
+                                            v-if="Availability(usercart.product_id.quantity)"
+                                            severity="success"
+                                            size="xlarge"
+                                        >
+                                            In Stock
+                                        </Badge>
+                                        <Badge v-else size="xlarge" severity="danger"
+                                        >Out Of Stock</Badge
+                                        >
                                     </td>
                                     <td class="shoping__cart__price">
                                        ${{ usercart.product_id.price }}
@@ -83,10 +96,13 @@
 <script>
 import CartService  from '@/services/CartService';
 import Toast from "primevue/toast";
+import Badge from "primevue/badge";
+
 
 export default {
     components:{
         Toast,
+        Badge,
     },
     data() {
         return {
@@ -158,14 +174,35 @@ export default {
                      console.log(err);
                  })
          },
+         Availability(quantity) {
+             if(quantity > 0) return true;
+             else return false;
+         },
          proceedToCheckout(){
-             if (this.total_price === 0) {
-                 this.$toast.add({ severity: 'info', summary: 'Info Message', detail: 'Message Content', life: 3000 });
+                 if (this.total_price === 0) {
+                     this.$toast.add({ severity: 'info', summary: 'Info Message', detail: 'No Products Found', life: 3000 });
+                     return;
+                 }
+                let qty_flag = false;
+             for (const qty in this.UserCart) {
+                 console.log(this.UserCart[qty]);
+                 if(this.UserCart[qty].product_id.quantity === 0){
+                     qty_flag = true;
+                     break;
+                 }
+             }
+
+             console.log("Flag: " + qty_flag);
+
+             if(!qty_flag){
+                 localStorage.setItem('usercart', JSON.stringify(this.UserCart))
+                 this.$router.push('/checkout')
+             }else {
+                 this.$toast.add({ severity: 'info', summary: 'Info Message', detail: 'Product is Out of stock', life: 3000 });
                  return;
              }
 
-             localStorage.setItem('usercart', JSON.stringify(this.UserCart))
-             this.$router.push('/checkout')
+
              // this.CartStore.items = this.UserCart;
              // console.log(this.CartStore.items);
          },
