@@ -55,9 +55,7 @@
         <input class="form-control" type="file" name="image" id="image"  @change="handleFileSelect"  accept="image/*" :maxFileSize="1000000"  />
         <small class="p-error" v-if="submitted && !subCategory.name">Name is required.</small>
       </div>
-      <Dropdown v-model="subCategory.category_id" :options="categories" optionLabel="name"  option-value="id" placeholder="Select a City" class="w-full md:w-14rem" />
-
-
+      <Dropdown v-model="subCategory.category_id" :options="categories" optionLabel="name"  option-value="id" placeholder="Select a Category" class="w-full md:w-14rem" />
       <template #footer>
         <Button label="Cancel" icon="pi pi-times" text @click="hideDialog"/>
         <Button label="Save" icon="pi pi-check" text @click="saveSubCategory" />

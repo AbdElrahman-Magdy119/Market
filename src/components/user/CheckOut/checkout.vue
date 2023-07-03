@@ -35,7 +35,6 @@
                                   <p>Address<span>*</span></p>
                                   <input type="text" placeholder="Street Address" class="checkout__input__add" v-model=user.address required>
                                   <span v-if="!user.address || user.address=='null'" class="error-message">Address is required</span>
-
                               </div>
 
                               <div class="row">

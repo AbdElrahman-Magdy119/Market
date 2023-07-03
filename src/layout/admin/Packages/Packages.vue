@@ -286,7 +286,7 @@ export default {
           formData.append('discount', this.package.discount);
 
           if (this.package.image) {
-            formData.append('image', this.package.image, this.package.image.name);
+            formData.append('image', this.package.image);
           } else {
             formData.append('image', null);
           }
