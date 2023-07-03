@@ -39,6 +39,15 @@
       </div>
       <button type="submit" class="p-button p-button-primary">Register</button>
     </form>
+
+      <div class="text-center mt-5">
+<!--          <button @click="google" class="btn btn-outline-success my-5">Sign-up With Google</button>-->
+          <GoogleLogin></GoogleLogin>
+<!--        <h1>Is Initialized: {{ Vue3GoogleOauth2.isInit }}</h1>-->
+<!--          <h1>Is Authorized: {{ Vue3GoogleOauth2.isAuthorized }}</h1>-->
+<!--      <button :disabled='!Vue3GoogleOauth2.isInit || Vue3GoogleOauth2.isAuthorized'>Sign in</button>-->
+<!--          <button :disabled='!Vue3GoogleOauth2.isAuthorized'>Sign up</button>-->
+      </div>
     <Message v-if="registrationSuccess" severity="success" text="Registration successful!" />
   </div>
 </template>
@@ -50,9 +59,13 @@ import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import authService from '@/services/AuthService';
 import * as router from 'vue-router';
+import GoogleLogin from "@/layout/auth/GoogleLogin.vue";
+import Vue3GoogleOauth2 from "vue3-google-oauth2";
+import {inject} from "vue";
 
 export default {
   components: {
+      GoogleLogin,
     Message,
   },
   data() {
@@ -67,7 +80,13 @@ export default {
       formSubmitted: false,
     };
   },
-  computed: {
+    mounted() {
+      const Vue3GoogleAuth = inject('Vue3GoogleOauth');
+    },
+    computed: {
+      Vue3GoogleOauth2() {
+          return Vue3GoogleOauth2
+      },
     isValidEmail() {
       const emailRegex = /^\S+@\S+\.\S+$/;
       return emailRegex.test(this.email);
@@ -86,7 +105,7 @@ export default {
     },
   },
   methods: {
-    register() {
+      register() {
       this.formSubmitted = true;
 
       if (!this.isValidEmail || !this.isValidName || !this.isValidLastName || !this.isValidPassword || !this.isValidConfirmPassword) {
@@ -126,6 +145,16 @@ export default {
             // Handle error
           });
     },
+      google(){
+          authService.googleRegister()
+              .then((res)=>{
+                  console.log(res);
+              })
+              .catch((err)=>{
+                  console.log("ERROR");
+                  console.log(err);
+              })
+      }
   },
 };
 </script>

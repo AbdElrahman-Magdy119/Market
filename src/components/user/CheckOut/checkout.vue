@@ -18,7 +18,7 @@
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
                                           <p>Fist Name<span>*</span></p>
-                                          <input type="text" v-model=user.name>
+                                          <input type="text" v-model=user.firstName>
                                       </div>
                                   </div>
                                   <div class="col-lg-6">
@@ -81,22 +81,25 @@
                                   </div>
                                   <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
                                       ut labore et dolore magna aliqua.</p> -->
-                                  <div class="checkout__input__checkbox">
-                                      <label for="payment">
-                                          Cash
-                                          <input type="checkbox" id="payment">
-                                          <span class="checkmark"></span>
-                                      </label>
-                                  </div>
-                                  <div class="checkout__input__checkbox">
-                                      <label for="paypal">
-                                          Paypal
-                                          <input type="checkbox" id="paypal">
-                                          <span class="checkmark"></span>
-                                        <button class="btn btn-primary" @click.prevent="paypalPayment">PayPal</button>
-                                      </label>
-                                  </div>
-                                  <button @click.prevent="createOrder">PLACE ORDER</button>
+<!--                                  <div class="checkout__input__checkbox">-->
+<!--                                      <label for="payment">-->
+<!--                                          Cash-->
+<!--                                          <input type="checkbox" id="payment">-->
+<!--                                          <span class="checkmark"></span>-->
+<!--                                      </label>-->
+<!--                                  </div>-->
+<!--                                  <div class="checkout__input__checkbox">-->
+<!--                                      <label for="paypal">-->
+<!--                                          Paypal-->
+<!--                                          <input type="checkbox" id="paypal">-->
+<!--                                          <span class="checkmark"></span>-->
+<!--                                      </label>-->
+<!--                                  </div>-->
+<!--                                <button @click.prevent="paypalPayment">PayPal</button>-->
+                                <button class="paypal-button" @click.prevent="paypalPayment">
+                                  <i class="fab fa-paypal"></i> Pay with PayPal
+                                </button>
+                                <button @click.prevent="createOrder">PLACE ORDER</button>
                               </div>
                           </div>
                       </div>
@@ -109,11 +112,6 @@
   <script>
   import '@/jquery.custom.js';
   import  Toast  from 'primevue/toast';
-
-  import authService from '@/services/AuthService';
-  import CartService from '@/services/CartService';
-  import { useAuthStore } from '@/store/AuthStore';
-  import { useCartStore } from '@/store/CartStore';
   import orderService from "@/services/OrderService";
   import axios from "axios";
   export default {
@@ -122,8 +120,7 @@
       },
     data() {
           return {
-              userStore: useAuthStore(),
-              itemsStore: useCartStore(),
+              itemsStore: [],
               total_price: 0,
               order:{},
             user:{
@@ -136,9 +133,10 @@
           };
       },
       mounted() {
+          this.itemsStore.items = JSON.parse(localStorage.getItem('usercart'));
         this.calc_total_price();
-        // this.user= this.userStore.user;
-        // console.log(this.userStore.user);
+        console.log(this.user);
+          console.log(this.itemsStore.items);
         // this.items= CartService.cartItems;
         },
       methods:{
@@ -213,6 +211,25 @@
   </script>
   
   <style scoped>
+  .paypal-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #003087;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  .paypal-button i {
+    margin-right: 5px;
+  }
+
+  .paypal-button:hover {
+    background-color: #001e5a;
+  }
   /******************************************************************
     Template Name: Ogani
     Description:  Ogani eCommerce  HTML Template

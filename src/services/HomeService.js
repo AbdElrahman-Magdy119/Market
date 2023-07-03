@@ -34,7 +34,14 @@ const HomeService = {
     },
     deleteOrder(order_tracking){
         return apiClient.delete(`/home/orders/${order_tracking}`);
-    }
+    },
+    getProductById(id) {
+        return apiClient.get(`home/products/${id}`);
+    },
+    getProductBySubcategoryId(id) {
+        return apiClient.get(`/home/products?filter=${id}`);
+    },
+    
 };
 
 

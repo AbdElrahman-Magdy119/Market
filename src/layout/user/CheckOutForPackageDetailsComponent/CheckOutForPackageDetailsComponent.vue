@@ -19,33 +19,33 @@
                                     <div class="checkout__input">
 
                                         <p>Fist Name<span>*</span></p>
-                                        <input type="text" v-model=userStore.user.name >
+                                        <input type="text" v-model=user.firstName >
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Last Name<span>*</span></p>
-                                        <input type="text" v-model=userStore.user.lastName>
+                                        <input type="text" v-model=user.lastName>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="checkout__input">
                                 <p>Address<span>*</span></p>
-                                <input type="text" placeholder="Street Address" class="checkout__input__add" v-model=userStore.user.address>
+                                <input type="text" placeholder="Street Address" class="checkout__input__add" v-model=user.address>
                             </div>
 
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Phone<span>*</span></p>
-                                        <input type="text" v-model=userStore.user.phone>
+                                        <input type="text" v-model=user.phone>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Email<span>*</span></p>
-                                        <input type="text" v-model=userStore.user.email>
+                                        <input type="text" v-model=user.email>
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                     <span>Total</span>
                                 </div>
                                 <ul>
-                                    <li v-for="item in itemsStore.items.package_items" :key="item.id">
+                                    <li v-for="item in package_items" :key="item.id">
                                         {{item.quantity}}x
                                         {{item.product.name}}
                                         <span>${{ item.product.price * item.quantity}}</span>
@@ -109,11 +109,6 @@
 <script>
 import '@/jquery.custom.js';
 import  Toast  from 'primevue/toast';
-
-import authService from '@/services/AuthService';
-import CartService from '@/services/CartService';
-import { useAuthStore } from '@/store/AuthStore';
-import { useCartStore } from '@/store/CartStore';
 import orderService from "@/services/OrderService";
 export default {
     components:{
@@ -121,34 +116,50 @@ export default {
     },
     data() {
         return {
-            userStore: useAuthStore(),
-            itemsStore: useCartStore(),
+            userStore: [],
+            itemsStore: [],
+            package_items:[],
             total_price: 0,
             order:{},
+            user:{
+                firstName:localStorage.getItem('name'),
+                lastName:localStorage.getItem('lastName'),
+                email:localStorage.getItem('email'),
+                phone:localStorage.getItem('phone'),
+                address:localStorage.getItem('address'),
+            }
         };
     },
     mounted() {
-        this.user= this.userStore.user;
+        this.itemsStore.items = JSON.parse(localStorage.getItem('userpackage'));
         this.total_price = this.itemsStore.items.total_price;
-        console.log(this.userStore.user);
-        console.log(this.itemsStore.items.package_items);
+        this.user = {
+            firstName:localStorage.getItem('name'),
+            lastName:localStorage.getItem('lastName'),
+            email:localStorage.getItem('email'),
+            phone:localStorage.getItem('phone'),
+            address:localStorage.getItem('address'),
+        };
+        console.log(this.user.firstName);
+        console.log(this.itemsStore.items);
+        this.package_items = this.itemsStore.items.package_items;
         // this.items= CartService.cartItems;
     },
     methods:{
         createOrder(){
-            this.order.firstName = this.userStore.user.name;
-            this.order.lastName = this.userStore.user.lastName;
-            this.order.address = this.userStore.user.address;
-            this.order.email = this.userStore.user.email;
-            this.order.phone = this.userStore.user.phone;
+            this.order.firstName = this.user.firstName;
+            this.order.lastName = this.user.lastName;
+            this.order.address = this.user.address;
+            this.order.email = this.user.email;
+            this.order.phone = this.user.phone;
             this.order.total_price = this.total_price;
             this.order.order_items = [];
-            for (const i in this.itemsStore.items.package_items) {
-                console.log(this.itemsStore.items.package_items[i]);
+            for (const i in this.package_items) {
+                console.log(this.package_items[i]);
                 this.order.order_items.push({
-                    product_id: this.itemsStore.items.package_items[i].product.id,
-                    quantity: this.itemsStore.items.package_items[i].quantity,
-                    price: this.itemsStore.items.package_items[i].product.price,
+                    product_id: this.package_items[i].product.id,
+                    quantity: this.package_items[i].quantity,
+                    price: this.package_items[i].product.price,
                 });
             }
             orderService.createOrder(this.order)

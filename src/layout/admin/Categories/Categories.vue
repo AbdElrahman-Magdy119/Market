@@ -1,4 +1,5 @@
 <template>
+  <div> 
     <Toast></Toast>
     <div class="card">
       <Toolbar class="mb-4">
@@ -70,6 +71,7 @@
         <Button label="Yes" icon="pi pi-check" text @click="deleteCategory" />
       </template>
     </Dialog>
+  </div>
 </template>
 
 

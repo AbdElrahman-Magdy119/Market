@@ -57,8 +57,6 @@
 
 <script>
 import HomeService from '@/services/HomeService';
-import { useCartStore } from '@/store/CartStore';
-
 import Galleria from 'primevue/galleria';
 import Button from 'primevue/button';
 
@@ -71,8 +69,6 @@ export default {
     return {
       images: null,
       package: null,
-        // UserCart: [],
-        CartStore: useCartStore(),
         PackageItems: [],
       responsiveOptions: [
         {
@@ -99,7 +95,7 @@ export default {
   },
     methods:{
         proceedFromPackageDetailsToCheckout(){
-          this.CartStore.items = this.package;
+          localStorage.setItem('userpackage', JSON.stringify(this.package));
           this.$router.push('/checkoutpackage');
       },
     },

@@ -10,7 +10,7 @@ import 'primevue/resources/themes/saga-blue/theme.css' // or whichever theme you
 import 'primevue/resources/primevue.min.css'
 import ToastService from 'primevue/toastservice';
 import VueGapi from "vue-gapi";
-
+import gAuthPlugin from 'vue3-google-oauth2';
 
  const pinia=createPinia();
 
@@ -22,10 +22,18 @@ const apiConfig = {
     scope: 'https://www.googleapis.com/auth/drive.metadata.readonly',
 };
 
+let gauthClientId = "380461466531-kks7596sd3o6kufbm8iiem2clbdrb2b2.apps.googleusercontent.com";
+
+
 createApp(MainComponent)
     .use(pinia)
+    // .use(gAuthPlugin, {
+    //     clientId: gauthClientId,
+    //     scope: 'email',
+    //     prompt: 'consent'
+    // })
     .use(router)
-    .use(VueGapi,apiConfig)
+    // .use(VueGapi,apiConfig)
     .use(PrimeVue)
     .use(ToastService)
     .mount('#app')

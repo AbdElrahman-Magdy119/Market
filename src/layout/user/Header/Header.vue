@@ -15,7 +15,7 @@
 
 </head>
 <body>
-    
+
     <header class="header">
 
         <router-link :to="'/'" class="logo"> <i class="fas fa-shopping-cart"></i> Grocery </router-link>
@@ -24,6 +24,7 @@
             <router-link :to="'/'"> Home </router-link>
             <router-link :to="'/allproducts'">product</router-link>
             <router-link :to="'/allpackages'">Package</router-link>
+            <router-link :to="'/contact'">Contact us</router-link>
             <router-link v-if="!isLogged" :to="'/login'">Login</router-link>
             <router-link v-if="!isLogged" :to="'/register'">Register</router-link>
             <a style="cursor: pointer" v-if="isLogged"  @click="logout">Logout</a>
@@ -36,12 +37,12 @@
            <router-link :to="'/profile'"> <div id="login-btn" class="fas fa-user"></div></router-link>
             <div id="menu-btn" class="fas fa-bars"></div>
         </div>
-      
+
 
 
     </header>
 
- 
+
   </body>
 </html>
 

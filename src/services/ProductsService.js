@@ -22,9 +22,7 @@ const productService = {
     deleteProduct(id) {
         return apiClient.delete(`/products/${id}`);
     },
-    getProductById(id) {
-        return apiClient.get(`/products/${id}`);
-    }
+   
 };
 
 
