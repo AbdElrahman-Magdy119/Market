@@ -25,10 +25,10 @@
         <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
         <Column :field="'index'" header="#" style="width: 3rem" :exportable="false"></Column>
         <Column field="name" header="Name" sortable style="min-width:16rem"></Column>
-        <Column field="category_id" header="Category Id" sortable style="min-width:16rem"></Column>
+        <Column field="category.name" header="Category Id" sortable style="min-width:16rem"></Column>
         <Column field="image" header="Image" sortable style="min-width:16rem">
           <template #body="{data}">
-              <img  :src="'http://localhost:8000/'+data.image" :alt="data.image" class="product-image"/>
+              <img width="50" height="50" :src="'http://localhost:8000/'+data.image" :alt="data.image"/>
           </template>        
         </Column>
         
@@ -55,9 +55,7 @@
         <input class="form-control" type="file" name="image" id="image"  @change="handleFileSelect"  accept="image/*" :maxFileSize="1000000"  />
         <small class="p-error" v-if="submitted && !subCategory.name">Name is required.</small>
       </div>
-      <Dropdown v-model="subCategory.category_id" :options="categories" optionLabel="name"  option-value="id" placeholder="Select a City" class="w-full md:w-14rem" />
-
-
+      <Dropdown v-model="subCategory.category_id" :options="categories" optionLabel="name"  option-value="id" placeholder="Select a Category" class="w-full md:w-14rem" />
       <template #footer>
         <Button label="Cancel" icon="pi pi-times" text @click="hideDialog"/>
         <Button label="Save" icon="pi pi-check" text @click="saveSubCategory" />
@@ -165,6 +163,14 @@ export default {
           SubCategoriesService.updateSubCategory(this.subCategory.id, formData)
               .then((response) => {
                 this.subCategories[this.findIndexById(this.subCategory.id)] = response.data;
+                  SubCategoriesService.getAllSubCategories().then((data) => {
+                      this.subCategories = data.data.data;
+
+                      // Add index property to each subCategory object
+                      this.subCategories.forEach((subCategory, index) => {
+                          subCategory.index = index + 1; // Adding 1 to display index starting from 1
+                      });
+                  });
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Updated', life: 3000 });
                 this.subCategory = {};
                 this.selectedFile = [];
@@ -184,6 +190,14 @@ export default {
               .then(response => {
                 const newCategory = response.data.data; // Assuming the API returns the newly created subCategory
                 this.subCategories.push(newCategory);
+                  SubCategoriesService.getAllSubCategories().then((data) => {
+                      this.subCategories = data.data.data;
+
+                      // Add index property to each subCategory object
+                      this.subCategories.forEach((subCategory, index) => {
+                          subCategory.index = index + 1; // Adding 1 to display index starting from 1
+                      });
+                  });
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Created', life: 3000 });
                 this.subCategory = {};
                 this.selectedFile = [];
@@ -211,6 +225,14 @@ export default {
             this.subCategories = this.subCategories.filter(val => val.id !== this.subCategory.id);
             this.deleteSubCategoryDialog = false;
             this.subCategory = {};
+              SubCategoriesService.getAllSubCategories().then((data) => {
+                  this.subCategories = data.data.data;
+
+                  // Add index property to each subCategory object
+                  this.subCategories.forEach((subCategory, index) => {
+                      subCategory.index = index + 1; // Adding 1 to display index starting from 1
+                  });
+              });
             this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Deleted', life: 3000 });
           })
           .catch(error => {

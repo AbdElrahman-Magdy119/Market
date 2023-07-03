@@ -41,6 +41,9 @@ const HomeService = {
     getProductBySubcategoryId(id) {
         return apiClient.get(`/home/products?filter=${id}`);
     },
+    updateUserData(id, data){
+        return apiClient.put(`/users/${id}`, data)
+    }
     
 };
 

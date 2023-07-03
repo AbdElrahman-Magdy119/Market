@@ -90,7 +90,6 @@
               <Fieldset legend="Review" style="margin-top:1rem" :toggleable="true">
                   <div class="container">
                     <div class="d-flex justify-content-center pt-3 pb-2">
-						<!-- v-show="userHasReview" -->
                       <input
                         ref="comment"
                         type="text"
@@ -98,42 +97,42 @@
                         placeholder="+ Add a note"
                         class="w-75 addtxt"
                         @keyup.enter="addComment()"
-						
+						v-show="userHasReview"
                       />
                     </div>
                     <div class="row">
                       <div class="col-12 py-2 px-2">
                         <div v-for="review in allReviews.data" :key="review._id">
                           <div class="row py-3 pt-3" v-if="review.comment != ''">
-                            <div class="col-6">
-                              <img
-                                src="https://images-eu.ssl-images-amazon.com/images/S/amazon-avatars-global/default._CR0,0,1024,1024_SX48_.png"
-                                style="
-                                  width: 50px;
-                                  height: 50px;
-                                  border-radius: 50%;
-                                "
-                              />
-                              <span class="text2">{{ review.user_id.name }}  {{ review.user_id.lastName }}</span>
-                              <p class="text1 mt-3">
-                                {{ review.comment }}
-                              </p>
-                             <button
-							    v-if="userId == review.user_id.id "
-                                ref="btn2"
-                                @click="remove(btn2, review, comment)"
-                                class="bg-warning me-3 fs-4 p-2 mt-3"
-                              >
-                                edit
-                              </button> 
-                              <button
-							    v-if="userId == review.user_id.id "
-                                ref="removeButton"
-                                @click="removeComment(review.id)"
-                                class="bg-danger me-3 fs-4 p-2 mt-3"
-                              >
-                                remove
-                              </button>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-start">
+                                    <div class="mx-2">
+                                        <img src="https://images-eu.ssl-images-amazon.com/images/S/amazon-avatars-global/default._CR0,0,1024,1024_SX48_.png" alt={{review.user_id.name}}
+                                             style="width: 50px;height: 50px;border-radius: 50%;"/>
+                                    </div>
+                                    <div>
+                                        <div style="background-color: rgb(240,242,245); border-radius:20px;padding:5px 7px 0 5px;  ">
+                                            <span style="font-weight:bold; font-size:10px; margin:30px 0 0 20px;">{{ review.user_id.name }}  {{ review.user_id.lastName }}</span>
+                                            <p style="font-size:10px; padding-left:10px; width:fit-content;">{{ review.comment }} </p>
+                                        </div>
+
+                                        <div class="d-flex justify-content-start align-items-start">
+                                            <p class="created_at mx-2" style="font-size:10px">
+                                                {{ formatDate(review.created_at) }}
+                                            </p>
+                                            <a id="user-edit" @click="visible = true" v-if="userId == review.user_id.id" style="font-size: 1.5rem; margin-right:10px; color:rgb(101,103,107);">Edit</a>
+                                            <a id="user-remove" @click="removeComment(review.id)" v-if="userId == review.user_id.id"  ref="removeButton"  autofocus style="font-size: 1.5rem; color:rgb(101,103,107)" >Remove</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <Dialog v-model:visible="visible" modal header="Update Comment" :style="{ width: '50vw' }">
+                                <input v-model="updateComment" type="text" placeholder="Enter your Comment"  class=" inputupdate"  />
+                                  <template #footer>
+                                    <Button label="No" icon="pi pi-times" @click="visible = false" text />
+                                    <Button label="Update" icon="pi pi-check" @click="editComment()" autofocus />
+                                  </template>
+                                </Dialog>
                             </div>
                           </div>
                         </div>
@@ -178,7 +177,6 @@
             </div>
           </div>
         </section>
-
       </div>
     </body>
   </html>
@@ -194,13 +192,18 @@ import Galleria from "primevue/galleria";
 import Rating from "primevue/rating";
 import Fieldset from "primevue/fieldset";
 import Badge from "primevue/badge";
+import Dialog from 'primevue/dialog';
+import Button from 'primevue/button';
+import {usecarditem} from '@/stores/notifications';
 export default {
   components: {
     Galleria,
     Rating,
     Fieldset,
-	Toast,
-	Badge
+    Toast,
+    Badge,
+    Dialog,
+    Button
   },
   data() {
     return {
@@ -209,15 +212,18 @@ export default {
 	  allReviews: {},
       averageRating: '',
       rating: '',
-	  userHasReview:false,
-	  userId:''
+	  userHasReview:true,
+	  userId:'',
+	  visible: false,
+	  updateComment:'',
+    cardNumber:usecarditem(),
+    wishNumber:usecarditem(),
     };
   },
- async mounted() {
+    async mounted() {
 	 await HomeService.getProductById(this.$route.params.idProduct).then(
         (data) => {
           this.product = data.data.Product;
-		  
         }
       );
 	 await HomeService.getProductBySubcategoryId(this.product.subcategory_id).then((data) => {
@@ -225,11 +231,13 @@ export default {
         })
 	 await ReviewService.getAllReviews(this.product.id).then((data) => {
           this.allReviews = data.data;
+       console.log(this.allReviews);
 		  this.averageRating = this.allReviews.avg
 		  const user_id = localStorage.getItem("id");
 		  this.userId = user_id;
           const user_rate = this.allReviews.data.filter((data) =>  data.user_id.id == user_id );
-		  console.log(this.allReviews)
+        this.checkusercomment();
+
 		  if( user_rate  && user_rate[0] &&   user_rate[0].rating)
 		  {
 			this.rating = user_rate[0].rating;
@@ -238,10 +246,23 @@ export default {
 		  {
 			this.rating = 0
 		  }
-		  
-        })
+   })
   },
+
   methods: {
+      formatDate(date) {
+          const options = { year: 'numeric', month: 'long', day: 'numeric' };
+          console.log(date);
+          return new Date(date).toLocaleDateString(undefined, options);
+      },
+	async checkusercomment(){
+		const checkUserHasReview =  await this.allReviews.data.filter((data) =>  data.user_id.id == this.userId && data.comment!='' );
+
+		  if(checkUserHasReview.length > 0)
+		  {
+             this.userHasReview = false;
+		  }
+	},
     getRating() {
        const user_id = localStorage.getItem("id");
 	   const user_rate = this.allReviews.data.filter((data) =>  data.user_id.id == user_id );
@@ -256,7 +277,8 @@ export default {
               this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Rating Updated Successfully', life: 4000 });
 			  ReviewService.getAllReviews(this.product.id).then((data) => {
               this.allReviews = data.data;
-		      this.averageRating = this.allReviews.avg });
+		      this.averageRating = this.allReviews.avg
+              });
             })
 		}
 		else
@@ -267,12 +289,21 @@ export default {
 				rating : this.rating
   			}
 			ReviewService.addReview(review_rate).then((data) => {
-              this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Rating Add Successfully', life: 4000 });
-            })
+          ReviewService.getAllReviews(this.product.id).then((data) => {
+              this.allReviews = data.data;
+              this.averageRating = this.allReviews.avg
+          });
+          this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Rating Add Successfully', life: 4000 });
+      })
 		}
 	   
     },
 	addToCart(product_id) {
+        this.cardNumber.cardNumberStore = localStorage.getItem('cardNumber')
+        this.cardNumber.cardNumberStore = Number(this.cardNumber.cardNumberStore) +1 
+        localStorage.setItem('cardNumber',this.cardNumber.cardNumberStore)
+
+
       const user_id = localStorage.getItem('id')
       const data={
         user_id: user_id,
@@ -290,7 +321,12 @@ export default {
                 this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to create Cart', life: 3000 });
               });
     },
-	addToWishList(product_id) {
+	addToWishList(product_id) { 
+
+        this.wishNumber.wishlistNumberStore = localStorage.getItem('wishlistNumber')
+	    	this.wishNumber.wishlistNumberStore = Number(this.wishNumber.wishlistNumberStore) +1 
+        localStorage.setItem('wishlistNumber',this.wishNumber.wishlistNumberStore)
+
       const user_id = localStorage.getItem('id')
       const data={
         user_id: user_id,
@@ -318,11 +354,24 @@ export default {
 	    const user_rate = this.allReviews.data.filter((data) =>  data.user_id.id == user_id );
 		if(user_rate.length > 0)
 		 {
-			console.log("yes");
+			this.userHasReview = false;
+			const user_id = localStorage.getItem('id')
+			const formData = new FormData();
+            formData.append('comment', this.$refs.comment.value);
+			formData.append('user_id',user_id);
+            formData.append('_method', 'PATCH');
+			ReviewService.updateReview(formData,this.product.id).then((data) => {
+              this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Comment Added Successfully', life: 4000 });
+			  ReviewService.getAllReviews(this.product.id).then((data) => {
+              this.allReviews = data.data;
+		      this.averageRating = this.allReviews.avg
+              });
+            })
+			this.$refs.comment.value=""
 		 }
 		 else
 		 {
-            this.userHasReview = true;
+            this.userHasReview = false;
 			const review_rate = {
 				product_id : this.product.id,
 				comment : this.$refs.comment.value
@@ -331,23 +380,39 @@ export default {
               this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Comment Add Successfully', life: 4000 });
 			  ReviewService.getAllReviews(this.product.id).then((data) => {
 				this.allReviews = data.data;
+          this.averageRating = this.allReviews.avg
 			  })
             })
+			
 		 }
     
 	},
 	removeComment(reviewId){
-           console.log(reviewId)
-			// const formData = new FormData();
-            // formData.append('comment', "");
-			// formData.append('user_id',this.userId);
-            // formData.append('_method', 'PATCH');
-			// ReviewService.updateReview(formData,this.product.id).then((data) => {
-            //   this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Comment Deleted Successfully', life: 4000 });
-			//   ReviewService.getAllReviews(this.product.id).then((data) => {
-            //   this.allReviews = data.data;
-		    //   this.averageRating = this.allReviews.avg });
-            // })
+              ReviewService.deleteReview(reviewId).then((data) => {
+              this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Comment Deleted Successfully', life: 4000 });
+				ReviewService.getAllReviews(this.product.id).then((data) => {
+				this.allReviews = data.data;
+				this.averageRating = this.allReviews.avg });
+              })
+			  this.userHasReview = true;
+			  this.$refs.comment.value=""
+	},
+	editComment(){
+		    this.userHasReview = false;
+			const user_id = localStorage.getItem('id')
+			const formData = new FormData();
+            formData.append('comment', this.updateComment);
+			formData.append('user_id',user_id);
+            formData.append('_method', 'PATCH');
+			ReviewService.updateReview(formData,this.product.id).then((data) => {
+              this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Comment updated Successfully', life: 4000 });
+			  ReviewService.getAllReviews(this.product.id).then((data) => {
+              this.allReviews = data.data;
+		      this.averageRating = this.allReviews.avg });
+            })
+			this.$refs.comment.value=""
+			this.visible = false;
+			this.updateComment= ""
 	}
   },
 };
@@ -385,6 +450,16 @@ export default {
 /*----------------------------------------*/
 /* Template default CSS
 /*----------------------------------------*/
+
+#user-edit:hover{
+    text-decoration:underline;
+    cursor:pointer;
+}
+
+#user-remove:hover{
+    text-decoration:underline;
+    cursor:pointer;
+}
 
 html,
 body {
@@ -454,6 +529,18 @@ img {
   background-color: #e5e8ed;
   font-weight: 500;
 }
+
+.inputupdate{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  font-size: 13px;
+  width: 100%;
+  background-color: #ebf0f8;
+  font-weight: 500;
+}
+
+
 
 .text1 {
   font-size: 2.3rem;

@@ -22,19 +22,18 @@
 
 			<div class="box">
 				<h3>find us here</h3>
-				<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. In accusamus praesentium.</p>
+				<p>Our Social Media Accounts.</p>
 				<div class="share">
-					<a href="#" class="fab fa-facebook-f"></a>
-					<a href="#" class="fab fa-twitter"></a>
-					<a href="#" class="fab fa-instagram"></a>
-					<a href="#" class="fab fa-linkedin"></a>
+					<a href="https://www.facebook.com/profile.php?id=100005089182388" target="_blank" class="fab fa-facebook-f"></a>
+					<a href="https://instagram.com/abdomagdy89?igshid=OGQ5ZDc2ODk2ZA==" target="_blank" class="fab fa-instagram"></a>
+					<a href="https://www.linkedin.com/in/abdelrahman-magdy-b3606a263/" target="_blank" class="fab fa-linkedin"></a>
 				</div>
 			</div>
 
 			<div class="box">
 				<h3>contact us</h3>
-				<p>+52 2 1478 7412</p>
-				<a href="#" class="link">ninjashub@gmail.com</a>
+				<p>01091516647</p>
+				<a href="https://www.facebook.com/profile.php?id=100005089182388" target="_blank" class="link">marketAssiut123@gmail.com</a>
 			</div>
 
 			<div class="box">
@@ -47,7 +46,7 @@
 
 	    	</div>
 
-	    	<div class="credit">created by <span> ninjashub </span> all rights reserved!</div>
+	    	<div class="credit">created by <span> ITI Market Team </span> all rights reserved!</div>
 
 	  	</section>
 

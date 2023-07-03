@@ -9,6 +9,7 @@
                             <thead>
                                 <tr>
                                     <th class="shoping__product">Products</th>
+                                    <th>Availability</th>
                                     <th>Price</th>
                                     <th>Quantity</th>
                                     <th>Total</th>
@@ -22,13 +23,25 @@
                                         <img :src="`http://localhost:8000/`+ usercart.product_id.image" :alt="usercart.product_id.name" >
                                         <h5>{{ usercart.product_id.name }}</h5>
                                     </td>
+                                    <td class="shoping__cart__total">
+                                        <Badge
+                                            v-if="Availability(usercart.product_id.quantity)"
+                                            severity="success"
+                                            size="xlarge"
+                                        >
+                                            In Stock
+                                        </Badge>
+                                        <Badge v-else size="xlarge" severity="danger"
+                                        >Out Of Stock</Badge
+                                        >
+                                    </td>
                                     <td class="shoping__cart__price">
                                        ${{ usercart.product_id.price }}
                                     </td>
                                     <td class="shoping__cart__quantity">
                                         <div class="quantity">
                                             <div class="pro-qty">
-                                                <span @click="increaseQty(usercart.product_id.id, usercart.user_id.id)" class="increase h1">+</span>
+                                                <span @click="increaseQty(usercart.product_id.id, usercart.user_id.id)" id="increase-btn" class="increase h1">+</span>
                                                 <input type="text" :value="usercart.prod_qty">
                                                 <button @click="decreaseQty(usercart.product_id.id, usercart.user_id.id)" class="decrease h1"><b>-</b></button>
                                             </div>
@@ -50,7 +63,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
-                        <router-link :to="'/shop'" class="primary-btn cart-btn"> CONTINUE SHOPPING</router-link>
+                        <router-link :to="'/allproducts'" class="primary-btn cart-btn"> CONTINUE SHOPPING</router-link>
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -68,10 +81,10 @@
                     <div class="shoping__checkout">
                         <h5>Cart Total</h5>
                         <ul>
-                            <li>Subtotal <span>$454.98</span></li>
-                            <li>Total <span>$454.98</span></li>
+<!--                            <li>Subtotal <span>$454.98</span></li>-->
+                            <li>Total <span>${{total_price}}</span></li>
                         </ul>
-                        <router-link :to="'/checkout'" @click="proceedToCheckout" class="primary-btn"> PROCEED TO CHECKOUT </router-link>
+                            <button @click="proceedToCheckout" class="primary-btn"> PROCEED TO CHECKOUT </button>
 <!--                        <button @click="proceedToCheckout">Click me</button>-->
                     </div>
                 </div>
@@ -83,23 +96,34 @@
 <script>
 import CartService  from '@/services/CartService';
 import Toast from "primevue/toast";
+import Badge from "primevue/badge";
+
 
 export default {
     components:{
         Toast,
+        Badge,
     },
     data() {
         return {
             UserCart: [],
+            total_price: 0,
         }
      },
      mounted() {
         CartService.getUserCart().then((data) => {
         this.UserCart = data.data.data;
         console.log(this.UserCart);
+        this.calc_total_price();
         });
      },
      methods:{
+         calc_total_price() {
+             this.total_price = 0;
+             for (const i in this.UserCart) {
+                 this.total_price += (this.UserCart[i].product_id.price * this.UserCart[i].prod_qty);
+             }
+         },
          increaseQty(prd_id, user_id){
             CartService.increaseQuantity(prd_id, user_id)
                 .then((res)=>{
@@ -107,6 +131,8 @@ export default {
                     CartService.getUserCart().then((data) => {
                         this.UserCart = data.data.data;
                         console.log(this.UserCart);
+                        this.calc_total_price();
+
                     });
                     this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Cart Updated', life: 3000 });
                 })
@@ -122,6 +148,8 @@ export default {
                      console.log(res)
                      CartService.getUserCart().then((data) => {
                          this.UserCart = data.data.data;
+                         this.calc_total_price();
+
                          console.log(this.UserCart);
                      });
                  })
@@ -137,6 +165,8 @@ export default {
                      this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
                      CartService.getUserCart().then((data) => {
                          this.UserCart = data.data.data;
+                         this.calc_total_price();
+
                          console.log(this.UserCart);
                      });
                  })
@@ -144,8 +174,35 @@ export default {
                      console.log(err);
                  })
          },
+         Availability(quantity) {
+             if(quantity > 0) return true;
+             else return false;
+         },
          proceedToCheckout(){
-             localStorage.setItem('usercart', JSON.stringify(this.UserCart))
+                 if (this.total_price === 0) {
+                     this.$toast.add({ severity: 'info', summary: 'Info Message', detail: 'No Products Found', life: 3000 });
+                     return;
+                 }
+                let qty_flag = false;
+             for (const qty in this.UserCart) {
+                 console.log(this.UserCart[qty]);
+                 if(this.UserCart[qty].product_id.quantity === 0){
+                     qty_flag = true;
+                     break;
+                 }
+             }
+
+             console.log("Flag: " + qty_flag);
+
+             if(!qty_flag){
+                 localStorage.setItem('usercart', JSON.stringify(this.UserCart))
+                 this.$router.push('/checkout')
+             }else {
+                 this.$toast.add({ severity: 'info', summary: 'Info Message', detail: 'Product is Out of stock', life: 3000 });
+                 return;
+             }
+
+
              // this.CartStore.items = this.UserCart;
              // console.log(this.CartStore.items);
          },
@@ -185,6 +242,11 @@ export default {
 /*----------------------------------------*/
 /* Template default CSS
 /*----------------------------------------*/
+
+#increase-btn:hover{
+    cursor:pointer;
+}
+
 
 html,
 body {
