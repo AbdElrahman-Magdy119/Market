@@ -9,21 +9,34 @@
 </template>
 
 <script>
+import authService from "@/services/AuthService";
+
 export default {
     name:"GoogleLogin",
     data() {
         return {
-            clientId: '380461466531-96gor4tmukkkijan8kia9plir6c1g112.apps.googleusercontent.com',
+            clientId: null,
         };
     },
     mounted() {
         // Define the callback function to handle the credential response
         window.handleCredentialResponse = this.handleCredentialResponse;
+        this.clientId = "380461466531-kks7596sd3o6kufbm8iiem2clbdrb2b2.apps.googleusercontent.com";
     },
     methods: {
         handleCredentialResponse(response) {
             // Handle the credential response here
-            console.log(response);
+            // console.log("res");
+            // console.log(response);
+            authService.googleRegister()
+                .then((res)=>{
+                    console.log("Logged");
+                    console.log(res);
+                })
+                .catch((err)=>{
+                    console.log("Error");
+                    console.log(err);
+                })
             // You can perform further actions with the response, such as sending it to your backend for authentication or storing user information
         },
     },

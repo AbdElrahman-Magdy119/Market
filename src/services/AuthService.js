@@ -4,7 +4,7 @@ const apiClient = axios.create({
     headers: {
         // Add any common headers if needed
         'Content-Type': 'application/json',
-        'Accept':'application/json'
+        'Accept': 'application/json'
     },
 });
 
@@ -17,7 +17,10 @@ const authService = {
         return apiClient.post('/register', credentials);
     },
     googleLogin(token) {
-        return apiClient.post('/login/google', { token });
+        return apiClient.get('/auth/google', { token });
+    },
+    googleRegister() {
+        return apiClient.get('/auth/google');
     },
 };
 

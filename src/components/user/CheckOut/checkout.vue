@@ -122,7 +122,7 @@
     data() {
           return {
               userStore: useAuthStore(),
-              itemsStore: useCartStore(),
+              itemsStore: [],
               total_price: 0,
               order:{},
           };
@@ -131,7 +131,7 @@
         this.calc_total_price();
         this.user= this.userStore.user;
         console.log(this.userStore.user);
-          console.log(this.itemsStore.items);
+          this.itemsStore.items = JSON.parse(localStorage.getItem('usercart'));
         // this.items= CartService.cartItems;
         },
       methods:{

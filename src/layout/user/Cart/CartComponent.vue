@@ -149,8 +149,9 @@ export default {
                  })
          },
          proceedToCheckout(){
-             this.CartStore.items = this.UserCart;
-             console.log(this.CartStore.items);
+             localStorage.setItem('usercart', JSON.stringify(this.UserCart))
+             // this.CartStore.items = this.UserCart;
+             // console.log(this.CartStore.items);
          },
      },
 }
