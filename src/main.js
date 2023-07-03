@@ -11,6 +11,9 @@ import 'primevue/resources/primevue.min.css'
 import ToastService from 'primevue/toastservice';
 import VueGapi from "vue-gapi";
 import gAuthPlugin from 'vue3-google-oauth2';
+import BadgeDirective from 'primevue/badgedirective';
+
+
 
  const pinia=createPinia();
 
@@ -36,4 +39,5 @@ createApp(MainComponent)
     // .use(VueGapi,apiConfig)
     .use(PrimeVue)
     .use(ToastService)
+    .directive('badge', BadgeDirective)
     .mount('#app')

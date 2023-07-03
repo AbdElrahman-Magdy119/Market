@@ -21,7 +21,7 @@
     </head>
     <body>
       <section class="product" id="product">
-      <Toast></Toast>
+      <Toast  />
         <h1 class="heading">our <span>products</span></h1>
       <section class="related-product">
         <div class="container">
@@ -58,6 +58,7 @@ import  Toast  from 'primevue/toast';
 import HomeService  from '@/services/HomeService';
 import WishListService  from '@/services/WishListService';
 import CartService  from '@/services/CartService';
+import {usecarditem} from '@/stores/notifications';
 export default {
   components: {
     Toast,
@@ -74,9 +75,12 @@ export default {
       wishListProductName: '',
       wishListProductPrice: '',
       wishListProductDescription: '',
+	  cardNumber:usecarditem(),
+	  wishNumber:usecarditem(),
     }
   },
   mounted() {
+	
     HomeService.getTrendingProduct().then((data) => {
         this.TrendingProducts = data.data.Products;
 		});
@@ -102,6 +106,11 @@ export default {
   },
   methods: {
     addToWishList(product_id) {
+
+		this.wishNumber.wishlistNumberStore = localStorage.getItem('wishlistNumber')
+		this.wishNumber.wishlistNumberStore = Number(this.wishNumber.wishlistNumberStore) +1 
+        localStorage.setItem('wishlistNumber',this.wishNumber.wishlistNumberStore)
+
       const user_id = localStorage.getItem('id')
       const data={
         user_id: user_id,
@@ -121,6 +130,10 @@ export default {
       
     },
     addToCart(product_id) {
+		this.cardNumber.cardNumberStore = localStorage.getItem('cardNumber')
+		this.cardNumber.cardNumberStore = Number(this.cardNumber.cardNumberStore) +1 
+        localStorage.setItem('cardNumber',this.cardNumber.cardNumberStore)
+
       const user_id = localStorage.getItem('id')
       const data={
         user_id: user_id,

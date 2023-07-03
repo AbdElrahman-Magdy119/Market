@@ -63,7 +63,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shoping__cart__btns">
-                        <router-link :to="'/shop'" class="primary-btn cart-btn"> CONTINUE SHOPPING</router-link>
+                        <router-link :to="'/allproducts'" class="primary-btn cart-btn"> CONTINUE SHOPPING</router-link>
                     </div>
                 </div>
                 <div class="col-lg-6">

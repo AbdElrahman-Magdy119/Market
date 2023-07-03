@@ -194,6 +194,7 @@ import Fieldset from "primevue/fieldset";
 import Badge from "primevue/badge";
 import Dialog from 'primevue/dialog';
 import Button from 'primevue/button';
+import {usecarditem} from '@/stores/notifications';
 export default {
   components: {
     Galleria,
@@ -205,16 +206,18 @@ export default {
     Button
   },
   data() {
-      return {
-          product: {},
-	      relatedProducts: {},
-	      allReviews: {},
-        averageRating: '',
-        rating: '',
-        userHasReview:true,
-	      userId:'',
-	      visible: false,
-	      updateComment:''
+    return {
+      product: {}, 
+	  relatedProducts: {},
+	  allReviews: {},
+      averageRating: '',
+      rating: '',
+	  userHasReview:true,
+	  userId:'',
+	  visible: false,
+	  updateComment:'',
+    cardNumber:usecarditem(),
+    wishNumber:usecarditem(),
     };
   },
     async mounted() {
@@ -296,6 +299,11 @@ export default {
 	   
     },
 	addToCart(product_id) {
+        this.cardNumber.cardNumberStore = localStorage.getItem('cardNumber')
+        this.cardNumber.cardNumberStore = Number(this.cardNumber.cardNumberStore) +1 
+        localStorage.setItem('cardNumber',this.cardNumber.cardNumberStore)
+
+
       const user_id = localStorage.getItem('id')
       const data={
         user_id: user_id,
@@ -313,7 +321,12 @@ export default {
                 this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to create Cart', life: 3000 });
               });
     },
-	addToWishList(product_id) {
+	addToWishList(product_id) { 
+
+        this.wishNumber.wishlistNumberStore = localStorage.getItem('wishlistNumber')
+	    	this.wishNumber.wishlistNumberStore = Number(this.wishNumber.wishlistNumberStore) +1 
+        localStorage.setItem('wishlistNumber',this.wishNumber.wishlistNumberStore)
+
       const user_id = localStorage.getItem('id')
       const data={
         user_id: user_id,
