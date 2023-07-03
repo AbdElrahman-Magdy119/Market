@@ -43,8 +43,11 @@ const HomeService = {
     },
     updateUserData(id, data){
         return apiClient.put(`/users/${id}`, data)
+    },
+    getAllSubCategories() {
+        return apiClient.get(`/home/subcategories`);
     }
-    
+
 };
 
 
