@@ -85,6 +85,7 @@ export default {
   methods: {
     logout() {
       localStorage.clear();
+      this.NumOfCard.cardNumberStore = null;
       this.$router.push('/login');
       authService.userData = {};
       console.log(authService.userData);

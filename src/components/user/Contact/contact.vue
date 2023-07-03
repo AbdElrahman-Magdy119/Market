@@ -13,7 +13,10 @@
                     <input type="text" placeholder="first name" name="to_name" required />
                     <input type="text" placeholder="last name" name="last_name" required />
                 </div>
-
+                <div class="inputBox">
+                    <input type="email" placeholder="email address" name="email" required />
+                    <input type="number" placeholder="phone" name="from_name" required />
+                </div>
             <textarea
               placeholder="message"
               id=""
