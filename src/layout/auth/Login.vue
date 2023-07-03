@@ -39,23 +39,28 @@
         </div>
       </div>
 
-      <div class="col">
-        <!-- Simple link -->
-        <a href="#">Forgot password?</a>
-      </div>
+<!--      <div class="col">-->
+<!--        &lt;!&ndash; Simple link &ndash;&gt;-->
+<!--        <a href="#">Forgot password?</a>-->
+<!--      </div>-->
     </div>
 
     <!-- Submit button -->
-    <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+    <div class="text-center">
+      <button type="submit" class="btn mb-4">Sign in</button>
+    </div>
 
     <!-- Register buttons -->
     <div class="text-center">
       <p>Not a member? <router-link to="register">Register</router-link></p>
       <p>or sign up with:</p>
+      <div class="text-center ms-5">
+        <GoogleLogin></GoogleLogin>
+      </div>
 <!--      <button type="button" class="btn btn-link btn-floating mx-1">-->
 <!--        <i class="fab fa-facebook-f"></i>-->
 <!--      </button>-->
-      <GoogleLogin></GoogleLogin>
+
 <!--      <button type="button" class="btn btn-link btn-floating mx-1" @click="googleLogin">-->
 <!--        <i class="fab fa-google"></i>-->
 <!--      </button>-->

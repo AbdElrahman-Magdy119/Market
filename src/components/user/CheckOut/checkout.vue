@@ -18,33 +18,40 @@
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
                                           <p>Fist Name<span>*</span></p>
-                                          <input type="text" v-model=user.firstName>
+                                          <input type="text" v-model=user.firstName required>
+                                          <span v-if="!user.firstName" class="error-message">First Name is required</span>
                                       </div>
                                   </div>
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
                                           <p>Last Name<span>*</span></p>
-                                          <input type="text" v-model=user.lastName>
+                                          <input type="text" v-model=user.lastName required>
+                                          <span v-if="!user.lastName" class="error-message">Last Name is required</span>
                                       </div>
                                   </div>
                               </div>
 
                               <div class="checkout__input">
                                   <p>Address<span>*</span></p>
-                                  <input type="text" placeholder="Street Address" class="checkout__input__add" v-model=user.address>
+                                  <input type="text" placeholder="Street Address" class="checkout__input__add" v-model=user.address required>
+                                  <span v-if="!user.address || user.address=='null'" class="error-message">Address is required</span>
+
                               </div>
 
                               <div class="row">
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
                                           <p>Phone<span>*</span></p>
-                                          <input type="text" v-model=user.phone>
+                                          <input type="text" placeholder="Phone" v-model=user.phone required>
+                                        <span v-if="!user.phone || user.phone=='null'" class="error-message">Phone is required</span>
                                       </div>
                                   </div>
                                   <div class="col-lg-6">
                                       <div class="checkout__input">
                                           <p>Email<span>*</span></p>
-                                          <input type="text" v-model=user.email>
+                                          <input type="text" v-model=user.email required>
+                                        <span v-if="!user.email" class="error-message">Email is required</span>
+
                                       </div>
                                   </div>
                               </div>
@@ -70,32 +77,8 @@
                                           <span>${{ item.product_id.price * item.prod_qty}}</span>
                                       </li>
                                   </ul>
-<!--                                  <div class="checkout__order__subtotal">Subtotal <span>$750.99</span></div>-->
                                   <div class="checkout__order__total">Total <span>${{total_price}}</span></div>
-                                  <!-- <div class="checkout__input__checkbox">
-                                      <label for="acc-or">
-                                          Create an account?
-                                          <input type="checkbox" id="acc-or">
-                                          <span class="checkmark"></span>
-                                      </label>
-                                  </div>
-                                  <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
-                                      ut labore et dolore magna aliqua.</p> -->
-<!--                                  <div class="checkout__input__checkbox">-->
-<!--                                      <label for="payment">-->
-<!--                                          Cash-->
-<!--                                          <input type="checkbox" id="payment">-->
-<!--                                          <span class="checkmark"></span>-->
-<!--                                      </label>-->
-<!--                                  </div>-->
-<!--                                  <div class="checkout__input__checkbox">-->
-<!--                                      <label for="paypal">-->
-<!--                                          Paypal-->
-<!--                                          <input type="checkbox" id="paypal">-->
-<!--                                          <span class="checkmark"></span>-->
-<!--                                      </label>-->
-<!--                                  </div>-->
-<!--                                <button @click.prevent="paypalPayment">PayPal</button>-->
+
                                 <button class="paypal-button" @click.prevent="paypalPayment">
                                   <i class="fab fa-paypal"></i> Pay with PayPal
                                 </button>
@@ -133,7 +116,7 @@
           };
       },
       mounted() {
-          this.itemsStore.items = JSON.parse(localStorage.getItem('usercart'));
+        this.itemsStore.items = JSON.parse(localStorage.getItem('usercart'));
         this.calc_total_price();
         console.log(this.user);
           console.log(this.itemsStore.items);
@@ -146,6 +129,16 @@
             }
         },
         createOrder(){
+          if (!this.user.firstName || !this.user.lastName || !this.user.address || !this.user.phone || !this.user.email) {
+            // Display an error message or toast notification
+            this.$toast.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Please fill in all required fields.',
+              life: 3000
+            });
+            return;
+          }
             // this.order.user = {};
             this.order.firstName = this.user.firstName;
             this.order.lastName = this.user.lastName;
@@ -178,6 +171,16 @@
                   })
           },
         paypalPayment() {
+          if (!this.user.firstName || !this.user.lastName || !this.user.address || !this.user.phone || !this.user.email) {
+            // Display an error message or toast notification
+            this.$toast.add({
+              severity: 'error',
+              summary: 'Error',
+              detail: 'Please fill in all required fields.',
+              life: 3000
+            });
+            return;
+          }
           this.order.firstName = this.user.firstName;
           this.order.lastName = this.user.lastName;
           this.order.address = this.user.address;
@@ -211,6 +214,11 @@
   </script>
   
   <style scoped>
+  .error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+  }
   .paypal-button {
     display: inline-block;
     padding: 10px 20px;
