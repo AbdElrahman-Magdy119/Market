@@ -87,7 +87,6 @@ import 'primevue/resources/themes/saga-blue/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
 import authService from '@/services/AuthService';
-import {useAuthStore} from '@/store/AuthStore';
 import GoogleSignInButton from 'vue-google-signin-button';
 import GoogleLogin from "@/layout/auth/GoogleLogin.vue";
 import HeaderComponent from "@/layout/user/Header/Header.vue";
@@ -107,7 +106,6 @@ export default {
         password: '',
         loginSuccess: false,
         message:'',
-        UserStore: useAuthStore(),
     };
   },
   methods: {
@@ -121,28 +119,26 @@ export default {
           .then(response => {
             // console.log(response.data);
             // Handle successful login
+              console.log(response.data);
             this.loginSuccess = true;
             this.message = '';
             const token = response.data.token;
             const name = response.data.name;
             const lastName = response.data.lastName;
-            const address = response.data.address1;
+            const address = response.data.address;
             const phone = response.data.phone;
             const role = response.data.role.name;
             const email=response.data.email;
             const id = response.data.id;
-              this.UserStore.user = {
-                name: name,
-                lastName: lastName,
-                address: address,
-                phone: phone,
-                email: email,
-            }; // Update the user data in the store
-            console.log(this.UserStore.user);
+
             localStorage.setItem('token', token);
             localStorage.setItem('name', name);
             localStorage.setItem('role', role);
             localStorage.setItem('id', id);
+            localStorage.setItem('lastName',lastName);
+            localStorage.setItem('phone',phone);
+            localStorage.setItem('email',email);
+            localStorage.setItem('address',address);
               // Navigate to admin component
               this.$router.push('/');
           })
@@ -169,10 +165,18 @@ export default {
                   const name = response.data.name;
                   const role = response.data.role.name;
                   const id = response.data.id;
+                  const lastName = response.data.lastName;
+                  const email = response.data.email;
+                  const phone = response.data.phone;
+                  const address = response.data.address;
                   localStorage.setItem('token', token);
                   localStorage.setItem('name', name);
                   localStorage.setItem('role', role);
                   localStorage.setItem('id', id);
+                  localStorage.setItem('lastName',lastName);
+                  localStorage.setItem('phone',phone);
+                  localStorage.setItem('email',email);
+                  localStorage.setItem('address',address);
                   // Navigate to the desired route or perform any other action
                 })
                 .catch((error) => {

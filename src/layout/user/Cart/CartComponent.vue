@@ -82,10 +82,7 @@
 
 <script>
 import CartService  from '@/services/CartService';
-import { useCartStore } from '@/store/CartStore';
-
 import Toast from "primevue/toast";
-import {useAuthStore} from "@/store/AuthStore";
 
 export default {
     components:{
@@ -94,7 +91,6 @@ export default {
     data() {
         return {
             UserCart: [],
-            CartStore: useCartStore(),
         }
      },
      mounted() {

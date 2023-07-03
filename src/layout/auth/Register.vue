@@ -124,13 +124,22 @@ export default {
           .then(response => {
             this.registrationSuccess = true;
             const token = response.data.token;
+            const name = response.data.name;
+            const role = response.data.role.name;
+            const id = response.data.id;
+            const lastName = response.data.lastName;
+            const email = response.data.email;
+            const phone = response.data.phone;
+            const address = response.data.address;
             localStorage.setItem('token', token);
-
-            this.email = '';
-            this.name = '';
-            this.lastName = '';
-            this.password = '';
-            this.confirmPassword = '';
+            localStorage.setItem('name', name);
+            localStorage.setItem('role', role);
+            localStorage.setItem('id', id);
+            localStorage.setItem('lastName',lastName);
+            localStorage.setItem('phone',phone);
+            localStorage.setItem('email',email);
+            localStorage.setItem('address',address);
+            this.$router.push('/');
           })
           .catch(error => {
             // Handle error
