@@ -104,51 +104,35 @@
                       <div class="col-12 py-2 px-2">
                         <div v-for="review in allReviews.data" :key="review._id">
                           <div class="row py-3 pt-3" v-if="review.comment != ''">
-                            <div class="col-6">
-                              <img
-                                src="https://images-eu.ssl-images-amazon.com/images/S/amazon-avatars-global/default._CR0,0,1024,1024_SX48_.png"
-                                style="
-                                  width: 50px;
-                                  height: 50px;
-                                  border-radius: 50%;
-                                "
-                              />
-                              <span class="text2">{{ review.user_id.name }}  {{ review.user_id.lastName }}</span>
-                              <p class="text1 mt-3">
-                                {{ review.comment }}
-                              </p>
-                             <button
-							    v-if="userId == review.user_id.id "
-                                @click="visible = true"
-                                class="bg-warning me-3 fs-4 p-2 mt-3"
-                              >
-                                edit
-                              </button> 
-                              <button
-							    v-if="userId == review.user_id.id "
-                                ref="removeButton"
-                                @click="removeComment(review.id)"
-                                class="bg-danger me-3 fs-4 p-2 mt-3"
-                              >
-                                remove
-                              </button>
+                            <div class="col-12">
+                                <div class="d-flex justify-content-start">
+                                    <div class="mx-2">
+                                        <img src="https://images-eu.ssl-images-amazon.com/images/S/amazon-avatars-global/default._CR0,0,1024,1024_SX48_.png" alt={{review.user_id.name}}
+                                             style="width: 50px;height: 50px;border-radius: 50%;"/>
+                                    </div>
+                                    <div>
+                                        <div style="background-color: rgb(240,242,245); border-radius:20px;padding:5px 7px 0 5px;  ">
+                                            <span style="font-weight:bold; font-size:10px; margin:30px 0 0 20px;">{{ review.user_id.name }}  {{ review.user_id.lastName }}</span>
+                                            <p style="font-size:10px; padding-left:10px; width:fit-content;">{{ review.comment }} </p>
+                                        </div>
 
-							  <Dialog v-model:visible="visible" modal header="Update Comment" :style="{ width: '50vw' }">
-								<input v-model="updateComment" type="text" placeholder="Enter your Comment"  class=" inputupdate"  />
-									<template #footer>
-										<Button label="No" icon="pi pi-times" @click="visible = false" text />
-										<Button label="Update" icon="pi pi-check" @click="editComment()" autofocus />
-									</template>
-							  </Dialog>
+                                        <div class="d-flex justify-content-start align-items-start">
+                                            <p class="created_at mx-2" style="font-size:10px">
+                                                {{ formatDate(review.created_at) }}
+                                            </p>
+                                            <a id="user-edit" @click="visible = true" v-if="userId == review.user_id.id" style="font-size: 1.5rem; margin-right:10px; color:rgb(101,103,107);">Edit</a>
+                                            <a id="user-remove" @click="removeComment(review.id)" v-if="userId == review.user_id.id"  ref="removeButton"  autofocus style="font-size: 1.5rem; color:rgb(101,103,107)" >Remove</a>
+                                        </div>
+                                    </div>
 
-
-
-
-
-
-
-
-
+                                </div>
+                                <Dialog v-model:visible="visible" modal header="Update Comment" :style="{ width: '50vw' }">
+                                <input v-model="updateComment" type="text" placeholder="Enter your Comment"  class=" inputupdate"  />
+                                  <template #footer>
+                                    <Button label="No" icon="pi pi-times" @click="visible = false" text />
+                                    <Button label="Update" icon="pi pi-check" @click="editComment()" autofocus />
+                                  </template>
+                                </Dialog>
                             </div>
                           </div>
                         </div>
@@ -193,7 +177,6 @@
             </div>
           </div>
         </section>
-
       </div>
     </body>
   </html>
@@ -217,10 +200,10 @@ export default {
     Galleria,
     Rating,
     Fieldset,
-	Toast,
-	Badge,
-	Dialog,
-	Button
+    Toast,
+    Badge,
+    Dialog,
+    Button
   },
   data() {
     return {
@@ -237,11 +220,10 @@ export default {
     wishNumber:usecarditem(),
     };
   },
- async mounted() {
+    async mounted() {
 	 await HomeService.getProductById(this.$route.params.idProduct).then(
         (data) => {
           this.product = data.data.Product;
-		  
         }
       );
 	 await HomeService.getProductBySubcategoryId(this.product.subcategory_id).then((data) => {
@@ -249,13 +231,13 @@ export default {
         })
 	 await ReviewService.getAllReviews(this.product.id).then((data) => {
           this.allReviews = data.data;
+       console.log(this.allReviews);
 		  this.averageRating = this.allReviews.avg
 		  const user_id = localStorage.getItem("id");
 		  this.userId = user_id;
           const user_rate = this.allReviews.data.filter((data) =>  data.user_id.id == user_id );
         this.checkusercomment();
-		  
-		 
+
 		  if( user_rate  && user_rate[0] &&   user_rate[0].rating)
 		  {
 			this.rating = user_rate[0].rating;
@@ -264,10 +246,15 @@ export default {
 		  {
 			this.rating = 0
 		  }
-		  
-        })
+   })
   },
+
   methods: {
+      formatDate(date) {
+          const options = { year: 'numeric', month: 'long', day: 'numeric' };
+          console.log(date);
+          return new Date(date).toLocaleDateString(undefined, options);
+      },
 	async checkusercomment(){
 		const checkUserHasReview =  await this.allReviews.data.filter((data) =>  data.user_id.id == this.userId && data.comment!='' );
 
@@ -290,7 +277,8 @@ export default {
               this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Rating Updated Successfully', life: 4000 });
 			  ReviewService.getAllReviews(this.product.id).then((data) => {
               this.allReviews = data.data;
-		      this.averageRating = this.allReviews.avg });
+		      this.averageRating = this.allReviews.avg
+              });
             })
 		}
 		else
@@ -301,8 +289,12 @@ export default {
 				rating : this.rating
   			}
 			ReviewService.addReview(review_rate).then((data) => {
-              this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Rating Add Successfully', life: 4000 });
-            })
+          ReviewService.getAllReviews(this.product.id).then((data) => {
+              this.allReviews = data.data;
+              this.averageRating = this.allReviews.avg
+          });
+          this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Rating Add Successfully', life: 4000 });
+      })
 		}
 	   
     },
@@ -372,7 +364,8 @@ export default {
               this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Comment Added Successfully', life: 4000 });
 			  ReviewService.getAllReviews(this.product.id).then((data) => {
               this.allReviews = data.data;
-		      this.averageRating = this.allReviews.avg });
+		      this.averageRating = this.allReviews.avg
+              });
             })
 			this.$refs.comment.value=""
 		 }
@@ -387,6 +380,7 @@ export default {
               this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Comment Add Successfully', life: 4000 });
 			  ReviewService.getAllReviews(this.product.id).then((data) => {
 				this.allReviews = data.data;
+          this.averageRating = this.allReviews.avg
 			  })
             })
 			
@@ -456,6 +450,16 @@ export default {
 /*----------------------------------------*/
 /* Template default CSS
 /*----------------------------------------*/
+
+#user-edit:hover{
+    text-decoration:underline;
+    cursor:pointer;
+}
+
+#user-remove:hover{
+    text-decoration:underline;
+    cursor:pointer;
+}
 
 html,
 body {

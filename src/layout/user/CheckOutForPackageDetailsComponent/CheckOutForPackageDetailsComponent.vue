@@ -19,13 +19,15 @@
                                     <div class="checkout__input">
 
                                         <p>Fist Name<span>*</span></p>
-                                        <input type="text" v-model=user.firstName >
+                                        <input type="text" v-model=user.firstName>
+                                        <span v-if="!user.firstName" class="error-message">First Name is required</span>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Last Name<span>*</span></p>
                                         <input type="text" v-model=user.lastName>
+                                        <span v-if="!user.lastName" class="error-message">Last Name is required</span>
                                     </div>
                                 </div>
                             </div>
@@ -33,6 +35,7 @@
                             <div class="checkout__input">
                                 <p>Address<span>*</span></p>
                                 <input type="text" placeholder="Street Address" class="checkout__input__add" v-model=user.address>
+                                <span v-if="!user.address || user.address=='null'" class="error-message">Address is required</span>
                             </div>
 
                             <div class="row">
@@ -40,12 +43,14 @@
                                     <div class="checkout__input">
                                         <p>Phone<span>*</span></p>
                                         <input type="text" v-model=user.phone>
+                                        <span v-if="!user.phone || user.phone=='null'" class="error-message">Phone is required</span>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Email<span>*</span></p>
                                         <input type="text" v-model=user.email>
+                                        <span v-if="!user.email" class="error-message">Email is required</span>
                                     </div>
                                 </div>
                             </div>
@@ -71,17 +76,7 @@
                                         <span>${{ item.product.price * item.quantity}}</span>
                                     </li>
                                 </ul>
-                                <!--                                  <div class="checkout__order__subtotal">Subtotal <span>$750.99</span></div>-->
                                 <div class="checkout__order__total">Total <span>${{total_price}}</span></div>
-                                <!-- <div class="checkout__input__checkbox">
-                                      <label for="acc-or">
-                                          Create an account?
-                                          <input type="checkbox" id="acc-or">
-                                          <span class="checkmark"></span>
-                                      </label>
-                                  </div>
-                                  <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
-                                      ut labore et dolore magna aliqua.</p> -->
                                 <button class="paypal-button" @click.prevent="paypalPayment">
                                     <i class="fab fa-paypal"></i> Pay with PayPal
                                 </button>
@@ -122,6 +117,7 @@ export default {
     mounted() {
         this.itemsStore.items = JSON.parse(localStorage.getItem('userpackage'));
         this.total_price = this.itemsStore.items.total_price;
+
         this.user = {
             firstName:localStorage.getItem('name'),
             lastName:localStorage.getItem('lastName'),
@@ -131,6 +127,12 @@ export default {
         };
         console.log(this.user.firstName);
         console.log(this.itemsStore.items);
+        if(this.user.address === 'null'){
+            this.user.address = '';
+        }
+        if(this.user.phone === 'null'){
+            this.user.phone = '';
+        }
         this.package_items = this.itemsStore.items.package_items;
         // this.items= CartService.cartItems;
     },
@@ -159,8 +161,14 @@ export default {
                     }, 4000);
                 })
                 .catch((err)=>{
-                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Error in submission', life: 3000 });
-                    console.log(err)
+                    console.log(err.response.data.data);
+                    let container = ``;
+                    for (const containerElement in err.response.data.data) {
+                        container += `
+                            ${err.response.data.data[containerElement][0]} \n
+                        `
+                    }
+                    this.$toast.add({ severity: 'error', summary: 'Error', detail: container, life: 3000 });
                 })
         },
         paypalPayment() {
@@ -239,6 +247,14 @@ export default {
 /*----------------------------------------*/
 /* Template default CSS
   /*----------------------------------------*/
+
+
+.error-message {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
 
 html,
 body {
