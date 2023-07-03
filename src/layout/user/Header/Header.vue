@@ -18,7 +18,7 @@
 
     <header class="header">
 
-        <router-link :to="'/'" class="logo"> <i class="fas fa-shopping-cart"></i> Grocery </router-link>
+        <router-link :to="'/'" class="logo"> <i class="fas fa-shopping-cart"></i> Foodco </router-link>
 
         <nav class="navbar">
             <router-link :to="'/'"> Home </router-link>
@@ -31,8 +31,10 @@
         </nav>
 
         <div class="icons">
-           <router-link :to="'/cart'"> <div id="cart-btn" class="fas fa-shopping-basket"></div></router-link>
-           <router-link :to="'/wishlist'"> <div class="fas fa-heart" ></div></router-link>
+           <router-link :to="'/cart'" v-if="NumOfCard.cardNumberStore == null "> <div  id="cart-btn" class="fas fa-shopping-basket " ></div></router-link>
+           <router-link :to="'/cart'" v-else> <div v-badge.danger="NumOfCard.cardNumberStore" size="xlarge" id="cart-btn" class="fas fa-shopping-basket p-overlay-badge" ></div></router-link>
+           <router-link :to="'/wishlist'" v-if="NumOfWishList.wishlistNumberStore == null "> <div  class="fas fa-heart " ></div></router-link>
+           <router-link :to="'/wishlist'" v-else> <div v-badge.danger="NumOfWishList.wishlistNumberStore" class="fas fa-heart p-overlay-badge" ></div></router-link>
            <router-link :to="'/myorder'"> <div class="fas fa-shop" ></div></router-link>
            <router-link :to="'/profile'"> <div id="login-btn" class="fas fa-user"></div></router-link>
             <div id="menu-btn" class="fas fa-bars"></div>
@@ -49,15 +51,22 @@
 </template>
 
 <script>
+import Badge from 'primevue/badge';
 import authService from "@/services/AuthService";
-
+import {usecarditem} from '@/stores/notifications';
 export default {
+  component:{
+    Badge
+  },
   data() {
     return {
       isLogged: false,
+      NumOfCard:usecarditem(),
+      NumOfWishList:usecarditem()
     }
   },
   mounted() {
+    
     if(localStorage.getItem('token')) this.isLogged=true
     let navbar = document.querySelector('.navbar');
 
