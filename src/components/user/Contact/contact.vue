@@ -48,7 +48,7 @@
               name="message"
             ></textarea>
             <p id="contact-message" style="color: #666; font-size: 1.8rem"></p>
-            <input type="submit" value="order now" class="btn" />
+            <input type="submit" value="Contact Us" class="btn" />
           </form>
         </div>
       </section>
