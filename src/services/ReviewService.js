@@ -26,6 +26,9 @@ const ReviewService = {
     updateReview(review,prdId) {
         return apiClient.post(`/review/product/${prdId}`,review);
     },
+    deleteReview(reviewID) {
+        return apiClient.delete(`/review/change/review_comment/${reviewID}`);
+    },
 
 };
 

@@ -337,17 +337,12 @@ export default {
     
 	},
 	removeComment(reviewId){
-           console.log(reviewId)
-			// const formData = new FormData();
-            // formData.append('comment', "");
-			// formData.append('user_id',this.userId);
-            // formData.append('_method', 'PATCH');
-			// ReviewService.updateReview(formData,this.product.id).then((data) => {
-            //   this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Comment Deleted Successfully', life: 4000 });
-			//   ReviewService.getAllReviews(this.product.id).then((data) => {
-            //   this.allReviews = data.data;
-		    //   this.averageRating = this.allReviews.avg });
-            // })
+              ReviewService.deleteReview(reviewId).then((data) => {
+              this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Comment Deleted Successfully', life: 4000 });
+				ReviewService.getAllReviews(this.product.id).then((data) => {
+				this.allReviews = data.data;
+				this.averageRating = this.allReviews.avg });
+              })
 	}
   },
 };
