@@ -14,15 +14,17 @@
                     <input type="text" placeholder="last name" name="last_name" required />
                 </div>
 
-                <div class="inputBox">
-                    <input type="email" placeholder="email address" name="email" required />
-                    <input type="number" placeholder="phone" name="from_name" required />
-                </div>
-
-                <textarea placeholder="message" id="" cols="30" rows="10" required name="message"></textarea>
-                <p id="contact-message" style="color: #666; font-size: 1.8rem"></p>
-                <input type="submit" value="order now" class="btn" />
-            </form>
+            <textarea
+              placeholder="message"
+              id=""
+              cols="30"
+              rows="10"
+              required
+              name="message"
+            ></textarea>
+            <p id="contact-message" style="color: #666; font-size: 1.8rem"></p>
+            <input type="submit" value="Contact Us" class="btn" />
+          </form>
         </div>
     </section>
 </template>
