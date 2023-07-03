@@ -58,7 +58,6 @@
       </div>
     <Message v-if="registrationSuccess" severity="success" text="Registration successful!" />
     </form>
-  </div>
 </div>
 
 </template>
@@ -74,16 +73,10 @@ import * as router from 'vue-router';
 import GoogleLogin from "@/layout/auth/GoogleLogin.vue";
 import Vue3GoogleOauth2 from "vue3-google-oauth2";
 import {inject} from "vue";
-import HeaderComponent from "@/layout/user/Header/Header.vue";
 
 export default {
   components: {
-<<<<<<< HEAD
     GoogleLogin,
-=======
-    HeaderComponent,
-      GoogleLogin,
->>>>>>> 185880b7ccb9f2431e04c260020bfe9f20ab3a11
     Message,
     HeaderComponent
   },
@@ -206,7 +199,6 @@ export default {
   font-size: 0.8rem;
   margin-top: 0.5rem;
 }
-<<<<<<< HEAD
 
 .login-link-container
 {
@@ -223,9 +215,5 @@ export default {
 {
   padding-left: 30px;
   margin-top: 20px;
-=======
-input{
-  border: 1px solid gray !important;
->>>>>>> 185880b7ccb9f2431e04c260020bfe9f20ab3a11
 }
 </style>
