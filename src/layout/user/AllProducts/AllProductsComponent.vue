@@ -54,22 +54,31 @@
 
 
 <script>
-import Sidebar from 'primevue/sidebar';
-import Button from 'primevue/button';
-import Tree from 'primevue/tree';
-import HomeService from "@/services/HomeService";
-import ProgressSpinner from "primevue/progressspinner";
+
 import  Toast  from 'primevue/toast';
+import HomeService  from '@/services/HomeService';
+import WishListService  from '@/services/WishListService';
+import CartService  from '@/services/CartService';
+import {usecarditem} from '@/stores/notifications';
 export default {
   components:{
-    Sidebar,
-    Button,
-    Tree,
-    ProgressSpinner
+    Toast
   },
   data() {
         return {
           subcategories:null,
+          TrendingProducts: [],
+          TrendingProduct: {},
+          wishList: [],
+          wishListCount: 0,
+          wishListProduct: {},
+          wishListProductCount: 0,
+          wishListProductImage: '',
+          wishListProductName: '',
+          wishListProductPrice: '',
+          wishListProductDescription: '',
+          cardNumber:usecarditem(),
+          wishNumber:usecarditem(),
         }
     },
   mounted() {
@@ -77,7 +86,55 @@ export default {
       this.subcategories=response.data.data
     })
   },
-  methods() {
+  methods:{
+         addToWishList(product_id) {
+
+            this.wishNumber.wishlistNumberStore = localStorage.getItem('wishlistNumber')
+            this.wishNumber.wishlistNumberStore = Number(this.wishNumber.wishlistNumberStore) +1 
+            localStorage.setItem('wishlistNumber',this.wishNumber.wishlistNumberStore)
+
+            const user_id = localStorage.getItem('id')
+            const data={
+            user_id: user_id,
+            product_id: product_id
+            }
+            WishListService.addToWishList(data)
+                .then(response => {
+                    // const newRole = response.data; // Assuming the API returns the newly created role
+                    // this.roles.push(newRole);
+                    this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Favourite Created', life: 4000 });
+                })
+                .catch(error => {
+                    console.error(error);
+                    this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to create Favourite', life: 3000 });
+                });
+
+
+         },
+         addToCart(product_id) {
+		this.cardNumber.cardNumberStore = localStorage.getItem('cardNumber')
+		this.cardNumber.cardNumberStore = Number(this.cardNumber.cardNumberStore) +1 
+        localStorage.setItem('cardNumber',this.cardNumber.cardNumberStore)
+
+      const user_id = localStorage.getItem('id')
+      const data={
+        user_id: user_id,
+        product_id: product_id,
+        prod_qty: 1
+      }
+      CartService.addToCart(data)
+              .then(response => {
+                // const newRole = response.data; // Assuming the API returns the newly created role
+                // this.roles.push(newRole);
+                this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Cart Created', life: 4000 });
+              })
+              .catch(error => {
+                console.error(error);
+                this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to create Cart', life: 3000 });
+              });
+
+      
+         }
 
   }
 }
