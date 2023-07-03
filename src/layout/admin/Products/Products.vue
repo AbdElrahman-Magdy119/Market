@@ -84,12 +84,12 @@
         <label for="discount">Discount</label>
         <InputNumber id="discount" v-model.trim="product.discount" showButtons required="true" :min="0" :max="100" autofocus :class="{'p-invalid': submitted && !product.discount}" />
         <small class="p-error" v-if="submitted && !product.discount">Quantity is required.</small>
-      </div>       
+      </div>
 
       <div class="field">
         <label for="category">Category</label>
         <Dropdown id="category" v-model="selectedCate" :options="categories" optionLabel="name"  option-value="id" placeholder="Select a Category" class="w-full md:w-14rem" :class="{'p-invalid': submitted && !product.subCategory}" />
-        <small class="p-error" v-if="submitted && !product.subCategory">Category is required.</small>        
+        <small class="p-error" v-if="submitted && !product.subCategory">Category is required.</small>
       </div>
 
       <div class="field">
@@ -257,6 +257,7 @@ export default {
 
     editProduct(product) {
       this.product = { ...product };
+      this.selectedCate = this.product.subcategory_id; // Set the selectedCate to the subcategory ID
       this.productDialog = true;
     },
 
