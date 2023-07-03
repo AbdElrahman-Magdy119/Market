@@ -112,7 +112,7 @@ export default {
       deleteCategoryDialog: false,
       category: {},
       selectedCategories: null,
-      selectedFile:null,
+      selectedFile: null,
       filters: {},
       submitted: false,
     }
@@ -154,6 +154,14 @@ export default {
           CategoriesService.updateCategory(this.category.id, formData)
               .then((response) => {
                 this.categories[this.findIndexById(this.category.id)] = response.data;
+                  CategoriesService.getAllCategories().then((data) => {
+                      this.categories = data.data.data;
+
+                      // Add index property to each category object
+                      this.categories.forEach((category, index) => {
+                          category.index = index + 1; // Adding 1 to display index starting from 1
+                      });
+                  });
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Updated', life: 3000 });
                 this.category = {};
                 this.selectedFile = [];
@@ -172,6 +180,14 @@ export default {
               .then(response => {
                 const newCategory = response.data.data; // Assuming the API returns the newly created category
                 this.categories.push(newCategory);
+                  CategoriesService.getAllCategories().then((data) => {
+                      this.categories = data.data.data;
+
+                      // Add index property to each category object
+                      this.categories.forEach((category, index) => {
+                          category.index = index + 1; // Adding 1 to display index starting from 1
+                      });
+                  });
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Created', life: 3000 });
                 this.category = {};
                 this.selectedFile = [];
@@ -199,6 +215,14 @@ export default {
             this.categories = this.categories.filter(val => val.id !== this.category.id);
             this.deleteCategoryDialog = false;
             this.category = {};
+              CategoriesService.getAllCategories().then((data) => {
+                  this.categories = data.data.data;
+
+                  // Add index property to each category object
+                  this.categories.forEach((category, index) => {
+                      category.index = index + 1; // Adding 1 to display index starting from 1
+                  });
+              });
             this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Deleted', life: 3000 });
           })
           .catch(error => {

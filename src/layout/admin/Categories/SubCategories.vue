@@ -25,7 +25,7 @@
         <Column selectionMode="multiple" style="width: 3rem" :exportable="false"></Column>
         <Column :field="'index'" header="#" style="width: 3rem" :exportable="false"></Column>
         <Column field="name" header="Name" sortable style="min-width:16rem"></Column>
-        <Column field="category_id" header="Category Id" sortable style="min-width:16rem"></Column>
+        <Column field="category.name" header="Category Id" sortable style="min-width:16rem"></Column>
         <Column field="image" header="Image" sortable style="min-width:16rem">
           <template #body="{data}">
               <img width="50" height="50" :src="'http://localhost:8000/'+data.image" :alt="data.image"/>
@@ -165,6 +165,14 @@ export default {
           SubCategoriesService.updateSubCategory(this.subCategory.id, formData)
               .then((response) => {
                 this.subCategories[this.findIndexById(this.subCategory.id)] = response.data;
+                  SubCategoriesService.getAllSubCategories().then((data) => {
+                      this.subCategories = data.data.data;
+
+                      // Add index property to each subCategory object
+                      this.subCategories.forEach((subCategory, index) => {
+                          subCategory.index = index + 1; // Adding 1 to display index starting from 1
+                      });
+                  });
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Updated', life: 3000 });
                 this.subCategory = {};
                 this.selectedFile = [];
@@ -184,6 +192,14 @@ export default {
               .then(response => {
                 const newCategory = response.data.data; // Assuming the API returns the newly created subCategory
                 this.subCategories.push(newCategory);
+                  SubCategoriesService.getAllSubCategories().then((data) => {
+                      this.subCategories = data.data.data;
+
+                      // Add index property to each subCategory object
+                      this.subCategories.forEach((subCategory, index) => {
+                          subCategory.index = index + 1; // Adding 1 to display index starting from 1
+                      });
+                  });
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Created', life: 3000 });
                 this.subCategory = {};
                 this.selectedFile = [];
@@ -211,6 +227,14 @@ export default {
             this.subCategories = this.subCategories.filter(val => val.id !== this.subCategory.id);
             this.deleteSubCategoryDialog = false;
             this.subCategory = {};
+              SubCategoriesService.getAllSubCategories().then((data) => {
+                  this.subCategories = data.data.data;
+
+                  // Add index property to each subCategory object
+                  this.subCategories.forEach((subCategory, index) => {
+                      subCategory.index = index + 1; // Adding 1 to display index starting from 1
+                  });
+              });
             this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Deleted', life: 3000 });
           })
           .catch(error => {

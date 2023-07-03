@@ -185,6 +185,7 @@ export default {
       submitted: false,
       productOptions: [],
       noPackagesAvailable: false,
+        selectedFile: [],
     }
   },
   created() {
@@ -224,12 +225,12 @@ export default {
     updateProductData(prod){
       // console.log(prod)
     },
-    handleFileSelect(event) {
-      if (event.target.files.length > 0) {
-        this.package.image = event.target.files[0];
-      }
-    },
-    calculatePrice(item) {
+      handleFileSelect(event) {
+          if (event.target.files.length >= 0) {
+              this.selectedFile = event.target.files[0];
+          }
+      },
+      calculatePrice(item) {
       // console.log(item);
       const selectedProduct = this.productOptions.value.find(product => product.value === item.product_id);
       // console.log('selected',selectedProduct);
@@ -285,10 +286,10 @@ export default {
           formData.append('description', this.package.description);
           formData.append('discount', this.package.discount);
 
-          if (this.package.image) {
-            formData.append('image', this.package.image, this.package.image.name);
+          if (this.package.image && this.selectedFile.length > 0) {
+            formData.append('image', this.package.image);
           } else {
-            formData.append('image', null);
+            formData.append('image', this.selectedFile);
           }
           this.package.package_items.forEach((item, index) => {
             formData.append(`package_items[${index}][product_id]`, item.product_id);
@@ -298,8 +299,16 @@ export default {
           // Update existing package
           formData.append('_method','PUT')
           PackageService.updatePackage(this.package.id, formData)
-              .then(() => {
+              .then( async () => {
                 this.packages[this.findIndexById(this.package.id)] = this.package;
+                  const response = await ProductService.getAllProducts();
+                  this.productOptions.value = response.data.data.map((product) => ({
+                      label: product.name,
+                      value: product.id,
+                      price: product.price,
+                      quantity: product.quantity
+                  }));
+                  this.packages = (await PackageService.getAllPackages()).data;
                 this.$toast.add({
                   severity: 'success',
                   summary: 'Successful',
@@ -323,11 +332,8 @@ export default {
           formData.append('total_price', this.package.total_price);
           formData.append('description', this.package.description);
           formData.append('discount', this.package.discount);
-          if (this.package.image) {
-            formData.append('image', this.package.image, this.package.image.name);
-          } else {
-            formData.append('image', null);
-          }
+          formData.append('image', this.selectedFile);
+
           this.package.package_items.forEach((item, index) => {
             formData.append(`package_items[${index}][product_id]`, item.product_id);
             formData.append(`package_items[${index}][quantity]`, item.quantity);
@@ -335,9 +341,18 @@ export default {
           });
           // Create a new package
           PackageService.addPackage(formData)
-              .then(response => {
-                const newPackage = response.data; // Assuming the API returns the newly created package
+              .then(async res => {
+                const newPackage = res.data; // Assuming the API returns the newly created package
                 this.packages.push(newPackage);
+                  const response = await ProductService.getAllProducts();
+                  this.productOptions.value = response.data.data.map((product) => ({
+                      label: product.name,
+                      value: product.id,
+                      price: product.price,
+                      quantity: product.quantity
+                  }));
+                  this.packages = (await PackageService.getAllPackages()).data;
+
                 this.$toast.add({
                   severity: 'success',
                   summary: 'Successful',
@@ -370,10 +385,20 @@ export default {
     },
     deletepackage() {
       PackageService.deletePackage(this.package.id)
-          .then(() => {
+          .then(async () => {
             this.packages = this.packages.filter(val => val.id !== this.package.id);
             this.deletePackageDialog = false;
             this.package = {};
+
+              const response = await ProductService.getAllProducts();
+              this.productOptions.value = response.data.data.map((product) => ({
+                  label: product.name,
+                  value: product.id,
+                  price: product.price,
+                  quantity: product.quantity
+              }));
+              this.packages = (await PackageService.getAllPackages()).data;
+
             this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'package Deleted', life: 3000 });
           })
           .catch(error => {

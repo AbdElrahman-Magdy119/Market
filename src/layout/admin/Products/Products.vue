@@ -84,14 +84,13 @@
 
       <div class="field">
         <label for="discount">Discount</label>
-        <InputNumber id="discount" v-model.trim="product.discount" showButtons required="true" :min="0" :max="100" autofocus :class="{'p-invalid': submitted && !product.discount}" />
-        <small class="p-error" v-if="submitted && !product.discount">Quantity is required.</small>
-      </div>       
+        <InputNumber id="discount" v-model.trim="product.discount" showButtons required="true" :min="0" :max="100" autofocus />
+      </div>
 
       <div class="field">
         <label for="category">Category</label>
-        <Dropdown id="category" v-model="selectedCate" :options="categories" optionLabel="name" option-value="id" placeholder="Select a Category" class="w-full md:w-14rem" :class="{'p-invalid': submitted && !product.subCategory}" />
-        <small class="p-error" v-if="submitted && !product.subCategory">Category is required.</small>        
+        <Dropdown id="category" v-model="selectedCate" :options="categories" optionLabel="name" option-value="id" placeholder="Select a Category" class="w-full md:w-14rem" :class="{'p-invalid': submitted && !selectedCate}" />
+        <small class="p-error" v-if="submitted && !selectedCate">Category is required.</small>
       </div>
 
       <div class="field">
@@ -206,7 +205,9 @@ export default {
   methods: {
     saveProduct() {
       this.submitted = true;
-      if (this.product.name) {
+      if (!this.product.name || !this.product.description || !this.product.price || !this.product.quantity || !this.selectedCate) {
+        return;
+      }
         if (this.product.id) {
           const formData = new FormData();
           formData.append('name', this.product.name);
@@ -217,9 +218,10 @@ export default {
           formData.append('subcategory_id', Number(this.selectedCate));
           formData.append('trend', this.isTrend ? 1 : 0);
           formData.append('_method', 'put');
-
-          if(this.selectedFile != null) {
-            formData.append('image', this.selectedFile);
+          if (this.product.image && this.selectedFile.length > 0) {
+              formData.append('image', this.product.image);
+          }else {
+              formData.append('image', this.selectedFile);
           }
 
           // Update existing product
@@ -233,7 +235,7 @@ export default {
                           Product.index = index + 1; // Adding 1 to display index starting from 1
                       });
                   });
-                this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Updated', life: 3000 });
+                this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
                 this.product = {};
                 this.selectedFile = [];
               
@@ -250,7 +252,7 @@ export default {
           formData.append('description', this.product.description);
           formData.append('price', this.product.price);
           formData.append('quantity', this.product.quantity);
-          formData.append('discount', this.product.discount);
+          formData.append('discount', this.product.discount === '' ? 0 : this.product.discount);
           formData.append('subcategory_id', this.selectedCate);
           formData.append('trend', this.isTrend ? 1 : 0);
 
@@ -274,10 +276,8 @@ export default {
                 this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to create product', life: 3000 });
               });
         }
-
         this.productDialog = false;
         this.submitted = false;
-      }
     },
       editProduct(product) {
           this.product = { ...product };
