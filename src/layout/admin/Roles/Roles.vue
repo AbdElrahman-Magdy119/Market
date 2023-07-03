@@ -156,6 +156,13 @@ export default {
           RoleService.updateRole(this.role.id, this.role)
               .then(() => {
                 this.roles[this.findIndexById(this.role.id)] = this.role;
+                  RoleService.getAllRoles().then((data) => {
+                      this.roles = data.data.data;
+                      // Add index property to each role object
+                      this.roles.forEach((role, index) => {
+                          role.index = index + 1; // Adding 1 to display index starting from 1
+                      });
+                  });
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Role Updated', life: 3000 });
               })
               .catch(error => {
@@ -168,6 +175,13 @@ export default {
               .then(response => {
                 const newRole = response.data; // Assuming the API returns the newly created role
                 this.roles.push(newRole);
+                  RoleService.getAllRoles().then((data) => {
+                      this.roles = data.data.data;
+                      // Add index property to each role object
+                      this.roles.forEach((role, index) => {
+                          role.index = index + 1; // Adding 1 to display index starting from 1
+                      });
+                  });
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Role Created', life: 3000 });
               })
               .catch(error => {
