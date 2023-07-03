@@ -90,7 +90,6 @@
               <Fieldset legend="Review" style="margin-top:1rem" :toggleable="true">
                   <div class="container">
                     <div class="d-flex justify-content-center pt-3 pb-2">
-						<!-- v-show="userHasReview" -->
                       <input
                         ref="comment"
                         type="text"
@@ -98,7 +97,7 @@
                         placeholder="+ Add a note"
                         class="w-75 addtxt"
                         @keyup.enter="addComment()"
-						
+						v-show="userHasReview"
                       />
                     </div>
                     <div class="row">
@@ -120,8 +119,7 @@
                               </p>
                              <button
 							    v-if="userId == review.user_id.id "
-                                ref="btn2"
-                                @click="remove(btn2, review, comment)"
+                                @click="visible = true"
                                 class="bg-warning me-3 fs-4 p-2 mt-3"
                               >
                                 edit
@@ -134,6 +132,23 @@
                               >
                                 remove
                               </button>
+
+							  <Dialog v-model:visible="visible" modal header="Update Comment" :style="{ width: '50vw' }">
+								<input v-model="updateComment" type="text" placeholder="Enter your Comment"  class=" inputupdate"  />
+									<template #footer>
+										<Button label="No" icon="pi pi-times" @click="visible = false" text />
+										<Button label="Update" icon="pi pi-check" @click="editComment()" autofocus />
+									</template>
+							  </Dialog>
+
+
+
+
+
+
+
+
+
                             </div>
                           </div>
                         </div>
@@ -194,13 +209,17 @@ import Galleria from "primevue/galleria";
 import Rating from "primevue/rating";
 import Fieldset from "primevue/fieldset";
 import Badge from "primevue/badge";
+import Dialog from 'primevue/dialog';
+import Button from 'primevue/button';
 export default {
   components: {
     Galleria,
     Rating,
     Fieldset,
 	Toast,
-	Badge
+	Badge,
+	Dialog,
+	Button
   },
   data() {
     return {
@@ -209,8 +228,10 @@ export default {
 	  allReviews: {},
       averageRating: '',
       rating: '',
-	  userHasReview:false,
-	  userId:''
+	  userHasReview:true,
+	  userId:'',
+	  visible: false,
+	  updateComment:''
     };
   },
  async mounted() {
@@ -229,7 +250,9 @@ export default {
 		  const user_id = localStorage.getItem("id");
 		  this.userId = user_id;
           const user_rate = this.allReviews.data.filter((data) =>  data.user_id.id == user_id );
-		  console.log(this.allReviews)
+        this.checkusercomment();
+		  
+		 
 		  if( user_rate  && user_rate[0] &&   user_rate[0].rating)
 		  {
 			this.rating = user_rate[0].rating;
@@ -242,6 +265,14 @@ export default {
         })
   },
   methods: {
+	async checkusercomment(){
+		const checkUserHasReview =  await this.allReviews.data.filter((data) =>  data.user_id.id == this.userId && data.comment!='' );
+
+		  if(checkUserHasReview.length > 0)
+		  {
+             this.userHasReview = false;
+		  }
+	},
     getRating() {
        const user_id = localStorage.getItem("id");
 	   const user_rate = this.allReviews.data.filter((data) =>  data.user_id.id == user_id );
@@ -318,11 +349,23 @@ export default {
 	    const user_rate = this.allReviews.data.filter((data) =>  data.user_id.id == user_id );
 		if(user_rate.length > 0)
 		 {
-			console.log("yes");
+			this.userHasReview = false;
+			const user_id = localStorage.getItem('id')
+			const formData = new FormData();
+            formData.append('comment', this.$refs.comment.value);
+			formData.append('user_id',user_id);
+            formData.append('_method', 'PATCH');
+			ReviewService.updateReview(formData,this.product.id).then((data) => {
+              this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Comment Added Successfully', life: 4000 });
+			  ReviewService.getAllReviews(this.product.id).then((data) => {
+              this.allReviews = data.data;
+		      this.averageRating = this.allReviews.avg });
+            })
+			this.$refs.comment.value=""
 		 }
 		 else
 		 {
-            this.userHasReview = true;
+            this.userHasReview = false;
 			const review_rate = {
 				product_id : this.product.id,
 				comment : this.$refs.comment.value
@@ -333,6 +376,7 @@ export default {
 				this.allReviews = data.data;
 			  })
             })
+			
 		 }
     
 	},
@@ -343,6 +387,25 @@ export default {
 				this.allReviews = data.data;
 				this.averageRating = this.allReviews.avg });
               })
+			  this.userHasReview = true;
+			  this.$refs.comment.value=""
+	},
+	editComment(){
+		    this.userHasReview = false;
+			const user_id = localStorage.getItem('id')
+			const formData = new FormData();
+            formData.append('comment', this.updateComment);
+			formData.append('user_id',user_id);
+            formData.append('_method', 'PATCH');
+			ReviewService.updateReview(formData,this.product.id).then((data) => {
+              this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Comment updated Successfully', life: 4000 });
+			  ReviewService.getAllReviews(this.product.id).then((data) => {
+              this.allReviews = data.data;
+		      this.averageRating = this.allReviews.avg });
+            })
+			this.$refs.comment.value=""
+			this.visible = false;
+			this.updateComment= ""
 	}
   },
 };
@@ -449,6 +512,18 @@ img {
   background-color: #e5e8ed;
   font-weight: 500;
 }
+
+.inputupdate{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+  font-size: 13px;
+  width: 100%;
+  background-color: #ebf0f8;
+  font-weight: 500;
+}
+
+
 
 .text1 {
   font-size: 2.3rem;
