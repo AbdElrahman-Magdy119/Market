@@ -1,122 +1,74 @@
 <template>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Complete Responsive Grocery Store Website</title>
-
-      <link
-        rel="stylesheet"
-        href="https://unpkg.com/swiper/swiper-bundle.min.css"
-      />
-
-      <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-      />
-
-      <link rel="stylesheet" href="/css/style.css" />
-    </head>
-    <body>
-      <section class="contact" id="contact">
+    <section class="contact" id="contact">
         <Toast></Toast>
         <h1 class="heading">contact <span> now </span></h1>
 
         <div class="row">
-          <div class="image">
-            <img src="images/contact.png" alt="contact Us" />
-          </div>
-
-          <form action="" id="contact-form">
-            <div class="inputBox">
-              <input type="text" placeholder="first name" name="to_name" required />
-              <input type="text" placeholder="last name" name="last_name" required />
+            <div class="image">
+                <img src="images/contact.png" alt="contact Us" />
             </div>
 
-            <div class="inputBox">
-              <input type="email" placeholder="email address" name="email" required />
-              <input type="number" placeholder="phone" name="from_name" required />
-            </div>
+            <form action="" id="contact-form">
+                <div class="inputBox">
+                    <input type="text" placeholder="first name" name="to_name" required />
+                    <input type="text" placeholder="last name" name="last_name" required />
+                </div>
 
-            <textarea
-              placeholder="message"
-              id=""
-              cols="30"
-              rows="10"
-              required
-              name="message"
-            ></textarea>
-            <p id="contact-message" style="color: #666; font-size: 1.8rem"></p>
-            <input type="submit" value="order now" class="btn" />
-          </form>
+                <div class="inputBox">
+                    <input type="email" placeholder="email address" name="email" required />
+                    <input type="number" placeholder="phone" name="from_name" required />
+                </div>
+
+                <textarea placeholder="message" id="" cols="30" rows="10" required name="message"></textarea>
+                <p id="contact-message" style="color: #666; font-size: 1.8rem"></p>
+                <input type="submit" value="order now" class="btn" />
+            </form>
         </div>
-      </section>
-    </body>
-  </html>
+    </section>
 </template>
 
 <script>
-import  Toast  from 'primevue/toast';
+import Toast from 'primevue/toast';
+
 export default {
-  components: {
-	  Toast
-  },
-  data: () => ({}),
-  mounted() {
-    const contactForm = document.getElementById("contact-form"),
-      contactMessage = document.getElementById("contact-message");
-    const sendEmail = (e) => {
-      e.preventDefault();
-      // serviceID - templateID - #form - publicKey
-      emailjs
-        .sendForm(
-          "service_o8o933p",
-          "template_xd0l5fk",
-          "#contact-form",
-          "77l_n6zZZL26ZcRj-"
-        )
-        .then(
-          () => {
-            contactMessage.textContent = "Message sent successfully✅ ";
-            this.$toast.add({ severity: 'success', summary: 'Successful', detail: ' Message sent successfully ', life: 3000 });
-            
-            // Remove message after five seconds
-            setTimeout(() => {
-              contactMessage.textContent = "";
-            }, 5000);
+    components: {
+        Toast
+    },
+    mounted() {
+        const contactForm = document.getElementById("contact-form");
+        const contactMessage = document.getElementById("contact-message");
 
-            // Clear input fields
+        const sendEmail = (e) => {
+            e.preventDefault();
 
-            contactForm.reset();
-          },
-          () => {
-            contactMessage.textContent = "Message not sent (service error)❌";
-          }
-        );
-    };
+            emailjs
+                .sendForm(
+                    "service_o8o933p",
+                    "template_xd0l5fk",
+                    "#contact-form",
+                    "77l_n6zZZL26ZcRj-"
+                )
+                .then(
+                    () => {
+                        contactMessage.textContent = "Message sent successfully ✅";
+                        this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Message sent successfully', life: 3000 });
 
-    contactForm.addEventListener("submit", sendEmail);
+                        // Remove message after five seconds
+                        setTimeout(() => {
+                            contactMessage.textContent = "";
+                        }, 5000);
 
-    let cart = document.querySelector(".shopping-cart");
+                        // Clear input fields
+                        contactForm.reset();
+                    },
+                    () => {
+                        contactMessage.textContent = "Message not sent (service error) ❌";
+                    }
+                );
+        };
 
-    // document.querySelector('#cart-btn').onclick = () =>{
-    // cart.classList.toggle('active');
-    // navbar.classList.remove('active');
-    // }
-
-    let navbar = document.querySelector(".navbar");
-
-    // document.querySelector('#menu-btn').onclick = () =>{
-    // navbar.classList.toggle('active');
-    // cart.classList.remove('active');
-    // }
-
-    // window.onscroll = () =>{
-    // navbar.classList.remove('active');
-    // cart.classList.remove('active');
-    // }
-  },
+        contactForm.addEventListener("submit", sendEmail);
+    },
 };
 </script>
 

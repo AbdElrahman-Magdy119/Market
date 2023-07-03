@@ -28,7 +28,7 @@
                                     <td class="shoping__cart__quantity">
                                         <div class="quantity">
                                             <div class="pro-qty">
-                                                <span @click="increaseQty(usercart.product_id.id, usercart.user_id.id)" class="increase h1">+</span>
+                                                <span @click="increaseQty(usercart.product_id.id, usercart.user_id.id)" id="increase-btn" class="increase h1">+</span>
                                                 <input type="text" :value="usercart.prod_qty">
                                                 <button @click="decreaseQty(usercart.product_id.id, usercart.user_id.id)" class="decrease h1"><b>-</b></button>
                                             </div>
@@ -71,7 +71,7 @@
 <!--                            <li>Subtotal <span>$454.98</span></li>-->
                             <li>Total <span>${{total_price}}</span></li>
                         </ul>
-                        <router-link :to="'/checkout'" @click="proceedToCheckout" class="primary-btn"> PROCEED TO CHECKOUT </router-link>
+                            <button @click="proceedToCheckout" class="primary-btn"> PROCEED TO CHECKOUT </button>
 <!--                        <button @click="proceedToCheckout">Click me</button>-->
                     </div>
                 </div>
@@ -103,6 +103,7 @@ export default {
      },
      methods:{
          calc_total_price() {
+             this.total_price = 0;
              for (const i in this.UserCart) {
                  this.total_price += (this.UserCart[i].product_id.price * this.UserCart[i].prod_qty);
              }
@@ -114,6 +115,8 @@ export default {
                     CartService.getUserCart().then((data) => {
                         this.UserCart = data.data.data;
                         console.log(this.UserCart);
+                        this.calc_total_price();
+
                     });
                     this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Cart Updated', life: 3000 });
                 })
@@ -129,6 +132,8 @@ export default {
                      console.log(res)
                      CartService.getUserCart().then((data) => {
                          this.UserCart = data.data.data;
+                         this.calc_total_price();
+
                          console.log(this.UserCart);
                      });
                  })
@@ -144,6 +149,8 @@ export default {
                      this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
                      CartService.getUserCart().then((data) => {
                          this.UserCart = data.data.data;
+                         this.calc_total_price();
+
                          console.log(this.UserCart);
                      });
                  })
@@ -152,7 +159,13 @@ export default {
                  })
          },
          proceedToCheckout(){
+             if (this.total_price === 0) {
+                 this.$toast.add({ severity: 'info', summary: 'Info Message', detail: 'Message Content', life: 3000 });
+                 return;
+             }
+
              localStorage.setItem('usercart', JSON.stringify(this.UserCart))
+             this.$router.push('/checkout')
              // this.CartStore.items = this.UserCart;
              // console.log(this.CartStore.items);
          },
@@ -192,6 +205,11 @@ export default {
 /*----------------------------------------*/
 /* Template default CSS
 /*----------------------------------------*/
+
+#increase-btn:hover{
+    cursor:pointer;
+}
+
 
 html,
 body {

@@ -267,7 +267,7 @@ export default {
                           Product.index = index + 1; // Adding 1 to display index starting from 1
                       });
                   });
-                this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Created', life: 3000 });
+                this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Created', life: 3000 });
                 this.product = {};
                 this.selectedFile = [];
               })
