@@ -34,9 +34,12 @@
         <Column field="price" header="Price" sortable style="min-width:16rem"></Column>
         <Column field="quantity" header="Quantity" sortable style="min-width:16rem"></Column>
         <Column field="discount" header="Discount" sortable style="min-width:16rem"></Column>
-        <Column field="subcategory_id" header="Subcategory_id" sortable style="min-width:16rem"></Column>
-        <Column field="trend" header="Trend" sortable style="min-width:16rem"></Column>
-
+        <Column field="subcategory.name" header="Subcategory_id" sortable style="min-width:16rem"></Column>
+          <Column field="trend" header="Trend" sortable style="min-width: 16rem">
+              <template #body="slotProps">
+                  <span>{{ slotProps.data.trend === 1 ? 'Yes' : 'No' }}</span>
+              </template>
+          </Column>
           <Column header="Reviews">
               <template #body="slotProps">
                   <router-link :to="`/admin/reviews/product/${slotProps.data.id}`">Reviews</router-link>
@@ -56,7 +59,6 @@
 
 
     <Dialog v-model:visible="productDialog" :style="{width: '450px'}" header="product Details" :modal="true" class="p-fluid">
-      
       <div class="field">
         <label for="name">Name</label>
         <InputText id="name" v-model.trim="product.name" required="true" autofocus :class="{'p-invalid': submitted && !product.name}" />
@@ -82,14 +84,13 @@
 
       <div class="field">
         <label for="discount">Discount</label>
-        <InputNumber id="discount" v-model.trim="product.discount" showButtons required="true" :min="0" :max="100" autofocus :class="{'p-invalid': submitted && !product.discount}" />
-        <small class="p-error" v-if="submitted && !product.discount">Quantity is required.</small>
+        <InputNumber id="discount" v-model.trim="product.discount" showButtons required="true" :min="0" :max="100" autofocus />
       </div>
 
       <div class="field">
         <label for="category">Category</label>
-        <Dropdown id="category" v-model="selectedCate" :options="categories" optionLabel="name"  option-value="id" placeholder="Select a Category" class="w-full md:w-14rem" :class="{'p-invalid': submitted && !product.subCategory}" />
-        <small class="p-error" v-if="submitted && !product.subCategory">Category is required.</small>
+        <Dropdown id="category" v-model="selectedCate" :options="categories" optionLabel="name" option-value="id" placeholder="Select a Category" class="w-full md:w-14rem" :class="{'p-invalid': submitted && !selectedCate}" />
+        <small class="p-error" v-if="submitted && !selectedCate">Category is required.</small>
       </div>
 
       <div class="field">
@@ -181,6 +182,15 @@ export default {
   mounted() {
     ProductsService.getAllProducts().then((data) => {
       this.products = data.data.data;
+        console.log(this.products);
+      // for (const i in this.products){
+      //     if(this.products[i].trend == 1){
+      //         this.products[i].trend = 'Yes'
+      //     }else{
+      //         this.products[i].trend = 'No'
+      //     }
+      // }
+
       // Add index property to each Product object
       this.products.forEach((Product, index) => {
         Product.index = index + 1; // Adding 1 to display index starting from 1
@@ -195,7 +205,9 @@ export default {
   methods: {
     saveProduct() {
       this.submitted = true;
-      if (this.product.name) {
+      if (!this.product.name || !this.product.description || !this.product.price || !this.product.quantity || !this.selectedCate) {
+        return;
+      }
         if (this.product.id) {
           const formData = new FormData();
           formData.append('name', this.product.name);
@@ -204,18 +216,26 @@ export default {
           formData.append('quantity', this.product.quantity);
           formData.append('discount', this.product.discount);
           formData.append('subcategory_id', Number(this.selectedCate));
-          formData.append('trend', 1);
+          formData.append('trend', this.isTrend ? 1 : 0);
           formData.append('_method', 'put');
-
-          if(this.selectedFile != null) {
-            formData.append('image', this.selectedFile);
+          if (this.product.image && this.selectedFile.length > 0) {
+              formData.append('image', this.product.image);
+          }else {
+              formData.append('image', this.selectedFile);
           }
 
           // Update existing product
           ProductsService.updateProduct(this.product.id, formData)
               .then((response) => {
                 this.products[this.findIndexById(this.product.id)] = response.data;
-                this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Updated', life: 3000 });
+                  ProductsService.getAllProducts().then((data) => {
+                      this.products = data.data.data;
+                      // Add index property to each Product object
+                      this.products.forEach((Product, index) => {
+                          Product.index = index + 1; // Adding 1 to display index starting from 1
+                      });
+                  });
+                this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Updated', life: 3000 });
                 this.product = {};
                 this.selectedFile = [];
               
@@ -232,7 +252,7 @@ export default {
           formData.append('description', this.product.description);
           formData.append('price', this.product.price);
           formData.append('quantity', this.product.quantity);
-          formData.append('discount', this.product.discount);
+          formData.append('discount', this.product.discount === '' ? 0 : this.product.discount);
           formData.append('subcategory_id', this.selectedCate);
           formData.append('trend', this.isTrend ? 1 : 0);
 
@@ -240,6 +260,13 @@ export default {
               .then(response => {
                 const newProduct = response.data; // Assuming the API returns the newly created product
                 this.products.push(newProduct);
+                  ProductsService.getAllProducts().then((data) => {
+                      this.products = data.data.data;
+                      // Add index property to each Product object
+                      this.products.forEach((Product, index) => {
+                          Product.index = index + 1; // Adding 1 to display index starting from 1
+                      });
+                  });
                 this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'category Created', life: 3000 });
                 this.product = {};
                 this.selectedFile = [];
@@ -249,19 +276,15 @@ export default {
                 this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to create product', life: 3000 });
               });
         }
-
         this.productDialog = false;
         this.submitted = false;
-      }
-    },    
-
-    editProduct(product) {
-      this.product = { ...product };
-      this.selectedCate = this.product.subcategory_id; // Set the selectedCate to the subcategory ID
-      this.productDialog = true;
     },
-
-
+      editProduct(product) {
+          this.product = { ...product };
+          this.selectedCate = this.product.subcategory_id; // Set the selectedCate to the subcategory ID
+          this.isTrend = Boolean(this.product.trend); // Set the selectedCate to the subcategory ID
+          this.productDialog = true;
+      },
     deleteProduct()
     {
       ProductsService.deleteProduct(this.product.id)
@@ -269,6 +292,13 @@ export default {
             this.products = this.products.filter(val => val.id !== this.product.id);
             this.deleteProductDialog = false;
             this.product = {};
+              ProductsService.getAllProducts().then((data) => {
+                  this.products = data.data.data;
+                  // Add index property to each Product object
+                  this.products.forEach((Product, index) => {
+                      Product.index = index + 1; // Adding 1 to display index starting from 1
+                  });
+              });
             this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Product Deleted', life: 3000 });
           })
           .catch(error => {

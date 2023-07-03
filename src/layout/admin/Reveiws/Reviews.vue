@@ -4,7 +4,7 @@
         <div class="card">
             <Toolbar class="mb-4">
                 <template #start>
-                    <Button label="New" icon="pi pi-plus" severity="success" class="mr-2" @click="openNew" />
+<!--                    <Button label="New" icon="pi pi-plus" severity="success" class="mr-2" @click="openNew" />-->
                     <Button label="Delete" icon="pi pi-trash" severity="danger" @click="confirmDeleteSelected" :disabled="!selectedReviews || !selectedReviews.length" />
 <!--                    <div class="field mx-3">-->
 <!--                        <Dropdown @change="getAllReviews($event.value)" id="product" v-model.trim="prd.name" optionValue="value" :options="productOptions" optionLabel="label" />-->
