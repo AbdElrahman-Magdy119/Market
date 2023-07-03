@@ -20,7 +20,7 @@
 }
 
 html{
-  font-size: 62.5%;
+  /* font-size: 62.5%; */
   overflow-x: hidden;
   scroll-padding-top: 9rem;
   scroll-behavior: smooth;
@@ -57,7 +57,7 @@ section{
   text-transform: uppercase;
 }
 
-.btn{
+/* .btn{
   margin-top: 1rem;
   display: inline-block;
   padding: 1.3rem 3.5rem;
@@ -72,7 +72,7 @@ section{
   color: var(--white);
   background: var(--secondary);
   box-shadow: var(--box-shadow);
-}
+} */
 
 /* header */
 
@@ -794,4 +794,14 @@ section{
   .home .content h3{
     font-size: 3.5rem;
   }
+}
+
+iframe {
+  display: flex !important;
+}
+
+#container
+{
+  display: block !important;
+  padding: 0 !important;
 }

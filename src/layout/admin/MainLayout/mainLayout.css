@@ -70,7 +70,7 @@ body {
     color: #212529;
     text-align: left;
     background-color: #fff;
-    overflow: hidden;
+    overflow: hidden !important;
 }
 
 [tabindex="-1"]:focus {
@@ -11794,7 +11794,7 @@ h5,
 .wrapper {
     width: 100%;
     flex-wrap: nowrap;
-    overflow: scroll;
+    /* overflow: scroll; */
     height: 100vh;
 }
 

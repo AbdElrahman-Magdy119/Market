@@ -3,7 +3,6 @@
         <HeaderComponent/>
     </div>
 
-
     <div class="container" style="margin-top:12rem;">
         <div class="row">
             <div class="col-12">
@@ -16,51 +15,47 @@
 
   <div class="container mt-5 d-flex justify-content-center align-items-center w-100" style="margin-bottom:12rem;">
 
-  <form @submit.prevent="login">
+  <form @submit.prevent="login" class="login-form">
     <!-- Email input -->
     <div class="form-outline mb-4">
-      <input type="email" id="loginEmail" v-model="email" class="form-control "  />
-      <label class="form-label" for="loginEmail">Email address</label>
+      <input type="email" id="loginEmail" v-model="email" class="form-control " placeholder="Email" />
     </div>
 
     <!-- Password input -->
     <div class="form-outline mb-4">
-      <input type="password" class="form-control " id="loginPassword" v-model="password" />
-      <label class="form-label" for="loginPassword">Password</label>
+      <input type="password" class="form-control " id="loginPassword" v-model="password" placeholder="Password" />
     </div>
 
     <!-- 2 column grid layout for inline styling -->
     <div class="row mb-4">
-      <div class="col d-flex justify-content-center">
+      <div class="col d-flex ">
         <!-- Checkbox -->
         <div class="form-check">
           <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
           <label class="form-check-label" for="form2Example31"> Remember me </label>
         </div>
       </div>
-
-<!--      <div class="col">-->
-<!--        &lt;!&ndash; Simple link &ndash;&gt;-->
-<!--        <a href="#">Forgot password?</a>-->
-<!--      </div>-->
     </div>
+    <div class="p-field row gy-2 mb-4 register-buttons-container">
+        <div class="col- col-md-4 ">
+          <button type="submit" class="btn btn-primary  ">Sign in</button>
+        </div>
+        <div class="col- col-md-8">
+          <GoogleLogin></GoogleLogin>      
+        </div>
+      </div>
 
+      <div class="row signup-link-container">
+          <span class="">Not a member? <router-link to="register">Register</router-link></span>
+      </div>          
     <!-- Submit button -->
-    <div class="text-center">
-      <button type="submit" class="btn mb-4">Sign in</button>
-    </div>
+
 
     <!-- Register buttons -->
-    <div class="text-center">
-      <p>Not a member? <router-link to="register">Register</router-link></p>
-      <p>or sign up with:</p>
-      <div class="text-center ms-5">
-        <GoogleLogin></GoogleLogin>
-      </div>
+
 <!--      <button type="button" class="btn btn-link btn-floating mx-1">-->
 <!--        <i class="fab fa-facebook-f"></i>-->
 <!--      </button>-->
-
 <!--      <button type="button" class="btn btn-link btn-floating mx-1" @click="googleLogin">-->
 <!--        <i class="fab fa-google"></i>-->
 <!--      </button>-->
@@ -72,7 +67,6 @@
 <!--      <button type="button" class="btn btn-link btn-floating mx-1">-->
 <!--        <i class="fab fa-github"></i>-->
 <!--      </button>-->
-    </div>
   </form>
 
 
@@ -199,7 +193,18 @@ export default {
 };
 </script>
 <style scoped>
-*{
-    font-size:20px;
+
+.login-form
+{
+  max-width: 400px;
+  padding: 2rem;
+  box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
 }
+
+.signup-link-container
+{
+  padding: 7px;
+  text-align: center;
+}
+
 </style>

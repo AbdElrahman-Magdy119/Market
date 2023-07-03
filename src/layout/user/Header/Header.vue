@@ -39,12 +39,7 @@
            <router-link :to="'/profile'"> <div id="login-btn" class="fas fa-user"></div></router-link>
             <div id="menu-btn" class="fas fa-bars"></div>
         </div>
-
-
-
     </header>
-
-
   </body>
 </html>
 
@@ -155,7 +150,7 @@ section{
   text-transform: uppercase;
 }
 
-.btn{
+/* .btn{
   margin-top: 1rem;
   display: inline-block;
   padding: 1.3rem 3.5rem;
@@ -170,7 +165,7 @@ section{
   color: var(--white);
   background: var(--secondary);
   box-shadow: var(--box-shadow);
-}
+} */
 
 /* header */
 
@@ -889,5 +884,5 @@ section{
   }
 }
 </style>
-
+<style src="../../../../public/css/style.css" scoped></style>
 	
