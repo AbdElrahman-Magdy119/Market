@@ -28,7 +28,7 @@
         <Column field="category_id" header="Category Id" sortable style="min-width:16rem"></Column>
         <Column field="image" header="Image" sortable style="min-width:16rem">
           <template #body="{data}">
-              <img  :src="'http://localhost:8000/'+data.image" :alt="data.image" class="product-image"/>
+              <img width="50" height="50" :src="'http://localhost:8000/'+data.image" :alt="data.image"/>
           </template>        
         </Column>
         

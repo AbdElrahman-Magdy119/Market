@@ -33,7 +33,7 @@
 
                               <div class="checkout__input">
                                   <p>Address<span>*</span></p>
-                                  <input type="text" placeholder="Street Address" class="checkout__input__add" v-model=user.address required>
+                                  <input type="text" placeholder="Street Address" class="checkout__input__add" v-model= "user.address" required>
                                   <span v-if="!user.address || user.address=='null'" class="error-message">Address is required</span>
                               </div>
 
@@ -119,6 +119,12 @@
         this.calc_total_price();
         console.log(this.user);
           console.log(this.itemsStore.items);
+          if(this.user.address === 'null'){
+                this.user.address = '';
+          }
+          if(this.user.phone === 'null'){
+              this.user.phone = '';
+          }
         // this.items= CartService.cartItems;
         },
       methods:{

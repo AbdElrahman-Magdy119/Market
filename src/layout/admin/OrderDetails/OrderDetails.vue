@@ -69,7 +69,7 @@
                             <Column field="product.quantity" header="Quantity" sortable="true" style="min-width:16rem"></Column>
                             <Column field="product.image" header="Image" sortable="true" style="min-width:16rem">
                                 <template #body="rowData">
-                                   <img :src="`http://localhost:8000/`+rowData.data.product.image" alt="..."/>
+                                   <img width="50" height="50" :src="`http://localhost:8000/`+rowData.data.product.image" alt="..."/>
                                 </template>
                             </Column>
 

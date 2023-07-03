@@ -35,7 +35,7 @@
         <Column field="total_price" header="total price" sortable style="min-width:16rem"></Column>
         <Column field="image" header="Image" :exportable="false">
           <template #body="slotProps">
-            <img v-if="slotProps.data.image" :src="`http://localhost:8000/`+slotProps.data.image" alt="Package Image" style="width: 50px; height: 50px; object-fit: cover;" />
+            <img width="50" height="50" v-if="slotProps.data.image" :src="`http://localhost:8000/`+slotProps.data.image" alt="Package Image" style="width: 50px; height: 50px; object-fit: cover;" />
           </template>
         </Column>
         <Column :exportable="false" style="min-width:8rem">
