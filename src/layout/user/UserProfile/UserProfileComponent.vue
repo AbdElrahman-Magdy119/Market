@@ -49,17 +49,38 @@
                 </form>
             </div>
         </div>
+
+        <div class="container mt-5">
+            <div class="row delete-account bg-light align-items-center justify-content-center p-5"
+                 style="border-radius:10px;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">
+                <div class="col-12 col-md-9">
+                    <div>
+                        <h3>Delete Account</h3>
+                        <p>Delete your user account and remove your self from our book store.
+                            <b class="text-muted">
+                                This cannot be undone
+                            </b>
+                        </p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-3 text-end">
+                    <Button label="Delete Account" severity="danger" size="large" raised @click="onDeleteAccount(user.id)"/>
+                </div>
+            </div>
+        </div>
     </section>
 
 </template>
 
 <script>
 import  Toast  from 'primevue/toast';
+import  Button  from 'primevue/button';
 import usersService from '@/services/UserService';
 import HomeService from "@/services/HomeService";
 export default {
     components:{
         Toast,
+        Button
     },
     data() {
         return {
@@ -123,8 +144,18 @@ export default {
                     console.log(error);
                 });
         },
-
-
+        onDeleteAccount(user_id){
+            HomeService.deleteUser(user_id)
+                .then((res)=>{
+                    this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'User deleted successfully', life: 3000 });
+                    setTimeout(() => {
+                        this.$router.push("/login");
+                    }, 4000);
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
+        },
     }
 }
 </script>

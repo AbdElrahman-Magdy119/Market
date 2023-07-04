@@ -16,7 +16,7 @@
                     <h1>
                         <router-link to="/admin" class="logo">
                             Market
-                            <span>Online Market</span>
+<!--                            <span><i class="fas fa-shopping-cart"></i> Foodco</span>-->
                         </router-link>
                     </h1>
                     <ul class="list-unstyled components mb-5">

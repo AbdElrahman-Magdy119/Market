@@ -59,9 +59,9 @@
                                 <div class="col-12 col-md-4 ">
                                     <button type="submit" class="btn btn-primary">Register</button>
                                 </div>
-                                <div class="col-12 col-md-8">
-                                    <GoogleLogin></GoogleLogin>
-                                </div>
+<!--                                <div class="col-12 col-md-8">-->
+<!--                                    <GoogleLogin></GoogleLogin>-->
+<!--                                </div>-->
                             </div>
                             <Message v-if="registrationSuccess" severity="success" text="Registration successful!" />
                         </form>
