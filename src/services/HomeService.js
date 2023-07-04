@@ -46,6 +46,9 @@ const HomeService = {
     },
     getAllSubCategories() {
         return apiClient.get(`/home/subcategories`);
+    },
+    deleteUser(id){
+        return apiClient.delete(`/users/${id}`)
     }
 
 };
