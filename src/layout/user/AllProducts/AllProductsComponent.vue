@@ -22,7 +22,7 @@
       <body>
         <Toast  />
         <section class="product" id="product" v-for="subcategory in subcategories" :key="subcategory.id">
-           <h1 class="heading">{{ subcategory.name }}</h1>
+         <router-link :to="'/productBySubcategory/' + subcategory.id"><h1 class="heading">{{ subcategory.name }}</h1></router-link>
              <section class="related-product" >
                  <div class="container">
                     <div class="row">
