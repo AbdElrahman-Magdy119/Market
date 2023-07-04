@@ -37,10 +37,10 @@
       </div>
     </div>
     <div class="p-field row gy-2 mb-4 register-buttons-container">
-        <div class="col- col-md-4 ">
-          <button type="submit" class="btn btn-primary  ">Sign in</button>
+        <div class="col-12 text-center">
+          <button type="submit" class="btn btn-primary w-50" >Sign in</button>
         </div>
-        <div class="col- col-md-8">
+        <div class="col-12 text-center me-3 w-50 mt-3">
           <GoogleLogin></GoogleLogin>      
         </div>
       </div>
@@ -193,7 +193,9 @@ export default {
 };
 </script>
 <style scoped>
-
+*{
+  font-size:1.7rem;
+}
 .login-form
 {
   max-width: 400px;

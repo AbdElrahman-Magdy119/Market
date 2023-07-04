@@ -102,7 +102,7 @@ export default {
 };
 </script>
 <style scoped>
-*{
-    font-size:20px;
+* {
+  font-size: 2rem;
 }
 </style>
