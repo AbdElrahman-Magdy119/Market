@@ -13,73 +13,59 @@
         </div>
     </div>
 
-  <div class="container mt-5 d-flex justify-content-center align-items-center w-100" style="margin-bottom:12rem;">
 
-  <form @submit.prevent="login" class="login-form">
-    <!-- Email input -->
-    <div class="form-outline mb-4">
-      <input type="email" id="loginEmail" v-model="email" class="form-control " placeholder="Email" />
-    </div>
 
-    <!-- Password input -->
-    <div class="form-outline mb-4">
-      <input type="password" class="form-control " id="loginPassword" v-model="password" placeholder="Password" />
-    </div>
+  <!--LOGIN FORM-->
+    <div class="container mb-4">
+        <div class="row align-items-center justify-content-center">
+            <div class="col-6">
+                <div>
+                    <img src="../../../public/images/login.svg" alt="login" class="w-75">
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Login</h4>
+                    </div>
+                    <div class="card-body">
+                        <form @submit.prevent="login" class="login-form">
+                            <p id="notfound"></p>
+                            <div class="mb-3">
+                                <label for="loginEmail" class="form-label">Email</label>
+                                <input type="email" id="loginEmail" v-model="email" class="form-control " placeholder="Email" />
+                            </div>
+                            <div class="mb-3">
+                                <label for="loginPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control " id="loginPassword" v-model="password" placeholder="Password" />
+                            </div>
 
-    <!-- 2 column grid layout for inline styling -->
-    <div class="row mb-4">
-      <div class="col d-flex ">
-        <!-- Checkbox -->
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
-          <label class="form-check-label" for="form2Example31"> Remember me </label>
+                            <div class="my-3">
+                                <input class="form-check-input" type="checkbox" value="" id="form2Example31" checked />
+                                <label class="form-check-label" for="form2Example31"> Remember me </label>
+                            </div>
+
+                            <div class="text-center">
+                                <button type="submit" class="paypal-button w-50 text-center my-3" >Sign in</button>
+                                <p class="">Not a member? <router-link to="register">Register</router-link></p>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    <div class="p-field row gy-2 mb-4 register-buttons-container">
-        <div class="col-12 text-center">
-          <button type="submit" class="btn btn-primary w-50" >Sign in</button>
-        </div>
-        <div class="col-12 text-center me-3 w-50 mt-3">
-          <GoogleLogin></GoogleLogin>      
-        </div>
-      </div>
+  <!--LOGIN FORM-->
 
-      <div class="row signup-link-container">
-          <span class="">Not a member? <router-link to="register">Register</router-link></span>
-      </div>          
-    <!-- Submit button -->
-
-
-    <!-- Register buttons -->
-
-<!--      <button type="button" class="btn btn-link btn-floating mx-1">-->
-<!--        <i class="fab fa-facebook-f"></i>-->
-<!--      </button>-->
-<!--      <button type="button" class="btn btn-link btn-floating mx-1" @click="googleLogin">-->
-<!--        <i class="fab fa-google"></i>-->
-<!--      </button>-->
-
-<!--      <button type="button" class="btn btn-link btn-floating mx-1">-->
-<!--        <i class="fab fa-twitter"></i>-->
-<!--      </button>-->
-
-<!--      <button type="button" class="btn btn-link btn-floating mx-1">-->
-<!--        <i class="fab fa-github"></i>-->
-<!--      </button>-->
-  </form>
-
-
-  </div>
     <div>
         <FooterComponent/>
     </div>
 
 </template>
 
-<style scoped>
 
-</style>
+
 <script>
 import Toast from 'primevue/toast';
 import 'primevue/resources/themes/saga-blue/theme.css';
@@ -193,12 +179,30 @@ export default {
 };
 </script>
 <style scoped>
+.paypal-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #004ee5;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.paypal-button i {
+    margin-right: 5px;
+}
+
+.paypal-button:hover {
+    background-color: #001e5a;
+}
 *{
   font-size:1.7rem;
 }
 .login-form
 {
-  max-width: 400px;
   padding: 2rem;
   box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px;
 }
