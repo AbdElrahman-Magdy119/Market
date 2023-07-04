@@ -10,7 +10,7 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <form class="d-flex" role="search">
-        <a id="username" class="nav-link" aria-current="page" href="#">{{ capitalizedName }}</a>
+        <a id="username" class="nav-link text-white m-1 me-3" aria-current="page" href="#">{{ capitalizedName }}</a>
         <button class="logout-button btn btn btn-outline-success" @click="logout">Log Out</button>
       </form>
     </div>

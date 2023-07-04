@@ -1,9 +1,14 @@
 <template>
-<body>
-     <div class="container">
-        <img class="centered-image" src="../../../../public/images/notfound.svg">
+     <div class="container mt-3">
+       <div class="row">
+         <div class="col-12">
+           <img class="centered-image" src="../../../../public/images/notfound.svg" alt="not found">
+         </div>
+         <div class="col-12 mt-5 text-center">
+           <router-link to="/" class="btn btn-primary">Home</router-link>
+         </div>
+       </div>
      </div>
-</body>
 
  </template>
  
@@ -14,16 +19,6 @@
  </script>
  
  <style scoped>
- html, body {
-  height: 100%;
-}
-
-body {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .container {
   display: flex;
   align-items: center;
