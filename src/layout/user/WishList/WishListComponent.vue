@@ -77,6 +77,7 @@
 import WishListService from "@/services/WishListService";
 import Badge from "primevue/badge";
 import Toast from "primevue/toast";
+import {usecarditem} from "@/stores/notifications";
 
 export default {
   components: {
@@ -87,6 +88,8 @@ export default {
     return {
       UserWishList: [], // Initialize as an empty array
       product: {},
+        wishNumber:usecarditem(),
+
     };
   },
   mounted() {
@@ -101,6 +104,11 @@ export default {
         .then(() => {
           this.UserWishList = this.UserWishList.filter((val) => val.id !== id);
           this.product = {};
+
+            this.wishNumber.wishlistNumberStore = localStorage.getItem('wishlistNumber')
+            this.wishNumber.wishlistNumberStore = Number(this.wishNumber.wishlistNumberStore) - 1
+            localStorage.setItem('wishlistNumber',this.wishNumber.wishlistNumberStore)
+
           this.$toast.add({
             severity: "success",
             summary: "Successful",

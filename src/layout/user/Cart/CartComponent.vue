@@ -51,7 +51,7 @@
                                         ${{usercart.prod_qty * usercart.product_id.price}}
                                     </td>
                                     <td class="shoping__cart__item__close">
-                                        <span class="icon_close"><i class="fa-solid fa-xmark" @click="deleteProductFromCart(usercart.id)"></i></span>
+                                        <span class="icon_close"><i class="fa-solid fa-xmark" @click="deleteProductFromCart(usercart.id, usercart.prod_qty)"></i></span>
                                     </td>
                                 </tr>
                                
@@ -97,6 +97,7 @@
 import CartService  from '@/services/CartService';
 import Toast from "primevue/toast";
 import Badge from "primevue/badge";
+import {usecarditem} from "@/stores/notifications";
 
 
 export default {
@@ -108,6 +109,7 @@ export default {
         return {
             UserCart: [],
             total_price: 0,
+            cardNumber:usecarditem(),
         }
      },
      mounted() {
@@ -132,6 +134,9 @@ export default {
                         this.UserCart = data.data.data;
                         console.log(this.UserCart);
                         this.calc_total_price();
+                        this.cardNumber.cardNumberStore = localStorage.getItem('cardNumber')
+                        this.cardNumber.cardNumberStore = Number(this.cardNumber.cardNumberStore) + 1
+                        localStorage.setItem('cardNumber',this.cardNumber.cardNumberStore)
 
                     });
                     this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'Cart Updated', life: 3000 });
@@ -149,7 +154,9 @@ export default {
                      CartService.getUserCart().then((data) => {
                          this.UserCart = data.data.data;
                          this.calc_total_price();
-
+                         this.cardNumber.cardNumberStore = localStorage.getItem('cardNumber')
+                         this.cardNumber.cardNumberStore = Number(this.cardNumber.cardNumberStore) - 1
+                         localStorage.setItem('cardNumber',this.cardNumber.cardNumberStore)
                          console.log(this.UserCart);
                      });
                  })
@@ -158,7 +165,12 @@ export default {
                      console.log(err)
                  })
          },
-         deleteProductFromCart(id) {
+         deleteProductFromCart(id, qty) {
+
+             this.cardNumber.cardNumberStore = localStorage.getItem('cardNumber')
+             this.cardNumber.cardNumberStore = Number(this.cardNumber.cardNumberStore) - qty
+             localStorage.setItem('cardNumber',this.cardNumber.cardNumberStore)
+
              CartService.deleteCart(id)
                  .then((res)=>{
                      console.log(res);
@@ -179,26 +191,24 @@ export default {
              else return false;
          },
          proceedToCheckout(){
-                 if (this.total_price === 0) {
-                     this.$toast.add({ severity: 'info', summary: 'Info Message', detail: 'No Products Found', life: 3000 });
-                     return;
-                 }
-                let qty_flag = false;
+             if (this.total_price === 0) {
+                 this.$toast.add({ severity: 'warn', summary: 'Info Message', detail: 'No Products Found', life: 3000 });
+                 return;
+             }
+
+             let qty_flag = false;
              for (const qty in this.UserCart) {
-                 console.log(this.UserCart[qty]);
-                 if(this.UserCart[qty].product_id.quantity === 0){
+                 if(Number(this.UserCart[qty].product_id.quantity) < Number(this.UserCart[qty].prod_qty)){
                      qty_flag = true;
                      break;
                  }
              }
 
-             console.log("Flag: " + qty_flag);
-
              if(!qty_flag){
                  localStorage.setItem('usercart', JSON.stringify(this.UserCart))
                  this.$router.push('/checkout')
              }else {
-                 this.$toast.add({ severity: 'info', summary: 'Info Message', detail: 'Product is Out of stock', life: 3000 });
+                 this.$toast.add({ severity: 'warn', summary: 'Info Message', detail: 'Product is Out of stock', life: 3000 });
                  return;
              }
 

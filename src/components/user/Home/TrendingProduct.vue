@@ -107,9 +107,9 @@ export default {
   methods: {
     addToWishList(product_id) {
 
-		this.wishNumber.wishlistNumberStore = localStorage.getItem('wishlistNumber')
-		this.wishNumber.wishlistNumberStore = Number(this.wishNumber.wishlistNumberStore) +1 
-        localStorage.setItem('wishlistNumber',this.wishNumber.wishlistNumberStore)
+		this.wishNumber.wishlistNumberStore = localStorage.getItem('wishlistNumber');
+		this.wishNumber.wishlistNumberStore = Number(this.wishNumber.wishlistNumberStore) +1;
+        localStorage.setItem('wishlistNumber',this.wishNumber.wishlistNumberStore);
 
       const user_id = localStorage.getItem('id')
       const data={
