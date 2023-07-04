@@ -38,6 +38,7 @@ export default {
                 .then((res)=>{
                     console.log("Logged");
                     console.log(res);
+                    window.location.href = 'http://localhost:8000/auth/google'
                     // window.location.href = res.data;
                 })
                 .catch((err)=>{
