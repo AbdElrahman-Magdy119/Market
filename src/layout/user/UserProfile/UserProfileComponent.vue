@@ -64,9 +64,20 @@
                     </div>
                 </div>
                 <div class="col-12 col-md-3 text-end">
-                    <Button label="Delete Account" severity="danger" size="large" raised @click="onDeleteAccount(user.id)"/>
+                    <Button label="Delete Account" severity="danger" size="large" raised @click="deleteReviewDialogFunc"/>
                 </div>
             </div>
+
+            <Dialog v-model:visible="deleteReviewDialog" :style="{width: '450px'}" header="Confirm" :modal="true">
+                <div class="confirmation-content">
+                    <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem" />
+                    <span v-if="user">Are you sure you want to delete <b>{{user.firstName+' '+user.lastName}}</b>?</span>
+                </div>
+                <template #footer>
+                    <Button label="No" icon="pi pi-times" text @click="deleteReviewDialog = false"/>
+                    <Button label="Yes" icon="pi pi-check" text @click="onDeleteAccount(user.id)" />
+                </template>
+            </Dialog>
         </div>
     </section>
 
@@ -74,19 +85,23 @@
 
 <script>
 import  Toast  from 'primevue/toast';
+import  Dialog  from 'primevue/dialog';
 import  Button  from 'primevue/button';
 import usersService from '@/services/UserService';
 import HomeService from "@/services/HomeService";
 export default {
     components:{
         Toast,
-        Button
+        Button,
+        Dialog
     },
     data() {
         return {
             checkData:true,
+            deleteReviewDialog:false,
             updatedUser: {},
             user:{
+                id:localStorage.getItem('id'),
                 firstName:localStorage.getItem('name'),
                 lastName:localStorage.getItem('lastName'),
                 email:localStorage.getItem('email'),
@@ -144,17 +159,23 @@ export default {
                     console.log(error);
                 });
         },
+        deleteReviewDialogFunc(){
+            this.deleteReviewDialog = true;
+        },
         onDeleteAccount(user_id){
             HomeService.deleteUser(user_id)
                 .then((res)=>{
                     this.$toast.add({ severity: 'success', summary: 'Successful', detail: 'User deleted successfully', life: 3000 });
                     setTimeout(() => {
+                        localStorage.clear();
                         this.$router.push("/login");
                     }, 4000);
                 })
                 .catch((err)=>{
                     console.log(err)
                 })
+
+            this.deleteReviewDialog = false;
         },
     }
 }
