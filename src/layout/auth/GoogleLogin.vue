@@ -10,6 +10,9 @@
 
 <script>
 import authService from "@/services/AuthService";
+// import jwt from 'jsonwebtoken';
+import jwtDecode from 'jwt-decode';
+
 
 export default {
     name:"GoogleLogin",
@@ -25,13 +28,17 @@ export default {
     },
     methods: {
         handleCredentialResponse(response) {
-            // Handle the credential response here
-            // console.log("res");
-            // console.log(response);
+            console.log(response);
+
+            // Example of decoding a JWT token
+            const decodedToken = jwtDecode(response.credential, 'my-google');
+            console.log(decodedToken);
+
             authService.googleRegister()
                 .then((res)=>{
                     console.log("Logged");
                     console.log(res);
+                    // window.location.href = res.data;
                 })
                 .catch((err)=>{
                     console.log("Error");
